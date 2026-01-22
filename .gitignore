@@ -1,0 +1,48 @@
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+*.so
+.ipynb_checkpoints/
+.env
+.venv/
+venv/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Power BI local files
+*.pbit
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+*.bak
+
+# Archives
+*.zip
+*.tar.gz
+*.rar
+
+# Personal notes
+notes.txt
+TODO.txt
