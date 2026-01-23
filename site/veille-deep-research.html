@@ -446,120 +446,85 @@
                     </div>
                 </div>
 
-                <!-- CRAA Pipeline - Process Cards with Connectors -->
-                <div class="relative">
-                    <!-- Connector Line (Desktop only) -->
-                    <div class="hidden lg:block absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-cyan-500/30 via-emerald-500/30 via-pink-500/30 to-purple-500/30 -translate-y-1/2 z-0"></div>
+                <!-- CRAA Pipeline - Vertical Timeline Layout -->
+                <div class="relative max-w-4xl mx-auto">
+                    <!-- Vertical Connector Line -->
+                    <div class="absolute left-[60px] md:left-[80px] top-0 bottom-0 w-px bg-gradient-to-b from-cyan-500/50 via-emerald-500/50 via-pink-500/50 to-purple-500/50"></div>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
+                    <div class="space-y-6">
                         
-                        <!-- Card 1: CADRAGE (Bleu - Product) -->
-                        <div class="group relative">
-                            <!-- Connector Arrow (Desktop) -->
-                            <div class="hidden lg:flex absolute -right-3 top-1/2 -translate-y-1/2 z-20 w-6 h-6 items-center justify-center">
-                                <i data-lucide="chevron-right" class="w-5 h-5 text-cyan-500/50 group-hover:text-cyan-400 transition-colors"></i>
+                        <!-- Step 1: CADRAGE -->
+                        <div class="group flex gap-6 md:gap-8 items-start">
+                            <!-- Left: Step Block -->
+                            <div class="shrink-0 w-[120px] md:w-[160px] bg-slate-900/60 backdrop-blur-md border border-cyan-500/30 rounded-2xl p-4 text-center relative z-10 group-hover:border-cyan-500 group-hover:shadow-[0_0_30px_rgba(6,182,212,0.15)] transition-all duration-300">
+                                <span class="text-cyan-400 font-mono text-xl md:text-2xl font-bold">C1</span>
+                                <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mx-auto my-2">
+                                    <i data-lucide="message-circle" class="w-5 h-5 text-cyan-400"></i>
+                                </div>
+                                <p class="text-cyan-400 font-mono text-xs uppercase tracking-wider font-bold">Cadrage</p>
                             </div>
-                            
-                            <div class="h-full bg-slate-900/50 backdrop-blur-md border border-slate-700 rounded-2xl p-6 transition-all duration-300 hover:border-cyan-500 hover:-translate-y-1 hover:shadow-[0_20px_40px_-12px_rgba(6,182,212,0.2)]">
-                                <!-- Step Number Badge -->
-                                <div class="absolute -top-3 left-6">
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full bg-cyan-500/20 border border-cyan-500/30 text-cyan-400 text-xs font-mono font-bold">
-                                        01
-                                    </span>
-                                </div>
-                                
-                                <!-- Icon -->
-                                <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-4 mt-2 group-hover:bg-cyan-500/20 transition-colors">
-                                    <i data-lucide="message-circle" class="w-6 h-6 text-cyan-400"></i>
-                                </div>
-                                
-                                <!-- Content -->
-                                <h4 class="text-white font-bold text-lg mb-1">Cadrage</h4>
-                                <p class="text-cyan-400 text-sm font-medium mb-3">Interview Agentique</p>
+                            <!-- Right: Description -->
+                            <div class="flex-1 pt-2">
+                                <h4 class="text-white font-bold text-lg mb-1">Interview Agentique</h4>
                                 <p class="text-slate-400 text-sm leading-relaxed">
-                                    Définition du besoin via un agent <strong class="text-slate-300">'Spécialiste'</strong> qui m'interviewe pour verrouiller le contexte avant toute recherche.
+                                    Définition du besoin via un agent <strong class="text-slate-300">'Spécialiste'</strong> qui m'interviewe pour verrouiller le contexte avant toute recherche. L'objectif est de transformer un besoin vague en brief actionnable.
                                 </p>
                             </div>
                         </div>
                         
-                        <!-- Card 2: RECHERCHE (Vert - Data) -->
-                        <div class="group relative">
-                            <!-- Connector Arrow (Desktop) -->
-                            <div class="hidden lg:flex absolute -right-3 top-1/2 -translate-y-1/2 z-20 w-6 h-6 items-center justify-center">
-                                <i data-lucide="chevron-right" class="w-5 h-5 text-emerald-500/50 group-hover:text-emerald-400 transition-colors"></i>
+                        <!-- Step 2: RECHERCHE -->
+                        <div class="group flex gap-6 md:gap-8 items-start">
+                            <!-- Left: Step Block -->
+                            <div class="shrink-0 w-[120px] md:w-[160px] bg-slate-900/60 backdrop-blur-md border border-emerald-500/30 rounded-2xl p-4 text-center relative z-10 group-hover:border-emerald-500 group-hover:shadow-[0_0_30px_rgba(16,185,129,0.15)] transition-all duration-300">
+                                <span class="text-emerald-400 font-mono text-xl md:text-2xl font-bold">R2</span>
+                                <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mx-auto my-2">
+                                    <i data-lucide="globe" class="w-5 h-5 text-emerald-400"></i>
+                                </div>
+                                <p class="text-emerald-400 font-mono text-xs uppercase tracking-wider font-bold">Recherche</p>
                             </div>
-                            
-                            <div class="h-full bg-slate-900/50 backdrop-blur-md border border-slate-700 rounded-2xl p-6 transition-all duration-300 hover:border-emerald-500 hover:-translate-y-1 hover:shadow-[0_20px_40px_-12px_rgba(16,185,129,0.2)]">
-                                <!-- Step Number Badge -->
-                                <div class="absolute -top-3 left-6">
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-bold">
-                                        02
-                                    </span>
-                                </div>
-                                
-                                <!-- Icon -->
-                                <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-4 mt-2 group-hover:bg-emerald-500/20 transition-colors">
-                                    <i data-lucide="globe" class="w-6 h-6 text-emerald-400"></i>
-                                </div>
-                                
-                                <!-- Content -->
-                                <h4 class="text-white font-bold text-lg mb-1">Recherche</h4>
-                                <p class="text-emerald-400 text-sm font-medium mb-3">Deep Research</p>
+                            <!-- Right: Description -->
+                            <div class="flex-1 pt-2">
+                                <h4 class="text-white font-bold text-lg mb-1">Deep Research</h4>
                                 <p class="text-slate-400 text-sm leading-relaxed">
-                                    Déploiement d'agents autonomes <strong class="text-slate-300">(Perplexity/OpenAI)</strong> pour scanner, lire et synthétiser 50+ sources techniques.
+                                    Déploiement d'agents autonomes <strong class="text-slate-300">(ChatGPT / Gemini)</strong> pour scanner, lire et synthétiser 50+ sources techniques. La machine explore pendant que je me concentre sur l'analyse.
                                 </p>
                             </div>
                         </div>
                         
-                        <!-- Card 3: AUDIT (Rose - Sécurité) -->
-                        <div class="group relative">
-                            <!-- Connector Arrow (Desktop) -->
-                            <div class="hidden lg:flex absolute -right-3 top-1/2 -translate-y-1/2 z-20 w-6 h-6 items-center justify-center">
-                                <i data-lucide="chevron-right" class="w-5 h-5 text-pink-500/50 group-hover:text-pink-400 transition-colors"></i>
+                        <!-- Step 3: AUDIT -->
+                        <div class="group flex gap-6 md:gap-8 items-start">
+                            <!-- Left: Step Block -->
+                            <div class="shrink-0 w-[120px] md:w-[160px] bg-slate-900/60 backdrop-blur-md border border-pink-500/30 rounded-2xl p-4 text-center relative z-10 group-hover:border-pink-500 group-hover:shadow-[0_0_30px_rgba(236,72,153,0.15)] transition-all duration-300">
+                                <span class="text-pink-400 font-mono text-xl md:text-2xl font-bold">A3</span>
+                                <div class="w-10 h-10 rounded-xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center mx-auto my-2">
+                                    <i data-lucide="shield-check" class="w-5 h-5 text-pink-400"></i>
+                                </div>
+                                <p class="text-pink-400 font-mono text-xs uppercase tracking-wider font-bold">Audit</p>
                             </div>
-                            
-                            <div class="h-full bg-slate-900/50 backdrop-blur-md border border-slate-700 rounded-2xl p-6 transition-all duration-300 hover:border-pink-500 hover:-translate-y-1 hover:shadow-[0_20px_40px_-12px_rgba(236,72,153,0.2)]">
-                                <!-- Step Number Badge -->
-                                <div class="absolute -top-3 left-6">
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full bg-pink-500/20 border border-pink-500/30 text-pink-400 text-xs font-mono font-bold">
-                                        03
-                                    </span>
-                                </div>
-                                
-                                <!-- Icon -->
-                                <div class="w-12 h-12 rounded-xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center mb-4 mt-2 group-hover:bg-pink-500/20 transition-colors">
-                                    <i data-lucide="shield-check" class="w-6 h-6 text-pink-400"></i>
-                                </div>
-                                
-                                <!-- Content -->
-                                <h4 class="text-white font-bold text-lg mb-1">Audit</h4>
-                                <p class="text-pink-400 text-sm font-medium mb-3">Human-in-the-Loop</p>
+                            <!-- Right: Description -->
+                            <div class="flex-1 pt-2">
+                                <h4 class="text-white font-bold text-lg mb-1">Human-in-the-Loop</h4>
                                 <p class="text-slate-400 text-sm leading-relaxed">
-                                    Vérification critique : <strong class="text-slate-300">Fact-checking par IA</strong> croisé avec ma lecture latérale des sources primaires.
+                                    Vérification critique : <strong class="text-slate-300">Fact-checking par IA</strong> croisé avec ma lecture latérale des sources primaires. L'humain garde le contrôle pour éviter les hallucinations.
                                 </p>
                             </div>
                         </div>
                         
-                        <!-- Card 4: ACTION (Violet - Bio-Digital) -->
-                        <div class="group relative">
-                            <div class="h-full bg-slate-900/50 backdrop-blur-md border border-slate-700 rounded-2xl p-6 transition-all duration-300 hover:border-purple-500 hover:-translate-y-1 hover:shadow-[0_20px_40px_-12px_rgba(168,85,247,0.2)]">
-                                <!-- Step Number Badge -->
-                                <div class="absolute -top-3 left-6">
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full bg-purple-500/20 border border-purple-500/30 text-purple-400 text-xs font-mono font-bold">
-                                        04
-                                    </span>
+                        <!-- Step 4: ACTION -->
+                        <div class="group flex gap-6 md:gap-8 items-start">
+                            <!-- Left: Step Block -->
+                            <div class="shrink-0 w-[120px] md:w-[160px] bg-slate-900/60 backdrop-blur-md border border-purple-500/30 rounded-2xl p-4 text-center relative z-10 group-hover:border-purple-500 group-hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] transition-all duration-300">
+                                <span class="text-purple-400 font-mono text-xl md:text-2xl font-bold">A4</span>
+                                <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center mx-auto my-2">
+                                    <i data-lucide="zap" class="w-5 h-5 text-purple-400"></i>
                                 </div>
-                                
-                                <!-- Icon -->
-                                <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center mb-4 mt-2 group-hover:bg-purple-500/20 transition-colors">
-                                    <i data-lucide="zap" class="w-6 h-6 text-purple-400"></i>
-                                </div>
-                                
-                                <!-- Content -->
-                                <h4 class="text-white font-bold text-lg mb-1">Action</h4>
-                                <p class="text-purple-400 text-sm font-medium mb-3">Production Assistée</p>
+                                <p class="text-purple-400 font-mono text-xs uppercase tracking-wider font-bold">Action</p>
+                            </div>
+                            <!-- Right: Description -->
+                            <div class="flex-1 pt-2">
+                                <h4 class="text-white font-bold text-lg mb-1">Production Assistée</h4>
                                 <p class="text-slate-400 text-sm leading-relaxed">
-                                    Transformation des insights en livrables concrets via <strong class="text-slate-300">Cursor (Web)</strong> ou <strong class="text-slate-300">NotebookLM (Rapports)</strong>.
+                                    Transformation des insights en livrables concrets via <strong class="text-slate-300">Cursor (Web)</strong> ou <strong class="text-slate-300">NotebookLM (Rapports)</strong>. L'IA accélère, l'humain valide.
                                 </p>
                             </div>
                         </div>
@@ -585,41 +550,34 @@
                     </div>
                 </div>
 
-                <!-- Tools Grid (Data-Dense Cards) -->
+                <!-- Tools Grid (3 Cards - Standardized Height) -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                     
-                    <!-- Tool Card 1: Perplexity Pro -->
-                    <div class="tool-card glass-card rounded-2xl border border-slate-800 relative overflow-hidden flex flex-col">
+                    <!-- Tool Card 1: ChatGPT Deep Research -->
+                    <div class="tool-card glass-card rounded-2xl border border-slate-800 relative overflow-hidden flex flex-col h-full">
                         <!-- Header -->
-                        <div class="p-5 pb-4">
-                            <!-- Role Badge -->
-                            <div class="flex items-center justify-between mb-3">
-                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold">
-                                    <span>⚡</span> Vélocité & Sourcing
-                                </span>
-                            </div>
-                            
+                        <div class="p-5 pb-4 flex-1">
                             <div class="flex items-center gap-3 mb-3">
-                                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 flex items-center justify-center border border-white/10">
-                                    <i data-lucide="globe" class="w-5 h-5 text-blue-400"></i>
+                                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 flex items-center justify-center border border-white/10">
+                                    <i data-lucide="bot" class="w-5 h-5 text-emerald-400"></i>
                                 </div>
-                                <h3 class="text-white font-bold text-lg">Perplexity Pro</h3>
+                                <h3 class="text-white font-bold text-lg">ChatGPT Deep Research</h3>
                             </div>
                             
                             <p class="text-slate-400 text-sm leading-relaxed">
-                                Moteur de réponse temps réel avec citation précise des sources.
+                                Agent de recherche autonome capable d'explorer des dizaines de sources web en profondeur pour générer des rapports complets de 10-20 pages.
                             </p>
                         </div>
                         
                         <!-- Metrics Grid -->
                         <div class="grid grid-cols-3 border-y border-slate-700/50 bg-slate-900/30">
                             <div class="p-3 text-center border-r border-slate-700/50">
-                                <p class="text-white font-bold text-sm">< 1 min</p>
-                                <p class="text-slate-500 text-[10px] uppercase tracking-wider">Vitesse</p>
+                                <p class="text-white font-bold text-sm">10-30 min</p>
+                                <p class="text-slate-500 text-[10px] uppercase tracking-wider">Temps</p>
                             </div>
                             <div class="p-3 text-center border-r border-slate-700/50">
-                                <p class="text-white font-bold text-sm">Web Index</p>
-                                <p class="text-slate-500 text-[10px] uppercase tracking-wider">Contexte</p>
+                                <p class="text-white font-bold text-sm">50+</p>
+                                <p class="text-slate-500 text-[10px] uppercase tracking-wider">Sources</p>
                             </div>
                             <div class="p-3 text-center">
                                 <p class="text-white font-bold text-sm">20$/mo</p>
@@ -630,75 +588,18 @@
                         <!-- Verdict -->
                         <div class="p-4 bg-slate-800/50 mt-auto">
                             <div class="flex items-start gap-2">
-                                <i data-lucide="user-check" class="w-4 h-4 text-blue-400 mt-0.5 shrink-0"></i>
-                                <p class="text-slate-300 text-xs leading-relaxed italic">
-                                    "Mon choix par défaut pour le dégrossissage rapide et la vérification des hallucinations."
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Tool Card 2: OpenAI Operator -->
-                    <div class="tool-card glass-card rounded-2xl border border-slate-800 relative overflow-hidden flex flex-col">
-                        <!-- Header -->
-                        <div class="p-5 pb-4">
-                            <!-- Role Badge -->
-                            <div class="flex items-center justify-between mb-3">
-                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold">
-                                    <span>🤖</span> Action & Raisonnement
-                                </span>
-                            </div>
-                            
-                            <div class="flex items-center gap-3 mb-3">
-                                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 flex items-center justify-center border border-white/10">
-                                    <i data-lucide="bot" class="w-5 h-5 text-emerald-400"></i>
-                                </div>
-                                <h3 class="text-white font-bold text-lg">OpenAI Operator</h3>
-                            </div>
-                            
-                            <p class="text-slate-400 text-sm leading-relaxed">
-                                Agent capable de planifier, naviguer et exécuter des tâches complexes.
-                            </p>
-                        </div>
-                        
-                        <!-- Metrics Grid -->
-                        <div class="grid grid-cols-3 border-y border-slate-700/50 bg-slate-900/30">
-                            <div class="p-3 text-center border-r border-slate-700/50">
-                                <p class="text-white font-bold text-sm">15-30 min</p>
-                                <p class="text-slate-500 text-[10px] uppercase tracking-wider">Vitesse</p>
-                            </div>
-                            <div class="p-3 text-center border-r border-slate-700/50">
-                                <p class="text-white font-bold text-sm">128k</p>
-                                <p class="text-slate-500 text-[10px] uppercase tracking-wider">Tokens</p>
-                            </div>
-                            <div class="p-3 text-center">
-                                <p class="text-white font-bold text-sm">200$/mo</p>
-                                <p class="text-slate-500 text-[10px] uppercase tracking-wider">Coût</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Verdict -->
-                        <div class="p-4 bg-slate-800/50 mt-auto">
-                            <div class="flex items-start gap-2">
                                 <i data-lucide="user-check" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i>
                                 <p class="text-slate-300 text-xs leading-relaxed italic">
-                                    "Utilisé uniquement pour les workflows complexes nécessitant de l'autonomie (ex: formulaires)."
+                                    "Mon outil principal pour les recherches approfondies nécessitant une synthèse structurée."
                                 </p>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Tool Card 3: Gemini Deep Research -->
-                    <div class="tool-card glass-card rounded-2xl border border-slate-800 relative overflow-hidden flex flex-col">
+                    <!-- Tool Card 2: Gemini Deep Research -->
+                    <div class="tool-card glass-card rounded-2xl border border-slate-800 relative overflow-hidden flex flex-col h-full">
                         <!-- Header -->
-                        <div class="p-5 pb-4">
-                            <!-- Role Badge -->
-                            <div class="flex items-center justify-between mb-3">
-                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 text-xs font-bold">
-                                    <span>📚</span> Base de Connaissance
-                                </span>
-                            </div>
-                            
+                        <div class="p-5 pb-4 flex-1">
                             <div class="flex items-center gap-3 mb-3">
                                 <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center border border-white/10">
                                     <i data-lucide="sparkles" class="w-5 h-5 text-purple-400"></i>
@@ -707,7 +608,7 @@
                             </div>
                             
                             <p class="text-slate-400 text-sm leading-relaxed">
-                                Puissance d'ingestion massive nativement intégrée à l'écosystème Google.
+                                Puissance d'ingestion massive avec fenêtre de contexte de 1M+ tokens, nativement intégrée à l'écosystème Google.
                             </p>
                         </div>
                         
@@ -715,7 +616,7 @@
                         <div class="grid grid-cols-3 border-y border-slate-700/50 bg-slate-900/30">
                             <div class="p-3 text-center border-r border-slate-700/50">
                                 <p class="text-white font-bold text-sm">~10 min</p>
-                                <p class="text-slate-500 text-[10px] uppercase tracking-wider">Vitesse</p>
+                                <p class="text-slate-500 text-[10px] uppercase tracking-wider">Temps</p>
                             </div>
                             <div class="p-3 text-center border-r border-slate-700/50">
                                 <p class="text-white font-bold text-sm">1M+</p>
@@ -738,64 +639,49 @@
                         </div>
                     </div>
                     
-                </div>
-
-                <!-- Carte Bonus : NotebookLM (Large - Boucle avec CRAA "Action") -->
-                <div class="mt-6">
-                    <div class="tool-card glass-card rounded-2xl border border-slate-800 relative overflow-hidden">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-0">
-                            <!-- Left: Header & Description -->
-                            <div class="p-5 md:col-span-2 border-b md:border-b-0 md:border-r border-slate-700/50">
-                                <!-- Role Badge -->
-                                <div class="flex items-center gap-3 mb-4">
-                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 text-xs font-bold">
-                                        <span>🎙️</span> Production & Synthèse
-                                    </span>
-                                    <span class="text-slate-600 text-xs">→ Étape "Action" du CRAA</span>
+                    <!-- Tool Card 3: NotebookLM -->
+                    <div class="tool-card glass-card rounded-2xl border border-slate-800 relative overflow-hidden flex flex-col h-full">
+                        <!-- Header -->
+                        <div class="p-5 pb-4 flex-1">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-yellow-500/20 to-orange-500/20 flex items-center justify-center border border-white/10">
+                                    <i data-lucide="mic" class="w-5 h-5 text-yellow-400"></i>
                                 </div>
-                                
-                                <div class="flex items-center gap-3 mb-3">
-                                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-yellow-500/20 to-orange-500/20 flex items-center justify-center border border-white/10">
-                                        <i data-lucide="mic" class="w-5 h-5 text-yellow-400"></i>
-                                    </div>
-                                    <h3 class="text-white font-bold text-lg">Google NotebookLM</h3>
-                                </div>
-                                
-                                <p class="text-slate-400 text-sm leading-relaxed mb-4">
-                                    Outil de synthèse documentaire avec génération de <strong class="text-white">podcasts audio</strong> et <strong class="text-white">rapports structurés</strong>. Transforme les insights bruts en livrables prêts à diffuser.
-                                </p>
-                                
-                                <!-- Verdict -->
-                                <div class="flex items-start gap-2 p-3 bg-slate-800/50 rounded-lg">
-                                    <i data-lucide="user-check" class="w-4 h-4 text-yellow-400 mt-0.5 shrink-0"></i>
-                                    <p class="text-slate-300 text-xs leading-relaxed italic">
-                                        "Mon outil de finalisation : je lui donne mes notes et il produit des synthèses audio parfaites pour briefer une équipe."
-                                    </p>
-                                </div>
+                                <h3 class="text-white font-bold text-lg">Google NotebookLM</h3>
                             </div>
                             
-                            <!-- Right: Metrics -->
-                            <div class="p-5 flex flex-col justify-center bg-slate-900/30">
-                                <div class="space-y-4">
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-slate-500 text-xs uppercase tracking-wider">Format</span>
-                                        <span class="text-white font-bold text-sm">Audio + PDF</span>
-                                    </div>
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-slate-500 text-xs uppercase tracking-wider">Contexte</span>
-                                        <span class="text-white font-bold text-sm">50 Sources</span>
-                                    </div>
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-slate-500 text-xs uppercase tracking-wider">Coût</span>
-                                        <span class="text-white font-bold text-sm">Gratuit</span>
-                                    </div>
-                                    <div class="pt-3 border-t border-slate-700/50">
-                                        <span class="text-slate-600 text-[10px] bg-slate-900/50 px-2 py-1 rounded">Source: Google Labs [2024]</span>
-                                    </div>
-                                </div>
+                            <p class="text-slate-400 text-sm leading-relaxed">
+                                Outil de synthèse documentaire avec génération de <strong class="text-white">podcasts audio</strong> et rapports structurés.
+                            </p>
+                        </div>
+                        
+                        <!-- Metrics Grid -->
+                        <div class="grid grid-cols-3 border-y border-slate-700/50 bg-slate-900/30">
+                            <div class="p-3 text-center border-r border-slate-700/50">
+                                <p class="text-white font-bold text-sm">Audio</p>
+                                <p class="text-slate-500 text-[10px] uppercase tracking-wider">Format</p>
+                            </div>
+                            <div class="p-3 text-center border-r border-slate-700/50">
+                                <p class="text-white font-bold text-sm">50</p>
+                                <p class="text-slate-500 text-[10px] uppercase tracking-wider">Sources</p>
+                            </div>
+                            <div class="p-3 text-center">
+                                <p class="text-white font-bold text-sm">Gratuit</p>
+                                <p class="text-slate-500 text-[10px] uppercase tracking-wider">Coût</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Verdict -->
+                        <div class="p-4 bg-slate-800/50 mt-auto">
+                            <div class="flex items-start gap-2">
+                                <i data-lucide="user-check" class="w-4 h-4 text-yellow-400 mt-0.5 shrink-0"></i>
+                                <p class="text-slate-300 text-xs leading-relaxed italic">
+                                    "Mon outil de finalisation : il produit des synthèses audio parfaites pour briefer une équipe."
+                                </p>
                             </div>
                         </div>
                     </div>
+                    
                 </div>
             </div>
         </section>
