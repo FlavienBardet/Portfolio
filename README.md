@@ -54,195 +54,35 @@ Mon profil hybride combine l'**empathie du praticien** avec la **puissance techn
 
 ## 🧰 Matrice des Outils Utilisés
 
-<table>
-<thead>
-<tr>
-<th align="left">Outil</th>
-<th align="center">P10</th>
-<th align="center">P9</th>
-<th align="center">P8</th>
-<th align="center">P7</th>
-<th align="center">P6</th>
-<th align="center">P5</th>
-<th align="center">P4</th>
-<th align="center">P3</th>
-<th align="center">P2</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Jupyter Notebook</strong></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">✓</td>
-<td align="center"></td>
-<td align="center">✓</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td><strong>Python</strong></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">✓</td>
-<td align="center"></td>
-<td align="center">✓</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td><strong>NumPy</strong></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">✓</td>
-<td align="center"></td>
-<td align="center">✓</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td><strong>Pandas</strong></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">✓</td>
-<td align="center"></td>
-<td align="center">✓</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td><strong>Matplotlib</strong></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">✓</td>
-<td align="center"></td>
-<td align="center">✓</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td><strong>Seaborn</strong></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">✓</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td><strong>Scikit-Learn</strong></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">✓</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td><strong>Power BI</strong></td>
-<td align="center">✓</td>
-<td align="center">✓</td>
-<td align="center"></td>
-<td align="center">✓</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td><strong>DAX</strong></td>
-<td align="center"></td>
-<td align="center">✓</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td><strong>Power Query</strong></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">✓</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">✓</td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td><strong>SQL</strong></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">✓</td>
-<td align="center"></td>
-<td align="center">✓</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td><strong>MariaDB</strong></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">✓</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td><strong>Excel</strong></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">✓</td>
-</tr>
-</tbody>
-</table>
+| Outil / Logiciel | P11 | P10 | P9 | P8 | P7 | P6 | P5 | P4 | P3 | P2 |
+|:-----------------|:---:|:---:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| **IA Générative (LLM)** | ✓ | | | | | | | | | |
+| **HTML / CSS / JS** | ✓ | | | | | | | | | |
+| **Python (Pandas/NumPy)** | | | | ✓ | | ✓ | | | | |
+| **Scikit-Learn (ML)** | | | | ✓ | | | | | | |
+| **Jupyter Notebook** | | | | ✓ | | ✓ | | | | |
+| **SQL (MariaDB/SQLite)** | | | | | | | ✓ | | ✓ | |
+| **Power BI** | | ✓ | ✓ | | ✓ | | | | | |
+| **DAX (Mesures)** | | ✓ | ✓ | | ✓ | | | | | |
+| **Power Query (ETL)** | | ✓ | ✓ | | ✓ | | | ✓ | | |
+| **Excel** | | | | | | | | | | ✓ |
+| **Git / GitHub** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 
 <details>
 <summary>📋 <strong>Légende des Projets</strong></summary>
 
-| Code | Projet |
-|:-----|:-------|
-| P10 | Project Vanguard (Market Strategy) |
-| P9 | Bottleneck BI (Architecture) |
-| P8 | Valuation ML (Machine Learning) |
-| P7 | Sanitoral PMO (Project Management) |
-| P6 | Bottleneck Data Audit (Python) |
-| P5 | RetailInsight360 (SQL Analytics) |
-| P4 | Dev'Immediat (RGPD/Privacy) |
-| P3 | SQL Foundations |
-| P2 | Strategic Churn Analysis |
+| Code | Projet | Focus |
+|:-----|:-------|:------|
+| **P11** | Portfolio Bio-Digital | IA-Assisted Development |
+| **P10** | Project Vanguard | Market Strategy (Power BI) |
+| **P9** | Bottleneck BI | Architecture & Stock |
+| **P8** | Valuation ML | Machine Learning |
+| **P7** | Sanitoral PMO | Project Management |
+| **P6** | Bottleneck Data Audit | Python / Data Quality |
+| **P5** | RetailInsight360 | SQL Analytics |
+| **P4** | Dev'Immediat | RGPD / Privacy |
+| **P3** | SQL Foundations | Database Querying |
+| **P2** | Strategic Churn | Fintech / Attrition |
 
 </details>
 
