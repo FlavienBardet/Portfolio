@@ -54,8 +54,8 @@ Mon profil hybride combine l'**empathie du praticien** avec la **puissance techn
 
 ## 🧰 Matrice des Outils Utilisés
 
-| Outil / Logiciel | P11 | P10 | P9 | P8 | P7 | P6 | P5 | P4 | P3 | P2 |
-|:-----------------|:---:|:---:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| Outil / Logiciel | P11 | P10 | P09 | P08 | P07 | P06 | P05 | P04 | P03 | P02 |
+|:-----------------|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | **IA Générative (LLM)** | ✓ | | | | | | | | | |
 | **HTML / CSS / JS** | ✓ | | | | | | | | | |
 | **Python (Pandas/NumPy)** | | | | ✓ | | ✓ | | | | |
@@ -74,15 +74,16 @@ Mon profil hybride combine l'**empathie du praticien** avec la **puissance techn
 | Code | Projet | Focus |
 |:-----|:-------|:------|
 | **P11** | Portfolio Bio-Digital | IA-Assisted Development |
-| **P10** | Project Vanguard | Market Strategy (Power BI) |
-| **P9** | Bottleneck BI | Architecture & Stock |
-| **P8** | Valuation ML | Machine Learning |
-| **P7** | Sanitoral PMO | Project Management |
-| **P6** | Bottleneck Data Audit | Python / Data Quality |
-| **P5** | RetailInsight360 | SQL Analytics |
-| **P4** | Dev'Immediat | RGPD / Privacy |
-| **P3** | SQL Foundations | Database Querying |
-| **P2** | Strategic Churn | Fintech / Attrition |
+| **P10** | Project Vanguard | Market Strategy |
+| **P09** | Bottleneck BI | Architecture & Stock |
+| **P08** | Valuation ML | Machine Learning |
+| **P07** | Sanitoral PMO | Project Management |
+| **P06** | Bottleneck Data Audit | Data Quality |
+| **P05** | RetailInsight360 | SQL Analytics |
+| **P04** | Dev'Immediat | RGPD / Privacy |
+| **P03** | SQL Foundations | Database Querying |
+| **P02** | Strategic Churn | Fintech / Attrition |
+| **P01** | Roadmap Stratégique | Méthodologie |
 
 </details>
 
@@ -103,67 +104,67 @@ Mon profil hybride combine l'**empathie du praticien** avec la **puissance techn
 <tr>
 <td align="center">🚀</td>
 <td><strong>P11 | Portfolio Bio-Digital</strong></td>
-<td><code>HTML</code> <code>Tailwind</code> <code>JS</code></td>
+<td><img src="https://img.shields.io/badge/HTML-E34F26?style=flat&logo=html5&logoColor=white" alt="HTML"> <img src="https://img.shields.io/badge/Tailwind-06B6D4?style=flat&logo=tailwindcss&logoColor=white" alt="Tailwind"> <img src="https://img.shields.io/badge/JS-F7DF1E?style=flat&logo=javascript&logoColor=black" alt="JS"></td>
 <td>Conception d'un écosystème portfolio complet certifiant la capacité à piloter des solutions Data de bout en bout pour l'aéronautique.</td>
 </tr>
 <tr>
 <td align="center">🎮</td>
-<td><strong><a href="./FB_P10_analysez-une-demande-business-et-identifiez-les-segments-du-marche-les-plus-pertinents-pour-votre-client_2025-12-03T151416%20(1)">P10 | Project Vanguard</a></strong></td>
-<td><code>Power BI</code></td>
-<td>Analyse Go-To-Market sécurisant un investissement de <strong>20M€</strong> en identifiant les niches de joueurs non-toxiques.</td>
+<td><strong><a href="./FB_P10_Project-Vanguard">P10 | Project Vanguard</a></strong></td>
+<td><img src="https://img.shields.io/badge/Power_BI-F2C811?style=flat&logo=power-bi&logoColor=black" alt="Power BI"> <img src="https://img.shields.io/badge/DAX-0078D4?style=flat" alt="DAX"></td>
+<td>Analyse de marché sécurisant un investissement de <strong>20M€</strong> en identifiant les niches de joueurs non-toxiques.</td>
 </tr>
 <tr>
 <td align="center">📦</td>
-<td><strong><a href="./FB_P9_ameliorez-les-performances-de-lentreprise_2025-10-17T120621">P9 | Bottleneck : Architecture BI</a></strong></td>
-<td><code>Power BI</code> <code>DAX</code></td>
+<td><strong><a href="./FB_P09_Bottleneck-BI-Architecture">P09 | Bottleneck : Architecture BI</a></strong></td>
+<td><img src="https://img.shields.io/badge/Power_BI-F2C811?style=flat&logo=power-bi&logoColor=black" alt="Power BI"> <img src="https://img.shields.io/badge/DAX-0078D4?style=flat" alt="DAX"></td>
 <td>Optimisation de la trésorerie via un schéma en étoile, identifiant <strong>15% de stock dormant</strong> pour maximiser la marge.</td>
 </tr>
 <tr>
 <td align="center">🏙️</td>
-<td><strong><a href="./FB_P8_analysez-levolution-des-prix-de-limmobilier-avec-python-1_2025-08-01T124629">P8 | Valuation ML</a></strong></td>
-<td><code>Python</code> <code>Sklearn</code></td>
+<td><strong><a href="./FB_P08_Valuation-ML">P08 | Valuation ML</a></strong></td>
+<td><img src="https://img.shields.io/badge/Python-3670A0?style=flat&logo=python&logoColor=ffdd54" alt="Python"> <img src="https://img.shields.io/badge/Scikit_Learn-F7931E?style=flat&logo=scikit-learn&logoColor=white" alt="Sklearn"></td>
 <td>Algorithme prédictif révélant <strong>38% de valeur latente</strong> dans un portefeuille immobilier via Machine Learning.</td>
 </tr>
 <tr>
 <td align="center">🏥</td>
-<td><strong><a href="./FB_P7_creez-un-tableau-de-bord-dynamique-avec-powerbi-pour-visualiser-lavancement-de-projets-1_2025-06-14T192232%20(1)">P7 | Sanitoral : PMO</a></strong></td>
-<td><code>Power BI</code></td>
+<td><strong><a href="./FB_P07_Sanitoral-PMO">P07 | Sanitoral : PMO</a></strong></td>
+<td><img src="https://img.shields.io/badge/Power_BI-F2C811?style=flat&logo=power-bi&logoColor=black" alt="Power BI"> <img src="https://img.shields.io/badge/Power_Query-217346?style=flat" alt="Power Query"></td>
 <td>Automatisation du pilotage de projet via une approche Produit, supprimant <strong>4h de reporting manuel</strong> par manager.</td>
 </tr>
 <tr>
 <td align="center">🕵️</td>
-<td><strong><a href="./FB_P6_optimisez-la-gestion-nettoyez-les-donnees-du-stock-dune-boutique_2025-05-02T171256">P6 | Bottleneck : Data Audit</a></strong></td>
-<td><code>Python</code> <code>Pandas</code></td>
+<td><strong><a href="./FB_P06_Bottleneck-Data-Audit">P06 | Bottleneck : Data Audit</a></strong></td>
+<td><img src="https://img.shields.io/badge/Python-3670A0?style=flat&logo=python&logoColor=ffdd54" alt="Python"> <img src="https://img.shields.io/badge/Pandas-150458?style=flat&logo=pandas&logoColor=white" alt="Pandas"></td>
 <td>Audit de qualité réconciliant les flux ERP/Web et identifiant <strong>111 produits orphelins</strong> pour fiabiliser le CA.</td>
 </tr>
 <tr>
 <td align="center">🛒</td>
-<td><strong><a href="./FB_P5_manipulez-une-base-de-donnees-avec-sql-pour-suivre-la-satisfaction-client_2025-03-28T175014">P5 | RetailInsight360</a></strong></td>
-<td><code>SQL</code> <code>MariaDB</code></td>
+<td><strong><a href="./FB_P05_RetailInsight360">P05 | RetailInsight360</a></strong></td>
+<td><img src="https://img.shields.io/badge/SQL-4479A1?style=flat&logo=postgresql&logoColor=white" alt="SQL"> <img src="https://img.shields.io/badge/MariaDB-003545?style=flat&logo=mariadb&logoColor=white" alt="MariaDB"></td>
 <td>Audit SQL de 100k+ transactions prouvant l'impact financier des <strong>biais cognitifs</strong> (regret d'achat) lors du Black Friday.</td>
 </tr>
 <tr>
 <td align="center">🛡️</td>
-<td><strong><a href="./FB_P4_collectez-des-donnees-en-respectant-les-normes-rgpd-1_2024-11-18T171649">P4 | Dev'Immediat : Privacy</a></strong></td>
-<td><code>Power Query</code></td>
+<td><strong><a href="./FB_P04_DevImmediat-Privacy">P04 | Dev'Immediat : Privacy</a></strong></td>
+<td><img src="https://img.shields.io/badge/Power_Query-217346?style=flat" alt="Power Query"> <img src="https://img.shields.io/badge/RGPD-0052CC?style=flat" alt="RGPD"></td>
 <td>Mise en conformité RGPD d'un CRM via un pipeline d'anonymisation ETL, <strong>levant les sanctions CNIL</strong> pour sécuriser l'activité.</td>
 </tr>
 <tr>
 <td align="center">🗃️</td>
-<td><strong><a href="./FB_P3_requetez-une-base-de-donnees-avec-sql-1_2024-11-04T102040">P3 | SQL Foundations</a></strong></td>
-<td><code>SQL</code></td>
+<td><strong><a href="./FB_P03_SQL-Foundations">P03 | SQL Foundations</a></strong></td>
+<td><img src="https://img.shields.io/badge/SQL-4479A1?style=flat&logo=postgresql&logoColor=white" alt="SQL"></td>
 <td>Construction et requêtage d'une base de données relationnelle complexe pour automatiser l'extraction d'indicateurs clés.</td>
 </tr>
 <tr>
 <td align="center">📉</td>
-<td><strong><a href="./FB_P2_visualisez-des-donnees-avec-excel-1_2024-10-11T150908">P2 | Strategic Churn Analysis</a></strong></td>
-<td><code>Excel</code></td>
+<td><strong><a href="./FB_P02_Strategic-Churn-Analysis">P02 | Strategic Churn Analysis</a></strong></td>
+<td><img src="https://img.shields.io/badge/Excel-217346?style=flat&logo=microsoft-excel&logoColor=white" alt="Excel"></td>
 <td>Analyse comportementale identifiant le <strong>"36-Month Cliff"</strong> pour cibler 0.5% des clients à haut risque et optimiser la rétention.</td>
 </tr>
 <tr>
 <td align="center">🎯</td>
-<td><strong>P1 | Roadmap Stratégique</strong></td>
-<td><code>Méthodologie</code></td>
+<td><strong>P01 | Roadmap Stratégique</strong></td>
+<td><img src="https://img.shields.io/badge/Méthodo-6366F1?style=flat" alt="Méthodologie"></td>
 <td>Définition de la trajectoire de montée en compétences et immersion dans les fondamentaux de l'analyse de données.</td>
 </tr>
 </tbody>
