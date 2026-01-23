@@ -46,3 +46,9 @@ venv/
 # Personal notes
 notes.txt
 TODO.txt
+
+# Internal source files (not for public repo)
+DEPLOY.bat
+deploy.bat
+sources_projets.md
+Contenus projets github.pdf
