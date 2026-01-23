@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FB | Livrables - Projet Aéroworld</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Icons (Lucide) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        slate: {
+                            850: '#151e2e',
+                            900: '#0f172a',
+                            950: '#020617',
+                            1000: '#0b0f19', 
+                        },
+                        neon: {
+                            cyan: '#06b6d4',
+                            purple: '#8b5cf6',
+                            pink: '#ec4899',
+                            emerald: '#10b981'
+                        },
+                        card: {
+                            dark: '#111318', 
+                        }
+                    },
+                    animation: {
+                        'blob': 'blob 10s infinite',
+                        'float-slow': 'float 8s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-12px)' },
+                        }
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html {
+            scroll-padding-top: 120px;
+        }
+
+        .glass-card {
+            background: rgba(30, 41, 59, 0.35);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1), inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+        }
+        
+        .glass-card:hover {
+            background: rgba(30, 41, 59, 0.55);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 25px 50px -12px rgba(6, 182, 212, 0.15), inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
+        }
+
+        .bg-noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Neon border effect for master card */
+        .neon-border-cyan {
+            position: relative;
+        }
+        .neon-border-cyan::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.4), rgba(16, 185, 129, 0.2), rgba(139, 92, 246, 0.3));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        /* Livrable card hover effects */
+        .livrable-card {
+            transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+        }
+        .livrable-card:hover {
+            transform: translateY(-6px);
+        }
+        .livrable-card--cyan:hover {
+            box-shadow: 0 20px 40px -12px rgba(6, 182, 212, 0.25);
+            border-color: rgba(6, 182, 212, 0.4);
+        }
+        .livrable-card--emerald:hover {
+            box-shadow: 0 20px 40px -12px rgba(16, 185, 129, 0.25);
+            border-color: rgba(16, 185, 129, 0.4);
+        }
+        .livrable-card--purple:hover {
+            box-shadow: 0 20px 40px -12px rgba(139, 92, 246, 0.25);
+            border-color: rgba(139, 92, 246, 0.4);
+        }
+
+        /* Expandable Card Styles */
+        .expandable-card {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .expandable-card.is-expanded {
+            border-color: rgba(6, 182, 212, 0.5);
+            box-shadow: 0 25px 60px -12px rgba(6, 182, 212, 0.2);
+        }
+        .expanded-content {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+                        opacity 0.4s ease-in-out,
+                        margin 0.5s ease-in-out;
+            margin-top: 0;
+        }
+        .expandable-card.is-expanded .expanded-content {
+            max-height: 800px;
+            opacity: 1;
+            margin-top: 2rem;
+        }
+        .expand-btn-icon {
+            transition: transform 0.3s ease;
+        }
+        .expandable-card.is-expanded .expand-btn-icon {
+            transform: rotate(180deg);
+        }
+        .phase-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.25rem;
+            transition: all 0.3s ease;
+        }
+        .phase-card:hover {
+            background: rgba(30, 41, 59, 0.5);
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-300 font-sans min-h-screen selection:bg-neon-cyan selection:text-white overflow-x-hidden">
+
+    <div class="bg-noise"></div>
+
+    <!-- Background Ambience -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="absolute -top-20 -left-20 w-96 h-96 bg-neon-purple/20 rounded-full mix-blend-screen filter blur-[120px] opacity-30 animate-blob"></div>
+        <div class="absolute top-1/3 right-0 w-96 h-96 bg-neon-cyan/20 rounded-full mix-blend-screen filter blur-[120px] opacity-25 animate-blob animation-delay-2000"></div>
+        <div class="absolute bottom-1/4 left-1/3 w-72 h-72 bg-neon-emerald/15 rounded-full mix-blend-screen filter blur-[100px] opacity-20 animate-blob animation-delay-4000"></div>
+    </div>
+
+    <!-- CAPSULE HEADER -->
+    <nav class="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
+        <div class="bg-slate-950/70 backdrop-blur-xl border border-white/10 rounded-full p-2 pl-6 pr-2 shadow-2xl shadow-black/20 max-w-4xl w-full flex justify-between items-center transition-all duration-300 hover:border-white/20">
+            
+            <a href="index.html" class="text-xl font-bold text-white tracking-tight mr-4 md:mr-8 hover:opacity-80 transition-opacity">
+                FB<span class="text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.6)]">.</span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-1">
+                <a href="index.html#about" class="px-5 py-2.5 text-sm font-medium text-slate-400 hover:text-white transition-all duration-300 rounded-full hover:bg-white/5">À propos</a>
+                <a href="index.html#skills" class="px-5 py-2.5 text-sm font-medium text-slate-400 hover:text-white transition-all duration-300 rounded-full hover:bg-white/5">Compétences</a>
+                <a href="index.html#projects" class="px-5 py-2.5 text-sm font-medium text-slate-400 hover:text-white transition-all duration-300 rounded-full hover:bg-white/5">Projets</a>
+                <a href="livrables.html" class="px-5 py-2.5 text-sm font-medium text-emerald-400 transition-all duration-300 rounded-full bg-emerald-500/10">Livrables</a>
+            </div>
+
+            <a href="assets/cv/cvflavienbardet.pdf" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-2 px-6 py-2.5 rounded-full bg-slate-900/50 border border-cyan-400/30 text-cyan-400 text-sm font-medium hover:bg-cyan-400/10 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] hover:border-cyan-400/80 transition-all duration-300 ml-auto md:ml-0">
+                <span>Mon CV</span>
+                <i data-lucide="arrow-up-right" class="w-4 h-4 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform"></i>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-16">
+        
+        <!-- Page Header -->
+        <section class="mb-12">
+            <div class="flex items-center gap-4 mb-6">
+                <a href="index.html" class="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                    <span>Retour au portfolio</span>
+                </a>
+            </div>
+            <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 tracking-tight">
+                Mes <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-400 to-purple-400">Livrables</span>
+            </h1>
+            <p class="text-slate-400 text-lg max-w-2xl">
+                Documents, analyses et ressources produits dans le cadre de ma certification Data Analyst.
+            </p>
+        </section>
+
+        <!-- MASTER PROJECT CARD (Contexte Aéroworld) -->
+        <section class="mb-16">
+            <div class="neon-border-cyan bg-slate-900/40 backdrop-blur-xl border border-slate-800 rounded-[2rem] p-8 md:p-12 relative overflow-hidden">
+                <!-- Background decoration -->
+                <div class="absolute -top-20 -right-20 w-64 h-64 bg-cyan-500/10 rounded-full blur-[80px] pointer-events-none"></div>
+                <div class="absolute -bottom-10 -left-10 w-48 h-48 bg-emerald-500/10 rounded-full blur-[60px] pointer-events-none"></div>
+                
+                <!-- Badge flottant -->
+                <div class="absolute top-6 right-6 md:top-8 md:right-8">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/30 backdrop-blur-md">
+                        <i data-lucide="award" class="w-4 h-4 text-purple-400"></i>
+                        <span class="text-purple-400 text-xs font-mono tracking-wide uppercase font-bold">PSPO I / Data Analyst</span>
+                    </div>
+                </div>
+                
+                <!-- Content -->
+                <div class="relative z-10 max-w-3xl">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-emerald-500/20 flex items-center justify-center border border-white/10">
+                            <i data-lucide="plane" class="w-6 h-6 text-cyan-400"></i>
+                        </div>
+                        <div>
+                            <p class="text-cyan-400 font-mono text-xs uppercase tracking-widest font-bold">Projet Fil Rouge</p>
+                            <p class="text-slate-500 text-sm">Formation OpenClassrooms</p>
+                        </div>
+                    </div>
+                    
+                    <h2 class="text-2xl md:text-3xl font-bold text-white mb-4 leading-tight">
+                        Mission : Modernisation de l'écosystème Data <span class="text-cyan-400">Aéroworld</span>
+                    </h2>
+                    
+                    <p class="text-slate-400 text-base md:text-lg leading-relaxed mb-6">
+                        Dans le cadre de ma formation, j'ai accompagné la société fictive <strong class="text-white font-medium">Aéroworld</strong> sur la structuration de leur gouvernance de données et le déploiement de solutions d'IA générative pour optimiser leurs processus métier.
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-3">
+                        <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono">
+                            <i data-lucide="database" class="w-3 h-3"></i> Data Governance
+                        </span>
+                        <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono">
+                            <i data-lucide="brain" class="w-3 h-3"></i> GenAI / RAG
+                        </span>
+                        <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-mono">
+                            <i data-lucide="target" class="w-3 h-3"></i> Product Strategy
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GRILLE DE LIVRABLES -->
+        <section>
+            <!-- Section Header -->
+            <div class="mb-10">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-3 tracking-tight">
+                    Documents & Ressources
+                </h2>
+                <div class="flex items-center gap-4">
+                    <div class="h-1 w-16 bg-gradient-to-r from-emerald-500 via-cyan-500 to-purple-500 rounded-full"></div>
+                    <p class="text-slate-500 font-mono text-sm uppercase tracking-wider">Livrables de certification</p>
+                </div>
+            </div>
+
+            <!-- Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- CARTE 1: Vidéo Guide (Violet - Formation) -->
+                <div class="livrable-card livrable-card--purple glass-card rounded-[1.5rem] p-6 border border-slate-800 group">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-xl bg-purple-500/20 flex items-center justify-center">
+                            <i data-lucide="video" class="w-5 h-5 text-purple-400"></i>
+                        </div>
+                        <div>
+                            <span class="text-purple-400 font-mono text-xs uppercase tracking-wider font-bold">Vidéo</span>
+                            <h3 class="text-white font-bold text-lg">Démonstration Technique</h3>
+                        </div>
+                    </div>
+                    
+                    <!-- Video Embed Placeholder -->
+                    <div class="relative aspect-video rounded-xl overflow-hidden bg-slate-900/80 border border-slate-700 mb-4">
+                        <iframe 
+                            class="w-full h-full"
+                            src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                            title="Démonstration Technique - Projet Aéroworld"
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Présentation vidéo du projet RAG Assistant et de l'architecture technique déployée pour Aéroworld.
+                    </p>
+                </div>
+
+                <!-- ============================================ -->
+                <!-- FEATURE CARD 1: Analyse du Besoin (Bleu Néon) -->
+                <!-- ============================================ -->
+                <div class="livrable-card livrable-card--cyan glass-card rounded-[2rem] p-6 md:p-8 border border-slate-800 group md:col-span-2 hover:border-cyan-500/40">
+                    <div class="flex flex-col lg:flex-row gap-6 lg:gap-8">
+                        <!-- Left: Visual -->
+                        <div class="lg:w-5/12 relative">
+                            <div class="absolute inset-0 bg-cyan-500/10 rounded-2xl blur-[40px] opacity-50 group-hover:opacity-70 transition-opacity"></div>
+                            <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-slate-700/50 bg-slate-900/60">
+                                <img src="assets/images/placeholder-analyse.jpg" alt="Analyse du Besoin - Diagnostic Stratégique" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <!-- Fallback Icon -->
+                                <div class="absolute inset-0 bg-gradient-to-br from-cyan-900/40 to-slate-900/60 flex items-center justify-center" style="display: none;">
+                                    <i data-lucide="search" class="w-20 h-20 text-cyan-400/40"></i>
+                                </div>
+                                <!-- Default Visual avec icône -->
+                                <div class="absolute inset-0 bg-gradient-to-br from-cyan-900/30 to-slate-900/50 flex items-center justify-center">
+                                    <div class="text-center">
+                                        <i data-lucide="file-search" class="w-16 h-16 text-cyan-400/60 mx-auto mb-3"></i>
+                                        <p class="text-cyan-400/60 text-xs font-mono uppercase tracking-wider">Diagnostic Data</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Right: Content -->
+                        <div class="lg:w-7/12 flex flex-col justify-center">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-10 h-10 rounded-xl bg-cyan-500/20 flex items-center justify-center">
+                                    <i data-lucide="search" class="w-5 h-5 text-cyan-400"></i>
+                                </div>
+                                <div>
+                                    <span class="text-cyan-400 font-mono text-xs uppercase tracking-wider font-bold">Strategic Audit</span>
+                                </div>
+                            </div>
+                            
+                            <h3 class="text-xl md:text-2xl font-bold text-white mb-3 leading-tight">
+                                Analyse du Besoin : Modernisation de l'Écosystème Data
+                            </h3>
+                            
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                                Diagnostic des enjeux de Big Data et d'interopérabilité pour Aéroworld. Identification des trois piliers métiers (R&D, Maintenance, Sécurité) pour transformer une structure historique de 50 ans en entreprise "Data-Driven".
+                            </p>
+                            
+                            <!-- Tags -->
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="inline-flex items-center px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono">
+                                    Diagnostic Métier
+                                </span>
+                                <span class="inline-flex items-center px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono">
+                                    Modernisation Data
+                                </span>
+                                <span class="inline-flex items-center px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono">
+                                    Big Data & Sécurité
+                                </span>
+                            </div>
+                            
+                            <!-- CTA Button -->
+                            <a href="assets/pdf/Projet_11_Analyse_besoin.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 bg-cyan-500/10 border border-cyan-500/40 text-cyan-400 text-sm font-bold rounded-xl hover:bg-cyan-500/20 hover:shadow-[0_0_20px_rgba(6,182,212,0.25)] transition-all group/btn w-fit">
+                                <i data-lucide="external-link" class="w-4 h-4"></i>
+                                <span>Consulter l'Analyse (PDF)</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================ -->
+                <!-- FEATURE CARD 2: Cahier des Charges (Vert Néon) -->
+                <!-- ============================================ -->
+                <div class="livrable-card livrable-card--emerald glass-card rounded-[2rem] p-6 md:p-8 border border-slate-800 group md:col-span-2 hover:border-emerald-500/40">
+                    <div class="flex flex-col lg:flex-row gap-6 lg:gap-8">
+                        <!-- Left: Visual -->
+                        <div class="lg:w-5/12 relative">
+                            <div class="absolute inset-0 bg-emerald-500/10 rounded-2xl blur-[40px] opacity-50 group-hover:opacity-70 transition-opacity"></div>
+                            <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-slate-700/50 bg-slate-900/60">
+                                <img src="assets/images/placeholder-cdc.jpg" alt="Cahier des Charges - Architecture Site + GitHub" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <!-- Fallback Icon -->
+                                <div class="absolute inset-0 bg-gradient-to-br from-emerald-900/40 to-slate-900/60 flex items-center justify-center" style="display: none;">
+                                    <i data-lucide="clipboard-check" class="w-20 h-20 text-emerald-400/40"></i>
+                                </div>
+                                <!-- Default Visual avec icône Architecture -->
+                                <div class="absolute inset-0 bg-gradient-to-br from-emerald-900/30 to-slate-900/50 flex items-center justify-center">
+                                    <div class="text-center">
+                                        <div class="flex items-center justify-center gap-3 mb-3">
+                                            <i data-lucide="globe" class="w-10 h-10 text-emerald-400/60"></i>
+                                            <span class="text-emerald-400/40 text-2xl">+</span>
+                                            <i data-lucide="github" class="w-10 h-10 text-emerald-400/60"></i>
+                                        </div>
+                                        <p class="text-emerald-400/60 text-xs font-mono uppercase tracking-wider">Site + Référentiel</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Right: Content -->
+                        <div class="lg:w-7/12 flex flex-col justify-center">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center">
+                                    <i data-lucide="clipboard-check" class="w-5 h-5 text-emerald-400"></i>
+                                </div>
+                                <div>
+                                    <span class="text-emerald-400 font-mono text-xs uppercase tracking-wider font-bold">System Specification</span>
+                                </div>
+                            </div>
+                            
+                            <h3 class="text-xl md:text-2xl font-bold text-white mb-3 leading-tight">
+                                Cahier des Charges : Portfolio & Référentiel Technique
+                            </h3>
+                            
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                                Blueprint de l'écosystème numérique. Définition des objectifs SMART, de la charte "Bio-Digital" et de l'architecture hybride alliant Psychologie et Data Science pour répondre aux exigences d'auditabilité d'Aéroworld.
+                            </p>
+                            
+                            <!-- Tags -->
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="inline-flex items-center px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono">
+                                    Objectifs SMART
+                                </span>
+                                <span class="inline-flex items-center px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono">
+                                    IA-Assisted Coding
+                                </span>
+                                <span class="inline-flex items-center px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono">
+                                    Architecture GitHub
+                                </span>
+                            </div>
+                            
+                            <!-- CTA Button -->
+                            <a href="assets/pdf/cahier-des-charges-aeroworld.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 bg-emerald-500/10 border border-emerald-500/40 text-emerald-400 text-sm font-bold rounded-xl hover:bg-emerald-500/20 hover:shadow-[0_0_20px_rgba(16,185,129,0.25)] transition-all group/btn w-fit">
+                                <i data-lucide="download" class="w-4 h-4"></i>
+                                <span>Télécharger les Specs (PDF)</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================ -->
+                <!-- FEATURE CARD 3: Planning & Roadmap (Expandable) -->
+                <!-- ============================================ -->
+                <div id="ganttCard" class="expandable-card livrable-card livrable-card--cyan glass-card rounded-[2rem] p-6 md:p-8 border border-slate-800 md:col-span-2">
+                    <!-- Header Section (Always Visible) -->
+                    <div class="flex flex-col lg:flex-row gap-6 lg:gap-8">
+                        <!-- Left: Visual -->
+                        <div class="lg:w-5/12 relative">
+                            <div class="absolute inset-0 bg-cyan-500/10 rounded-2xl blur-[40px] opacity-50 transition-opacity"></div>
+                            <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-slate-700/50 bg-slate-900/60">
+                                <img src="assets/images/placeholder-gantt.jpg" alt="Planning - Timeline 8 Semaines" class="w-full h-full object-cover opacity-80 transition-all duration-500" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <!-- Fallback Icon -->
+                                <div class="absolute inset-0 bg-gradient-to-br from-cyan-900/40 to-slate-900/60 flex items-center justify-center" style="display: none;">
+                                    <i data-lucide="gantt-chart" class="w-20 h-20 text-cyan-400/40"></i>
+                                </div>
+                                <!-- Default Visual avec Mini Gantt 4 Phases -->
+                                <div class="absolute inset-0 bg-gradient-to-br from-cyan-900/30 to-slate-900/50 flex items-center justify-center p-6">
+                                    <div class="w-full space-y-3">
+                                        <!-- Phase Labels + Bars -->
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-[9px] text-slate-500 font-mono w-16 shrink-0">Cadrage</span>
+                                            <div class="flex-1 h-3 bg-slate-800/50 rounded-full overflow-hidden">
+                                                <div class="h-full w-[25%] bg-gradient-to-r from-blue-500/80 to-blue-400/60 rounded-full"></div>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-[9px] text-slate-500 font-mono w-16 shrink-0">Data</span>
+                                            <div class="flex-1 h-3 bg-slate-800/50 rounded-full overflow-hidden">
+                                                <div class="h-full w-[25%] ml-[25%] bg-gradient-to-r from-emerald-500/80 to-emerald-400/60 rounded-full"></div>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-[9px] text-slate-500 font-mono w-16 shrink-0">Dév IA</span>
+                                            <div class="flex-1 h-3 bg-slate-800/50 rounded-full overflow-hidden">
+                                                <div class="h-full w-[37.5%] ml-[50%] bg-gradient-to-r from-purple-500/80 to-purple-400/60 rounded-full"></div>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-[9px] text-slate-500 font-mono w-16 shrink-0">Recette</span>
+                                            <div class="flex-1 h-3 bg-slate-800/50 rounded-full overflow-hidden">
+                                                <div class="h-full w-[12.5%] ml-[87.5%] bg-gradient-to-r from-cyan-500/80 to-cyan-400/60 rounded-full"></div>
+                                            </div>
+                                        </div>
+                                        <p class="text-cyan-400/60 text-xs font-mono uppercase tracking-wider text-center mt-4">8 Semaines • 15 Jours</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Right: Content -->
+                        <div class="lg:w-7/12 flex flex-col justify-center">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-10 h-10 rounded-xl bg-cyan-500/20 flex items-center justify-center">
+                                    <i data-lucide="gantt-chart" class="w-5 h-5 text-cyan-400"></i>
+                                </div>
+                                <div>
+                                    <span class="text-cyan-400 font-mono text-xs uppercase tracking-wider font-bold">Project Management</span>
+                                </div>
+                            </div>
+                            
+                            <h3 class="text-xl md:text-2xl font-bold text-white mb-3 leading-tight">
+                                Rétroplanning & Pilotage Opérationnel
+                            </h3>
+                            
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                                Orchestration de 15 jours de production répartis sur 4 phases : Cadrage, Contenus Data, Développement Assisté par IA et Recette. Un pilotage agile garantissant le respect des délais pour la soutenance.
+                            </p>
+                            
+                            <!-- Tags -->
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="inline-flex items-center px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono">
+                                    Pilotage Agile
+                                </span>
+                                <span class="inline-flex items-center px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono">
+                                    Jalons Critiques
+                                </span>
+                                <span class="inline-flex items-center px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-mono">
+                                    Rigueur Méthodologique
+                                </span>
+                            </div>
+                            
+                            <!-- CTA Button - Toggle Expand -->
+                            <button onclick="toggleGanttCard()" class="inline-flex items-center gap-2 px-6 py-3 bg-cyan-500/10 border border-cyan-500/40 text-cyan-400 text-sm font-bold rounded-xl hover:bg-cyan-500/20 hover:shadow-[0_0_20px_rgba(6,182,212,0.25)] transition-all w-fit">
+                                <i data-lucide="play" class="w-4 h-4"></i>
+                                <span id="ganttBtnText">Voir le planning interactif</span>
+                                <i data-lucide="chevron-down" class="w-4 h-4 expand-btn-icon"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- ============================================ -->
+                    <!-- EXPANDED CONTENT (Hidden by default) -->
+                    <!-- ============================================ -->
+                    <div class="expanded-content">
+                        <!-- Close Button -->
+                        <div class="flex justify-between items-center mb-6">
+                            <h4 class="text-lg font-bold text-white flex items-center gap-2">
+                                <i data-lucide="layers" class="w-5 h-5 text-cyan-400"></i>
+                                Détail des Phases du Projet
+                            </h4>
+                            <button onclick="toggleGanttCard()" class="p-2 rounded-lg bg-slate-800/50 border border-slate-700 text-slate-400 hover:text-white hover:bg-slate-700/50 hover:border-slate-600 transition-all" aria-label="Réduire">
+                                <i data-lucide="x" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- Phases Grid -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                            <!-- Phase 1: Cadrage -->
+                            <div class="phase-card">
+                                <div class="flex items-center gap-2 mb-3">
+                                    <div class="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center">
+                                        <i data-lucide="target" class="w-4 h-4 text-blue-400"></i>
+                                    </div>
+                                    <span class="text-blue-400 font-mono text-[10px] uppercase tracking-wider font-bold">S1-S2</span>
+                                </div>
+                                <h5 class="text-white font-bold text-sm mb-1">Phase 1 : Cadrage</h5>
+                                <p class="text-slate-400 text-xs leading-relaxed">Conception & Spécifications fonctionnelles</p>
+                                <div class="mt-3 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                                    <div class="h-full w-full bg-gradient-to-r from-blue-500 to-blue-400 rounded-full"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Phase 2: Data -->
+                            <div class="phase-card">
+                                <div class="flex items-center gap-2 mb-3">
+                                    <div class="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center">
+                                        <i data-lucide="database" class="w-4 h-4 text-emerald-400"></i>
+                                    </div>
+                                    <span class="text-emerald-400 font-mono text-[10px] uppercase tracking-wider font-bold">S3-S4</span>
+                                </div>
+                                <h5 class="text-white font-bold text-sm mb-1">Phase 2 : Data Prep</h5>
+                                <p class="text-slate-400 text-xs leading-relaxed">Préparation & Storytelling des contenus</p>
+                                <div class="mt-3 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                                    <div class="h-full w-full bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Phase 3: Développement -->
+                            <div class="phase-card">
+                                <div class="flex items-center gap-2 mb-3">
+                                    <div class="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center">
+                                        <i data-lucide="code-2" class="w-4 h-4 text-purple-400"></i>
+                                    </div>
+                                    <span class="text-purple-400 font-mono text-[10px] uppercase tracking-wider font-bold">S5-S7</span>
+                                </div>
+                                <h5 class="text-white font-bold text-sm mb-1">Phase 3 : Dév & IA</h5>
+                                <p class="text-slate-400 text-xs leading-relaxed">Intégration & IA-Assisted Coding</p>
+                                <div class="mt-3 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                                    <div class="h-full w-full bg-gradient-to-r from-purple-500 to-purple-400 rounded-full"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Phase 4: Launch -->
+                            <div class="phase-card">
+                                <div class="flex items-center gap-2 mb-3">
+                                    <div class="w-8 h-8 rounded-lg bg-cyan-500/20 flex items-center justify-center">
+                                        <i data-lucide="rocket" class="w-4 h-4 text-cyan-400"></i>
+                                    </div>
+                                    <span class="text-cyan-400 font-mono text-[10px] uppercase tracking-wider font-bold">S8</span>
+                                </div>
+                                <h5 class="text-white font-bold text-sm mb-1">Phase 4 : Launch</h5>
+                                <p class="text-slate-400 text-xs leading-relaxed">Tests & Mise en ligne officielle</p>
+                                <div class="mt-3 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                                    <div class="h-full w-full bg-gradient-to-r from-cyan-500 to-cyan-400 rounded-full"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Power BI Iframe Container -->
+                        <div class="mb-6">
+                            <div class="flex items-center gap-2 mb-4">
+                                <i data-lucide="bar-chart-3" class="w-5 h-5 text-cyan-400"></i>
+                                <h4 class="text-lg font-bold text-white">Timeline Interactive (Power BI)</h4>
+                            </div>
+                            <div id="powerbiContainer" class="relative aspect-video rounded-xl overflow-hidden border border-slate-700 bg-slate-900/80">
+                                <!-- Placeholder avant chargement -->
+                                <div id="powerbiPlaceholder" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-900/90">
+                                    <div class="w-16 h-16 rounded-2xl bg-cyan-500/10 flex items-center justify-center mb-4">
+                                        <i data-lucide="bar-chart-3" class="w-8 h-8 text-cyan-400"></i>
+                                    </div>
+                                    <p class="text-slate-400 text-sm mb-4">Tableau de bord Power BI</p>
+                                    <button onclick="loadPowerBIIframe()" class="inline-flex items-center gap-2 px-5 py-2.5 bg-cyan-500/10 border border-cyan-500/40 text-cyan-400 text-sm font-bold rounded-lg hover:bg-cyan-500/20 hover:shadow-[0_0_15px_rgba(6,182,212,0.25)] transition-all">
+                                        <i data-lucide="play" class="w-4 h-4"></i>
+                                        <span>Charger le dashboard</span>
+                                    </button>
+                                </div>
+                                <!-- Iframe (chargé dynamiquement) -->
+                                <iframe id="powerbiIframe" class="w-full h-full hidden" frameborder="0" allowFullScreen="true"></iframe>
+                            </div>
+                            <p class="text-slate-500 text-xs mt-2 text-center">
+                                <i data-lucide="info" class="w-3 h-3 inline mr-1"></i>
+                                Le chargement du dashboard peut prendre quelques secondes
+                            </p>
+                        </div>
+                        
+                        <!-- Download PDF Link (Placeholder - fichier non disponible) -->
+                        <div class="flex justify-center">
+                            <span class="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-800/30 border border-slate-700/50 text-slate-500 text-sm font-medium rounded-lg cursor-not-allowed">
+                                <i data-lucide="clock" class="w-4 h-4"></i>
+                                <span>Gantt PDF - Bientôt disponible</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARTE 3: Veille Techno (Vert - Data) -->
+                <div class="livrable-card livrable-card--emerald glass-card rounded-[1.5rem] p-6 border border-slate-800 group md:col-span-2">
+                    <div class="flex flex-col md:flex-row md:items-center gap-6">
+                        <!-- Left: Content -->
+                        <div class="flex-1">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center">
+                                    <i data-lucide="radar" class="w-5 h-5 text-emerald-400"></i>
+                                </div>
+                                <div>
+                                    <span class="text-emerald-400 font-mono text-xs uppercase tracking-wider font-bold">Data & AI</span>
+                                    <h3 class="text-white font-bold text-lg">Veille Technologique</h3>
+                                </div>
+                            </div>
+                            
+                            <h4 class="text-xl md:text-2xl font-bold text-white mb-3">
+                                Deep Research & Data Analysis
+                            </h4>
+                            
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 max-w-xl">
+                                Étude approfondie sur l'impact des agents IA autonomes (Deep Research) sur les pratiques d'analyse de données. Benchmark des solutions et implications pour le métier de Data Analyst.
+                            </p>
+                            
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="inline-flex items-center px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono">
+                                    LLM Agents
+                                </span>
+                                <span class="inline-flex items-center px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono">
+                                    Autonomous AI
+                                </span>
+                                <span class="inline-flex items-center px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono">
+                                    Research Automation
+                                </span>
+                            </div>
+                            
+                            <a href="veille-deep-research.html" class="inline-flex items-center gap-2 px-6 py-3 bg-emerald-500/10 border border-emerald-500/40 text-emerald-400 text-sm font-bold rounded-xl hover:bg-emerald-500/20 hover:shadow-[0_0_20px_rgba(16,185,129,0.25)] transition-all group/btn">
+                                <span>Lire l'étude</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform"></i>
+                            </a>
+                        </div>
+                        
+                        <!-- Right: Visual -->
+                        <div class="hidden md:block w-48 h-48 relative">
+                            <div class="absolute inset-0 bg-emerald-500/10 rounded-full blur-[40px]"></div>
+                            <div class="relative w-full h-full rounded-2xl bg-slate-900/60 border border-emerald-500/20 flex items-center justify-center">
+                                <i data-lucide="sparkles" class="w-16 h-16 text-emerald-400/60"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-950 border-t border-slate-800 py-12 relative z-20 mt-16">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+                
+                <!-- Left: Logo + Copyright -->
+                <div class="flex flex-col gap-3">
+                    <a href="index.html" class="text-2xl font-bold text-white tracking-tight hover:opacity-80 transition-opacity">
+                        FB<span class="text-emerald-500">.</span>
+                    </a>
+                    <p class="text-slate-500 text-sm font-light">
+                        AI Product Manager & Data Analyst
+                    </p>
+                    <p class="text-slate-600 text-xs">© 2025 FB. All rights reserved.</p>
+                </div>
+                
+                <!-- Right: Links + Socials -->
+                <div class="flex flex-col md:flex-row items-start md:items-center gap-8">
+                    <!-- Navigation Links -->
+                    <div class="flex flex-wrap gap-6 text-sm">
+                        <a href="index.html#projects" class="text-slate-400 hover:text-emerald-400 hover:drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] transition-all">Projets</a>
+                        <a href="index.html#skills" class="text-slate-400 hover:text-emerald-400 hover:drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] transition-all">Compétences</a>
+                        <a href="livrables.html" class="text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.3)]">Livrables</a>
+                    </div>
+
+                    <!-- Social Icons -->
+                    <div class="flex items-center gap-4">
+                        <a href="https://linkedin.com/in/flavien-bardet" target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] transition-all" aria-label="LinkedIn">
+                            <i data-lucide="linkedin" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://github.com/flavien-bardet" target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] transition-all" aria-label="GitHub">
+                            <i data-lucide="github" class="w-5 h-5"></i>
+                        </a>
+                        <a href="mailto:flavien.bardet@email.com" class="text-slate-500 hover:text-emerald-400 hover:drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] transition-all" aria-label="Email">
+                            <i data-lucide="mail" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+        });
+
+        // ============================================
+        // GANTT EXPANDABLE CARD - Interactive Logic
+        // ============================================
+        
+        let isGanttExpanded = false;
+        let isPowerBILoaded = false;
+        
+        // URL du rapport Power BI (à remplacer par ton URL réelle)
+        const POWERBI_EMBED_URL = 'https://app.powerbi.com/view?r=YOUR_REPORT_ID';
+
+        /**
+         * Toggle l'expansion de la carte Gantt
+         */
+        function toggleGanttCard() {
+            const card = document.getElementById('ganttCard');
+            const btnText = document.getElementById('ganttBtnText');
+            
+            if (!card) return;
+            
+            isGanttExpanded = !isGanttExpanded;
+            
+            if (isGanttExpanded) {
+                card.classList.add('is-expanded');
+                btnText.textContent = 'Réduire le planning';
+                
+                // Scroll smooth vers la carte
+                setTimeout(() => {
+                    card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+                
+                // Réinitialiser les icônes Lucide pour les nouveaux éléments
+                lucide.createIcons();
+            } else {
+                card.classList.remove('is-expanded');
+                btnText.textContent = 'Voir le planning interactif';
+            }
+        }
+
+        /**
+         * Charge l'iframe Power BI de manière lazy (au premier clic)
+         */
+        function loadPowerBIIframe() {
+            if (isPowerBILoaded) return;
+            
+            const iframe = document.getElementById('powerbiIframe');
+            const placeholder = document.getElementById('powerbiPlaceholder');
+            
+            if (!iframe || !placeholder) return;
+            
+            // Afficher un loader pendant le chargement
+            placeholder.innerHTML = `
+                <div class="flex flex-col items-center justify-center">
+                    <div class="w-12 h-12 border-4 border-cyan-500/20 border-t-cyan-500 rounded-full animate-spin mb-4"></div>
+                    <p class="text-slate-400 text-sm">Chargement du dashboard...</p>
+                </div>
+            `;
+            
+            // Injecter l'URL et afficher l'iframe
+            iframe.src = POWERBI_EMBED_URL;
+            
+            iframe.onload = function() {
+                placeholder.classList.add('hidden');
+                iframe.classList.remove('hidden');
+                isPowerBILoaded = true;
+            };
+            
+            // Fallback si l'iframe ne charge pas (timeout 10s)
+            setTimeout(() => {
+                if (!isPowerBILoaded) {
+                    placeholder.innerHTML = `
+                        <div class="flex flex-col items-center justify-center p-6 text-center">
+                            <div class="w-16 h-16 rounded-2xl bg-slate-800/50 flex items-center justify-center mb-4">
+                                <i data-lucide="alert-triangle" class="w-8 h-8 text-yellow-400"></i>
+                            </div>
+                            <p class="text-slate-300 text-sm font-medium mb-2">Dashboard non disponible</p>
+                            <p class="text-slate-500 text-xs mb-4">Le rapport Power BI et le PDF du Gantt seront bientôt disponibles.</p>
+                            <span class="inline-flex items-center gap-2 px-4 py-2 bg-slate-800/30 border border-slate-700/50 text-slate-500 text-sm font-medium rounded-lg cursor-not-allowed">
+                                <i data-lucide="clock" class="w-4 h-4"></i>
+                                <span>En préparation</span>
+                            </span>
+                        </div>
+                    `;
+                    lucide.createIcons();
+                }
+            }, 10000);
+        }
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise RAG Assistant | FB Portfolio</title>
+    <meta name="description" content="Développement d'un assistant conversationnel sécurisé avec architecture RAG pour l'analyse de données d'entreprise.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Icons (Lucide) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        slate: {
+                            850: '#151e2e',
+                            900: '#0f172a',
+                            950: '#020617',
+                            1000: '#0b0f19', 
+                        },
+                        neon: {
+                            cyan: '#06b6d4',
+                            purple: '#8b5cf6',
+                            pink: '#ec4899',
+                            emerald: '#10b981'
+                        },
+                        card: {
+                            dark: '#111318', 
+                        }
+                    },
+                    animation: {
+                        'blob': 'blob 10s infinite',
+                        'float-slow': 'float 8s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-12px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html {
+            scroll-padding-top: 100px;
+        }
+
+        .bg-noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: rgba(30, 41, 59, 0.35);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1), inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+        }
+
+        /* Tech Tag Style */
+        .tech-tag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            background-color: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: 'JetBrains Mono', monospace;
+            transition: all 0.3s ease;
+        }
+        .tech-tag:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            background-color: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
+        }
+
+        /* KPI Card */
+        .kpi-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .kpi-card:hover {
+            border-color: rgba(16, 185, 129, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Code Block */
+        .code-block {
+            background: #0b0f19;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+        .code-header {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .code-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        /* Section divider */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            margin: 3rem 0;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-300 font-sans min-h-screen selection:bg-neon-cyan selection:text-white overflow-x-hidden">
+
+    <div class="bg-noise"></div>
+
+    <!-- Background Ambience -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="absolute -top-20 -left-20 w-96 h-96 bg-neon-emerald/20 rounded-full mix-blend-screen filter blur-[120px] opacity-30 animate-blob"></div>
+        <div class="absolute top-1/3 right-0 w-96 h-96 bg-neon-cyan/20 rounded-full mix-blend-screen filter blur-[120px] opacity-25 animate-blob animation-delay-2000"></div>
+    </div>
+
+    <!-- BACK NAVIGATION -->
+    <nav class="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
+        <div class="bg-slate-950/70 backdrop-blur-xl border border-white/10 rounded-full p-2 pl-4 pr-4 shadow-2xl shadow-black/20 max-w-4xl w-full flex justify-between items-center transition-all duration-300 hover:border-white/20">
+            
+            <a href="../index.html" class="group flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm font-medium">
+                <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform"></i>
+                <span data-ml-key="back_portfolio">Retour au Portfolio</span>
+            </a>
+
+            <div class="flex items-center gap-4">
+                <!-- Language Toggle - Dynamic -->
+                <div id="langToggle" class="hidden md:flex items-center gap-1 px-3 py-1.5 bg-slate-900/50 rounded-full border border-white/10 cursor-pointer hover:border-white/20 transition-all" onclick="toggleLanguage()">
+                    <span id="langFR" class="text-white text-xs font-bold transition-colors">FR</span>
+                    <span class="text-slate-600">/</span>
+                    <span id="langEN" class="text-slate-500 text-xs font-bold transition-colors">EN</span>
+                </div>
+
+                <a href="../index.html#projects" class="group flex items-center gap-2 px-5 py-2 rounded-full bg-slate-900/50 border border-emerald-400/30 text-emerald-400 text-sm font-medium hover:bg-emerald-400/10 hover:border-emerald-400/80 transition-all duration-300">
+                    <span data-ml-key="all_projects">Tous les Projets</span>
+                    <i data-lucide="grid-3x3" class="w-4 h-4"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-16">
+        
+        <!-- TWO COLUMN LAYOUT -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+            
+            <!-- LEFT COLUMN - STICKY -->
+            <aside class="lg:col-span-4 lg:sticky lg:top-32 lg:self-start">
+                <div class="space-y-8">
+                    
+                    <!-- Project Badge -->
+                    <div class="flex items-center gap-3">
+                        <span class="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.6)]"></span>
+                        <span class="text-emerald-500 font-mono text-xs font-bold tracking-[0.2em] uppercase">Engineering</span>
+                    </div>
+
+                    <!-- Title -->
+                    <div>
+                        <h1 class="text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight tracking-tight">
+                            Enterprise RAG Assistant
+                        </h1>
+                        <p class="text-slate-400 text-lg font-light">
+                            B2B Intelligent Chatbot
+                        </p>
+                    </div>
+
+                    <!-- Tech Stack -->
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tech-tag text-emerald-400 border-emerald-500/20">RAG</span>
+                        <span class="tech-tag text-emerald-400 border-emerald-500/20">Python</span>
+                        <span class="tech-tag text-emerald-400 border-emerald-500/20">LangChain</span>
+                        <span class="tech-tag text-cyan-400 border-cyan-500/20">Governance</span>
+                        <span class="tech-tag text-purple-400 border-purple-500/20">GDPR</span>
+                    </div>
+
+                    <!-- Quick Info -->
+                    <div class="glass-card rounded-2xl p-6 space-y-4">
+                        <div class="flex items-center gap-4">
+                            <i data-lucide="calendar" class="w-5 h-5 text-slate-500"></i>
+                            <div>
+                                <p class="text-xs text-slate-500 uppercase tracking-wider" data-ml-key="info_duration">Durée</p>
+                                <p class="text-white font-medium" data-ml-key="info_duration_value">3 mois</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <i data-lucide="users" class="w-5 h-5 text-slate-500"></i>
+                            <div>
+                                <p class="text-xs text-slate-500 uppercase tracking-wider" data-ml-key="info_role">Rôle</p>
+                                <p class="text-white font-medium">Lead Data Engineer</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <i data-lucide="building-2" class="w-5 h-5 text-slate-500"></i>
+                            <div>
+                                <p class="text-xs text-slate-500 uppercase tracking-wider" data-ml-key="info_sector">Secteur</p>
+                                <p class="text-white font-medium">B2B / Enterprise</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-col gap-3">
+                        <a href="#demo" class="group flex items-center justify-center gap-2 px-6 py-3 bg-emerald-500/10 border border-emerald-500/50 text-emerald-400 font-bold rounded-xl hover:bg-emerald-500/20 transition-all">
+                            <i data-lucide="play-circle" class="w-5 h-5"></i>
+                            <span data-ml-key="cta_demo">Voir la Démo</span>
+                        </a>
+                        <a href="../index.html#contact" class="group flex items-center justify-center gap-2 px-6 py-3 bg-slate-900/50 border border-white/10 text-white font-medium rounded-xl hover:bg-white/5 hover:border-white/20 transition-all">
+                            <i data-lucide="message-circle" class="w-5 h-5"></i>
+                            <span data-ml-key="cta_discuss">Discuter du projet</span>
+                        </a>
+                    </div>
+
+                </div>
+            </aside>
+
+            <!-- RIGHT COLUMN - SCROLLABLE CONTENT -->
+            <article class="lg:col-span-8 space-y-12">
+                
+                <!-- HERO IMAGE -->
+                <div class="relative rounded-3xl overflow-hidden border border-white/10">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2670&auto=format&fit=crop" 
+                         alt="RAG Dashboard Interface" 
+                         class="w-full aspect-video object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent"></div>
+                </div>
+
+                <!-- SECTION: Contexte -->
+                <section id="contexte">
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="w-2 h-8 bg-emerald-500 rounded-full"></span>
+                        Contexte & Problématique
+                    </h2>
+                    <div class="space-y-4 text-slate-400 leading-relaxed">
+                        <p>
+                            Une entreprise B2B du secteur industriel souhaitait permettre à ses équipes d'interroger leurs bases de données documentaires (manuels techniques, rapports qualité, normes) via un <strong class="text-white">assistant conversationnel intelligent</strong>.
+                        </p>
+                        <p>
+                            Le défi principal : garantir la <strong class="text-white">confidentialité des données</strong> tout en offrant des réponses précises et sourcées, conformes aux exigences GDPR et à l'EU AI Act.
+                        </p>
+                    </div>
+                </section>
+
+                <div class="section-divider"></div>
+
+                <!-- SECTION: Solution -->
+                <section id="solution">
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="w-2 h-8 bg-cyan-500 rounded-full"></span>
+                        Solution Technique
+                    </h2>
+                    <div class="space-y-6">
+                        <p class="text-slate-400 leading-relaxed">
+                            Développement d'une architecture <strong class="text-white">RAG (Retrieval-Augmented Generation)</strong> permettant de combiner la puissance des LLM avec une base de connaissances privée.
+                        </p>
+                        
+                        <!-- Architecture Diagram Placeholder -->
+                        <div class="glass-card rounded-2xl p-8">
+                            <h3 class="text-white font-bold mb-4">Architecture du Système</h3>
+                            <div class="bg-slate-900/50 rounded-xl p-6 border border-white/5">
+                                <div class="flex flex-wrap items-center justify-center gap-4 text-center">
+                                    <div class="px-4 py-3 bg-emerald-500/10 border border-emerald-500/30 rounded-lg">
+                                        <p class="text-emerald-400 font-mono text-sm">Documents</p>
+                                    </div>
+                                    <i data-lucide="arrow-right" class="w-5 h-5 text-slate-600"></i>
+                                    <div class="px-4 py-3 bg-cyan-500/10 border border-cyan-500/30 rounded-lg">
+                                        <p class="text-cyan-400 font-mono text-sm">Embeddings</p>
+                                    </div>
+                                    <i data-lucide="arrow-right" class="w-5 h-5 text-slate-600"></i>
+                                    <div class="px-4 py-3 bg-purple-500/10 border border-purple-500/30 rounded-lg">
+                                        <p class="text-purple-400 font-mono text-sm">Vector DB</p>
+                                    </div>
+                                    <i data-lucide="arrow-right" class="w-5 h-5 text-slate-600"></i>
+                                    <div class="px-4 py-3 bg-emerald-500/10 border border-emerald-500/30 rounded-lg">
+                                        <p class="text-emerald-400 font-mono text-sm">LLM + Context</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Key Features -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="glass-card rounded-xl p-5">
+                                <i data-lucide="shield-check" class="w-8 h-8 text-emerald-400 mb-3"></i>
+                                <h4 class="text-white font-bold mb-2">Sécurité Native</h4>
+                                <p class="text-slate-400 text-sm">Données hébergées on-premise, aucune fuite vers des API externes.</p>
+                            </div>
+                            <div class="glass-card rounded-xl p-5">
+                                <i data-lucide="file-search" class="w-8 h-8 text-cyan-400 mb-3"></i>
+                                <h4 class="text-white font-bold mb-2">Sources Tracées</h4>
+                                <p class="text-slate-400 text-sm">Chaque réponse cite les documents sources pour validation.</p>
+                            </div>
+                            <div class="glass-card rounded-xl p-5">
+                                <i data-lucide="zap" class="w-8 h-8 text-purple-400 mb-3"></i>
+                                <h4 class="text-white font-bold mb-2">Réponse < 3s</h4>
+                                <p class="text-slate-400 text-sm">Optimisation du pipeline pour une latence minimale.</p>
+                            </div>
+                            <div class="glass-card rounded-xl p-5">
+                                <i data-lucide="scale" class="w-8 h-8 text-emerald-400 mb-3"></i>
+                                <h4 class="text-white font-bold mb-2">GDPR Compliant</h4>
+                                <p class="text-slate-400 text-sm">Gouvernance des données conforme aux régulations européennes.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="section-divider"></div>
+
+                <!-- SECTION: KPIs -->
+                <section id="resultats">
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="w-2 h-8 bg-purple-500 rounded-full"></span>
+                        Résultats & Impact
+                    </h2>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                        <div class="kpi-card text-center">
+                            <p class="text-3xl font-bold text-emerald-400 mb-1">-65%</p>
+                            <p class="text-xs text-slate-500 uppercase tracking-wider">Temps de recherche</p>
+                        </div>
+                        <div class="kpi-card text-center">
+                            <p class="text-3xl font-bold text-cyan-400 mb-1">92%</p>
+                            <p class="text-xs text-slate-500 uppercase tracking-wider">Précision réponses</p>
+                        </div>
+                        <div class="kpi-card text-center">
+                            <p class="text-3xl font-bold text-purple-400 mb-1">500+</p>
+                            <p class="text-xs text-slate-500 uppercase tracking-wider">Documents indexés</p>
+                        </div>
+                        <div class="kpi-card text-center">
+                            <p class="text-3xl font-bold text-white mb-1">100%</p>
+                            <p class="text-xs text-slate-500 uppercase tracking-wider">GDPR Compliant</p>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="section-divider"></div>
+
+                <!-- SECTION: Power BI Dashboard -->
+                <section id="demo">
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="w-2 h-8 bg-emerald-500 rounded-full"></span>
+                        Dashboard Analytique
+                    </h2>
+                    
+                    <!-- Power BI Embed Placeholder -->
+                    <div class="powerbi-container aspect-video bg-slate-900 rounded-2xl border border-white/10 flex flex-col items-center justify-center relative overflow-hidden">
+                        <!-- Placeholder content - à remplacer par iframe Power BI -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-cyan-500/5"></div>
+                        <i data-lucide="bar-chart-3" class="w-16 h-16 text-slate-700 mb-4 relative z-10"></i>
+                        <p class="text-slate-500 font-mono text-sm relative z-10">Dashboard Power BI</p>
+                        <p class="text-slate-600 text-xs mt-2 relative z-10">Intégration à venir</p>
+                        
+                        <!-- 
+                        POUR INTEGRER UN DASHBOARD POWER BI :
+                        Remplacer ce div par :
+                        <iframe 
+                            title="RAG Assistant Analytics"
+                            src="VOTRE_URL_POWER_BI_EMBED"
+                            frameborder="0" 
+                            allowFullScreen="true"
+                            class="w-full h-full">
+                        </iframe>
+                        -->
+                    </div>
+
+                    <!-- Fallback mobile message -->
+                    <p class="text-slate-500 text-sm mt-4 text-center lg:hidden">
+                        <i data-lucide="monitor" class="w-4 h-4 inline mr-1"></i>
+                        Pour une meilleure expérience, consultez le dashboard sur desktop.
+                    </p>
+                </section>
+
+                <div class="section-divider"></div>
+
+                <!-- SECTION: Code Snippet -->
+                <section id="code">
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="w-2 h-8 bg-cyan-500 rounded-full"></span>
+                        Extrait de Code
+                    </h2>
+                    
+                    <div class="code-block">
+                        <div class="code-header">
+                            <div class="code-dot bg-red-500"></div>
+                            <div class="code-dot bg-yellow-500"></div>
+                            <div class="code-dot bg-green-500"></div>
+                            <span class="text-slate-500 text-xs font-mono ml-2">rag_pipeline.py</span>
+                        </div>
+                        <pre class="p-6 text-sm font-mono overflow-x-auto"><code class="text-slate-300"><span class="text-purple-400">from</span> langchain.chains <span class="text-purple-400">import</span> RetrievalQA
+<span class="text-purple-400">from</span> langchain.vectorstores <span class="text-purple-400">import</span> Chroma
+<span class="text-purple-400">from</span> langchain.embeddings <span class="text-purple-400">import</span> OpenAIEmbeddings
+
+<span class="text-slate-500"># Configuration du retriever avec filtrage GDPR</span>
+<span class="text-cyan-400">def</span> <span class="text-emerald-400">create_secure_retriever</span>(documents, user_permissions):
+    <span class="text-slate-500">"""Crée un retriever respectant les ACL utilisateur."""</span>
+    
+    embeddings = OpenAIEmbeddings()
+    vectorstore = Chroma.from_documents(
+        documents=documents,
+        embedding=embeddings,
+        collection_metadata={<span class="text-amber-400">"hnsw:space"</span>: <span class="text-amber-400">"cosine"</span>}
+    )
+    
+    <span class="text-purple-400">return</span> vectorstore.as_retriever(
+        search_kwargs={
+            <span class="text-amber-400">"k"</span>: <span class="text-cyan-400">5</span>,
+            <span class="text-amber-400">"filter"</span>: {<span class="text-amber-400">"access_level"</span>: user_permissions}
+        }
+    )</code></pre>
+                    </div>
+                </section>
+
+                <div class="section-divider"></div>
+
+                <!-- SECTION: Learnings -->
+                <section id="learnings">
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="w-2 h-8 bg-purple-500 rounded-full"></span>
+                        Apprentissages Clés
+                    </h2>
+                    
+                    <div class="space-y-4">
+                        <div class="glass-card rounded-xl p-5 flex gap-4">
+                            <span class="text-2xl">🔐</span>
+                            <div>
+                                <h4 class="text-white font-bold mb-1">Security by Design</h4>
+                                <p class="text-slate-400 text-sm">Intégrer les contraintes GDPR dès la conception évite les refactorisations coûteuses.</p>
+                            </div>
+                        </div>
+                        <div class="glass-card rounded-xl p-5 flex gap-4">
+                            <span class="text-2xl">⚡</span>
+                            <div>
+                                <h4 class="text-white font-bold mb-1">Optimisation des Embeddings</h4>
+                                <p class="text-slate-400 text-sm">Le choix du modèle d'embedding impacte directement la pertinence des résultats.</p>
+                            </div>
+                        </div>
+                        <div class="glass-card rounded-xl p-5 flex gap-4">
+                            <span class="text-2xl">📊</span>
+                            <div>
+                                <h4 class="text-white font-bold mb-1">Feedback Loop</h4>
+                                <p class="text-slate-400 text-sm">Implémenter un système de feedback utilisateur améliore continuellement la qualité.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- NAVIGATION PROJETS -->
+                <div class="flex justify-between items-center pt-12 border-t border-white/5">
+                    <a href="../index.html#projects" class="group flex items-center gap-2 text-slate-400 hover:text-white transition-colors">
+                        <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform"></i>
+                        <span>Tous les projets</span>
+                    </a>
+                    <a href="vanguard-strategy.html" class="group flex items-center gap-2 text-emerald-400 hover:text-emerald-300 transition-colors">
+                        <span>Projet suivant</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+
+            </article>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-black border-t border-white/10 py-8 relative z-20">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
+            <p>© 2025 FB. All rights reserved.</p>
+            <a href="../index.html#contact" class="hover:text-emerald-400 transition-colors">Contact</a>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+        });
+
+        // --- MULTILANGUAGE SYSTEM (askask11 inspired) ---
+        const translations = {
+            fr: {
+                back_portfolio: "Retour au Portfolio",
+                all_projects: "Tous les Projets",
+                info_duration: "Durée",
+                info_duration_value: "3 mois",
+                info_role: "Rôle",
+                info_sector: "Secteur",
+                cta_demo: "Voir la Démo",
+                cta_discuss: "Discuter du projet"
+            },
+            en: {
+                back_portfolio: "Back to Portfolio",
+                all_projects: "All Projects",
+                info_duration: "Duration",
+                info_duration_value: "3 months",
+                info_role: "Role",
+                info_sector: "Industry",
+                cta_demo: "View Demo",
+                cta_discuss: "Discuss Project"
+            }
+        };
+
+        let currentLang = 'fr';
+
+        function applyTranslations(lang) {
+            const elements = document.querySelectorAll('[data-ml-key]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-ml-key');
+                const useHtml = el.hasAttribute('data-ml-html');
+                
+                if (translations[lang] && translations[lang][key]) {
+                    if (useHtml) {
+                        el.innerHTML = translations[lang][key];
+                    } else {
+                        el.textContent = translations[lang][key];
+                    }
+                }
+            });
+            document.documentElement.setAttribute('lang', lang);
+        }
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'fr' ? 'en' : 'fr';
+            applyTranslations(currentLang);
+            updateLangToggleUI();
+        }
+
+        function updateLangToggleUI() {
+            const frEl = document.getElementById('langFR');
+            const enEl = document.getElementById('langEN');
+            
+            if (currentLang === 'fr') {
+                frEl.classList.add('text-white');
+                frEl.classList.remove('text-slate-500');
+                enEl.classList.add('text-slate-500');
+                enEl.classList.remove('text-white');
+            } else {
+                enEl.classList.add('text-white');
+                enEl.classList.remove('text-slate-500');
+                frEl.classList.add('text-slate-500');
+                frEl.classList.remove('text-white');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            applyTranslations(currentLang);
+            updateLangToggleUI();
+        });
+    </script>
+</body>
+</html>

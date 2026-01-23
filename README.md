@@ -6,7 +6,15 @@
 
 [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/flavien-bardet-38649a18b/)
 [![Email](https://img.shields.io/badge/-Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:issadun@gmail.com)
-[![Portfolio](https://img.shields.io/badge/-Portfolio-10B981?style=for-the-badge&logo=vercel&logoColor=white)](https://flavienbardet.com)
+[![Portfolio](https://img.shields.io/badge/-Portfolio_Web-10B981?style=for-the-badge&logo=github&logoColor=white)](https://flavienbardet.github.io/Portfolio/)
+
+</div>
+
+<div align="center">
+
+### 🌐 [Voir le Portfolio Web Interactif →](https://flavienbardet.github.io/Portfolio/)
+
+*Site Bio-Digital avec design Glassmorphism, documentation des livrables et études de cas*
 
 </div>
 
