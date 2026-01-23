@@ -65,7 +65,7 @@ Mon profil hybride combine l'**empathie du praticien** avec la **puissance techn
 | **Power BI** | | ✓ | ✓ | | ✓ | | | | | |
 | **DAX (Mesures)** | | ✓ | ✓ | | ✓ | | | | | |
 | **Power Query (ETL)** | | ✓ | ✓ | | ✓ | | | ✓ | | |
-| **Excel** | | | | | | | | | | ✓ |
+| **Excel** | | ✓ | | | | | ✓ | ✓ | | ✓ |
 | **Git / GitHub** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 
 <details>
