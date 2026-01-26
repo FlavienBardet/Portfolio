@@ -426,8 +426,17 @@
                         </div>
                     </div>
                     
+                    <!-- Image Gantt -->
+                    <div class="mb-4 rounded-lg overflow-hidden border border-slate-700/50 group-hover:border-cyan-500/30 transition-all duration-300">
+                        <img 
+                            src="assets/images/diagramme_gantt.png" 
+                            alt="Diagramme de Gantt - Planning Projet Portfolio"
+                            class="w-full h-auto object-cover group-hover:shadow-[0_0_20px_rgba(6,182,212,0.15)] transition-all duration-300"
+                        >
+                    </div>
+                    
                     <p class="text-slate-400 text-sm leading-relaxed mb-4">
-                        Orchestration Agile sur 8 semaines : Cadrage, Data Prep, Développement IA et Recette. Pilotage rigoureux garantissant le respect des délais.
+                        Suivi du projet Portfolio : Définition des objectifs SMART et orchestration agile sur 8 semaines. Le projet est segmenté en 4 phases clés : Cadrage stratégique, Data Preparation (Sourcing & Veille), Développement assisté par IA, et Recette finale (QA & Soutenance).
                     </p>
                     
                     <div class="flex flex-wrap gap-2 mb-5">
@@ -435,10 +444,17 @@
                         <span class="px-2.5 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-mono">Rigueur Méthodologique</span>
                     </div>
                     
-                    <button onclick="toggleGanttCard()" class="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-900/80 border border-cyan-500/40 text-cyan-400 text-sm font-bold rounded-xl hover:bg-cyan-500/10 hover:shadow-[0_0_20px_rgba(6,182,212,0.2)] transition-all group/btn">
-                        <i data-lucide="calendar" class="w-4 h-4"></i>
-                        <span>Voir le planning</span>
-                    </button>
+                    <!-- Dualité des Actions -->
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <button onclick="toggleGanttCard()" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-slate-900/80 border border-cyan-500/40 text-cyan-400 text-sm font-bold rounded-xl hover:bg-cyan-500/10 hover:shadow-[0_0_20px_rgba(6,182,212,0.2)] transition-all group/btn flex-1">
+                            <i data-lucide="calendar" class="w-4 h-4"></i>
+                            <span>Voir le planning</span>
+                        </button>
+                        <a href="assets/data/diagramme_gantt.pbix" download class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-slate-900/80 border border-slate-600/40 text-slate-300 text-sm font-bold rounded-xl hover:bg-slate-800/80 hover:border-cyan-500/40 hover:text-cyan-400 hover:shadow-[0_0_20px_rgba(6,182,212,0.2)] transition-all group/btn flex-1">
+                            <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                            <span>Télécharger le Dashboard (PBIX)</span>
+                        </a>
+                    </div>
                 </div>
 
                 <!-- ============================================ -->
