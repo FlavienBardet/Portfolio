@@ -1,0 +1,40 @@
+---
+description: Standards HTML/CSS pour le portfolio
+globs: ["**/*.html"]
+autoAttach: true
+---
+
+# Standards HTML & CSS
+
+## HTML Sémantique
+- Utiliser `<header>`, `<main>`, `<footer>`, `<section>`, `<article>`, `<nav>`
+- `<button>` pour les éléments cliquables (pas `<div>`)
+- `<a>` pour les liens avec `href` obligatoire
+- `<img>` avec attribut `alt` descriptif
+- Pas d'éléments dépréciés (`<font>`, `<center>`)
+
+## Tailwind CSS Best Practices
+- **Utiliser uniquement les classes core** : `bg-slate-950`, `text-emerald-500`, etc.
+- Pas de classes Tailwind avec `@apply` (utiliser inline)
+- Préférer les utility classes aux custom CSS
+- Responsive : `sm:`, `md:`, `lg:`, `xl:` breakpoints
+- Dark mode : Classe `dark:` si nécessaire
+
+## Responsive Design
+- Mobile-First : styles de base pour mobile, puis `md:` et `lg:`
+- Touch targets : Min 44x44px pour éléments tactiles
+- Images responsive : `srcset` et `sizes` si applicable
+- Viewport meta tag obligatoire
+
+## Accessibilité
+- Rôles ARIA si nécessaire (`role="button"`, `aria-label`)
+- Contraste texte/fond conforme WCAG AA
+- Navigation clavier fonctionnelle (`:focus` visible)
+- Alt text descriptif pour images
+- Landmarks sémantiques pour lecteurs d'écran
+
+## Performance
+- Minifier le CSS inline si possible
+- Lazy loading pour images : `loading="lazy"`
+- Optimiser les animations (préférer `transform` et `opacity`)
+- Limiter les reflows/repaints

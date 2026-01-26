@@ -1,0 +1,90 @@
+---
+description: Identité visuelle "Bio-Digital" du portfolio Aéroworld
+globs: ["**/*.html"]
+autoAttach: true
+---
+
+# Identité Visuelle "Bio-Digital"
+
+## Concept
+Alliance de la rigueur Data (froid/structuré) et de la dimension psychologique (organique/humain).
+
+## Palette de Couleurs STRICTE
+### Couleurs Principales
+- **Background** : `bg-slate-950` (#020617) - Noir profond
+- **Accent Primaire** : `text-emerald-500` (#10b981) - Vert néon (CTA, KPIs, succès)
+- **Accent Secondaire** : `text-cyan-500` (#06b6d4) - Product/Strategy
+- **Accent Tertiaire** : `text-purple-500` (#8b5cf6) - Leadership/Soft Skills
+
+### Couleurs de Texte
+- **Titres** : `text-white`
+- **Corps** : `text-slate-300`
+- **Secondaire** : `text-slate-400` ou `text-slate-500`
+
+### Couleurs d'État
+- **Succès** : `text-emerald-400`
+- **Info** : `text-cyan-400`
+- **Warning** : `text-amber-400`
+- **Erreur** : `text-red-400`
+
+## Typographie
+- **Police principale** : Inter (sans-serif)
+- **Police code** : JetBrains Mono (monospace)
+- **Hiérarchie** :
+  - H1 : `text-5xl lg:text-6xl font-extrabold`
+  - H2 : `text-4xl md:text-5xl font-bold`
+  - H3 : `text-2xl font-bold`
+  - Body : `text-base` ou `text-lg`
+  - Small : `text-sm` ou `text-xs`
+
+## Style UI - Glassmorphism
+```css
+/* Classe standard .glass-card */
+.glass-card {
+    background: rgba(30, 41, 59, 0.35);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+```
+
+## Composants Visuels Clés
+
+### Tech Tags
+```html
+<span class="tech-tag text-emerald-400 border-emerald-500/20">
+    PYTHON
+</span>
+```
+
+### Boutons CTA
+```html
+<button class="px-8 py-4 bg-emerald-500/10 border border-emerald-500/50 
+               text-emerald-400 font-bold rounded-xl 
+               hover:bg-emerald-500/20 
+               shadow-[0_0_20px_rgba(16,185,129,0.15)]">
+    Action
+</button>
+```
+
+### Cards Projet
+- Glassmorphism background
+- Hover : translateY(-4px) + shadow augmentée
+- Border subtle au repos, plus visible au hover
+
+## Animations
+- **Subtiles et smooth** : `transition-all duration-300 ease`
+- **Pas de bounce** : Préférer `ease-in-out` ou `cubic-bezier`
+- **DNA Animation** : Déjà implémentée, à conserver telle quelle
+- **Blob ambience** : Déjà implémentée, à conserver
+
+## Règles d'Or Design
+1. ✅ Toujours utiliser la palette définie (pas d'impro)
+2. ✅ Glassmorphism pour les cards importantes
+3. ✅ Emerald-500 pour actions/succès
+4. ✅ Cyan-500 pour Product/Strategy
+5. ✅ Purple-500 pour Leadership
+6. ✅ Animations subtiles (pas de flash)
+7. ❌ Jamais de couleurs vives non définies
+8. ❌ Jamais de gradient flashy non justifié

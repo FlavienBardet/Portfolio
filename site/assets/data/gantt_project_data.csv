@@ -1,0 +1,22 @@
+Phase;Tache;Date_Debut;Date_Fin;Livrable;Avancement;Priorite;Responsable
+Cadrage;Analyse des besoins AéroWorld;2025-12-02;2025-12-06;Analyse du Besoin (PDF);100;Haute;Flavien Bardet
+Cadrage;Rédaction Cahier des Charges;2025-12-09;2025-12-13;Cahier des Charges (PDF);100;Haute;Flavien Bardet
+Cadrage;Définition charte Bio-Digital;2025-12-09;2025-12-11;Charte Graphique;100;Moyenne;Flavien Bardet
+Cadrage;Setup architecture projet;2025-12-12;2025-12-13;Structure GitHub;100;Haute;Flavien Bardet
+Data Prep;Rédaction Article Veille Tech;2025-12-16;2025-12-20;Article de Veille (PDF);100;Haute;Flavien Bardet
+Data Prep;Création Guide Méthodologique BI;2025-12-16;2025-12-18;Guide Power BI (PDF);100;Moyenne;Flavien Bardet
+Data Prep;Enregistrement Podcast NotebookLM;2025-12-19;2025-12-20;Podcast Audio (M4A);100;Moyenne;Flavien Bardet
+Data Prep;Collecte assets visuels;2025-12-23;2025-12-27;Assets Images/CV;100;Basse;Flavien Bardet
+Développement;Développement index.html (Portfolio);2025-12-30;2026-01-03;Page Accueil;100;Haute;Flavien Bardet
+Développement;Développement livrables.html;2026-01-06;2026-01-08;Page Livrables;100;Haute;Flavien Bardet
+Développement;Développement veille-deep-research.html;2026-01-09;2026-01-15;Page Veille Tech;100;Haute;Flavien Bardet
+Développement;Intégration Audio Player;2026-01-13;2026-01-14;Lecteur NotebookLM;100;Moyenne;Flavien Bardet
+Développement;Section CRAA Pipeline;2026-01-14;2026-01-15;Méthodologie Interactive;100;Moyenne;Flavien Bardet
+Développement;Section ROI & KPIs;2026-01-15;2026-01-16;Dashboard Impact;100;Moyenne;Flavien Bardet
+Développement;Structuration GitHub (P2-P10);2026-01-16;2026-01-17;Référentiel Projets;100;Haute;Flavien Bardet
+Développement;README Global & Matrice;2026-01-17;2026-01-18;Documentation GitHub;100;Moyenne;Flavien Bardet
+Launch;Configuration GitHub Actions;2026-01-20;2026-01-21;CI/CD Pipeline;100;Haute;Flavien Bardet
+Launch;Déploiement GitHub Pages;2026-01-21;2026-01-22;Site en Production;100;Haute;Flavien Bardet
+Launch;Tests & Recette liens PDF;2026-01-22;2026-01-23;Validation Fonctionnelle;100;Haute;Flavien Bardet
+Launch;Enregistrement Vidéo Démo RAG;2026-01-24;2026-01-26;Vidéo Démonstration;0;Haute;Flavien Bardet
+Launch;Préparation Soutenance;2026-01-27;2026-01-31;Support Présentation;0;Haute;Flavien Bardet
