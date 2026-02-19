@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Livrables du projet Aéroworld : cahier des charges, veille technologique, rétroplanning Gantt et démonstration technique du portfolio Data Analyst.">
     <title>FB | Livrables - Projet Aéroworld</title>
     
     <!-- Fonts -->
@@ -460,8 +461,8 @@
                                 <span class="px-2.5 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-mono">Rigueur Méthodologique</span>
                             </div>
                             <div class="flex flex-col sm:flex-row gap-3">
-                                <button onclick="toggleGanttCard()" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-slate-900/80 border border-cyan-500/40 text-cyan-400 text-sm font-bold rounded-xl hover:bg-cyan-500/10 hover:shadow-[0_0_20px_rgba(6,182,212,0.2)] transition-all group/btn">
-                                    <i data-lucide="calendar" class="w-4 h-4"></i>
+                                <button type="button" onclick="toggleGanttCard()" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-slate-900/80 border border-cyan-500/40 text-cyan-400 text-sm font-bold rounded-xl hover:bg-cyan-500/10 hover:shadow-[0_0_20px_rgba(6,182,212,0.2)] transition-all group/btn" aria-label="Afficher le diagramme de Gantt et le rétroplanning">
+                                    <i data-lucide="calendar" class="w-4 h-4" aria-hidden="true"></i>
                                     <span>Voir le planning</span>
                                 </button>
                                 <a href="assets/data/diagramme_gantt.pbix" download class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-slate-900/80 border border-slate-600/40 text-slate-300 text-sm font-bold rounded-xl hover:bg-slate-800/80 hover:border-cyan-500/40 hover:text-cyan-400 hover:shadow-[0_0_20px_rgba(6,182,212,0.2)] transition-all group/btn">
@@ -525,8 +526,8 @@
                             <i data-lucide="gantt-chart" class="w-6 h-6 text-cyan-400"></i>
                             Rétroplanning & Pilotage
                         </h3>
-                        <button onclick="toggleGanttCard()" class="p-2 rounded-lg bg-slate-800/50 border border-slate-700 text-slate-400 hover:text-white transition-all">
-                            <i data-lucide="x" class="w-5 h-5"></i>
+                        <button type="button" onclick="toggleGanttCard()" class="p-2 rounded-lg bg-slate-800/50 border border-slate-700 text-slate-400 hover:text-white transition-all" aria-label="Fermer le planning">
+                            <i data-lucide="x" class="w-5 h-5" aria-hidden="true"></i>
                         </button>
                     </div>
                     

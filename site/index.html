@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio de Flavien Bardet, Lead Data Analyst & AI Engineer en alternance. Expert en diagnostic neurodéveloppemental reconverti à l'IA, projets Data Science, Power BI et GenAI.">
     <title>FB | Lead Data Analyst Portfolio</title>
     
     <!-- Fonts -->
@@ -473,7 +474,7 @@
     <nav class="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
         <div class="bg-slate-950/70 backdrop-blur-xl border border-white/10 rounded-full p-2 pl-6 pr-2 shadow-2xl shadow-black/20 max-w-4xl w-full flex justify-between items-center transition-all duration-300 hover:border-white/20">
             
-            <a href="#" class="text-xl font-bold text-white tracking-tight mr-4 md:mr-8 hover:opacity-80 transition-opacity">
+            <a href="#" class="text-xl font-bold text-white tracking-tight mr-4 md:mr-8 hover:opacity-80 transition-opacity" aria-label="Retour en haut de page - Accueil">
                 FB<span class="text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.6)]">.</span>
             </a>
 
@@ -489,11 +490,11 @@
             </div>
 
             <!-- Language Toggle FR/EN - Dynamic -->
-            <div id="langToggle" class="hidden md:flex items-center gap-1 px-3 py-1.5 bg-slate-900/50 rounded-full border border-white/10 cursor-pointer hover:border-white/20 transition-all" onclick="toggleLanguage()">
+            <button type="button" id="langToggle" class="hidden md:flex items-center gap-1 px-3 py-1.5 bg-slate-900/50 rounded-full border border-white/10 hover:border-white/20 transition-all" onclick="toggleLanguage()" aria-label="Choisir la langue : Français ou English">
                 <span id="langFR" class="text-white text-xs font-bold transition-colors">FR</span>
-                <span class="text-slate-600">/</span>
+                <span class="text-slate-600" aria-hidden="true">/</span>
                 <span id="langEN" class="text-slate-500 text-xs font-bold transition-colors">EN</span>
-            </div>
+            </button>
 
             <a href="assets/cv/cvflavienbardet.pdf" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-2 px-6 py-2.5 rounded-full bg-slate-900/50 border border-cyan-400/30 text-cyan-400 text-sm font-medium hover:bg-cyan-400/10 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] hover:border-cyan-400/80 transition-all duration-300 ml-auto md:ml-0">
                 <span>Mon CV</span>
@@ -551,7 +552,7 @@
                         <div class="absolute -right-4 -top-4 w-2/3 h-2/3 bg-emerald-500/20 rounded-full blur-[80px] pointer-events-none -z-10"></div>
                         <div class="absolute -left-4 -bottom-4 w-1/2 h-1/2 bg-blue-500/10 rounded-full blur-[60px] pointer-events-none -z-10"></div>
                         <div class="w-full h-full rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl relative bg-slate-900">
-                            <img src="assets/images/photoprofil.jpg" alt="Flavien Bardet - Behavioral Data Strategist" class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105">
+                            <img src="assets/images/photoprofil.jpg" alt="Flavien Bardet - Behavioral Data Strategist" class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" loading="lazy">
                         </div>
                     </div>
                 </div>
@@ -762,7 +763,7 @@
                     <div class="relative group/image order-1 h-full min-h-[240px]">
                         <div class="absolute inset-0 bg-cyan-500/10 blur-[80px] rounded-full opacity-30 group-hover/image:opacity-50 transition-opacity duration-700 animate-pulse-slow pointer-events-none"></div>
                         <div class="relative overflow-hidden rounded-2xl border border-white/5 bg-slate-900/50 h-full min-h-0">
-                            <img src="assets/images/projet-vanguard.png" alt="Projet Vanguard - Analyse Gaming Steam" class="w-full h-full object-cover transition-transform duration-700 group-hover/image:scale-[1.03]">
+                            <img src="assets/images/projet-vanguard.png" alt="Projet Vanguard - Analyse Gaming Steam" class="w-full h-full object-cover transition-transform duration-700 group-hover/image:scale-[1.03]" loading="lazy">
                             <div class="absolute inset-0 bg-gradient-to-t from-[#0b0f19]/60 via-transparent to-transparent pointer-events-none"></div>
                         </div>
                     </div>
@@ -840,7 +841,7 @@
                     <div class="relative group/image order-1 lg:order-2 h-full min-h-[240px]">
                         <div class="absolute inset-0 bg-emerald-500/10 blur-[80px] rounded-full opacity-30 group-hover/image:opacity-50 transition-opacity duration-700 animate-pulse-slow pointer-events-none"></div>
                         <div class="relative overflow-hidden rounded-2xl border border-white/5 bg-slate-900/50 h-full min-h-0 p-4 flex items-center justify-center">
-                            <img src="https://images.unsplash.com/photo-1518932945647-7a1c969f8be2?q=80&w=2670&auto=format&fit=crop" alt="Jupyter Notebook Analysis" class="w-full h-full object-contain transition-transform duration-700 group-hover/image:scale-[1.03]">
+                            <img src="https://images.unsplash.com/photo-1518932945647-7a1c969f8be2?q=80&w=2670&auto=format&fit=crop" alt="Jupyter Notebook Analysis" class="w-full h-full object-contain transition-transform duration-700 group-hover/image:scale-[1.03]" loading="lazy">
                             <div class="absolute inset-0 bg-gradient-to-t from-[#0b0f19]/60 via-transparent to-transparent pointer-events-none"></div>
                         </div>
                     </div>
@@ -928,7 +929,7 @@
                     <div class="relative group/image order-1 lg:order-2 h-full min-h-[240px]">
                         <div class="absolute inset-0 bg-neon-cyan/10 blur-[80px] rounded-full opacity-40 group-hover/image:opacity-60 transition-opacity duration-700 animate-pulse-slow pointer-events-none"></div>
                         <div class="relative overflow-hidden rounded-2xl border border-white/5 bg-slate-900/50 h-full min-h-0">
-                            <img src="assets/images/AI360image.png" alt="AI Strategy & Conversational Intelligence - AImanager360" class="w-full h-full object-cover transition-transform duration-700 group-hover/image:scale-[1.03]">
+                            <img src="assets/images/AI360image.png" alt="AI Strategy & Conversational Intelligence - AImanager360" class="w-full h-full object-cover transition-transform duration-700 group-hover/image:scale-[1.03]" loading="lazy">
                             <div class="absolute inset-0 bg-gradient-to-t from-[#0b0f19]/60 via-transparent to-transparent pointer-events-none"></div>
                         </div>
                     </div>
@@ -1026,7 +1027,7 @@
                     <div class="relative group/image order-1 h-full min-h-[240px]">
                         <div class="absolute inset-0 bg-emerald-500/10 blur-[80px] rounded-full opacity-40 group-hover/image:opacity-60 transition-opacity duration-700 animate-pulse-slow pointer-events-none"></div>
                         <div class="relative overflow-hidden rounded-2xl border border-white/5 bg-slate-900/50 h-full min-h-0">
-                            <img src="assets/images/projet9image.png" alt="Audit BI & Pilotage E-commerce" class="w-full h-full object-cover transition-transform duration-700 group-hover/image:scale-[1.03]">
+                            <img src="assets/images/projet9image.png" alt="Audit BI & Pilotage E-commerce" class="w-full h-full object-cover transition-transform duration-700 group-hover/image:scale-[1.03]" loading="lazy">
                             <div class="absolute inset-0 bg-gradient-to-t from-[#0b0f19]/60 via-transparent to-transparent pointer-events-none"></div>
                         </div>
                     </div>
@@ -1079,11 +1080,11 @@
                 <!-- Toggle -->
                 <div class="flex justify-center lg:justify-start mb-12">
                     <div class="inline-flex p-1 bg-slate-900/80 rounded-full border border-white/10 backdrop-blur-md relative">
-                        <button onclick="switchLogTab('experience')" id="tab-log-exp" class="px-8 py-2.5 rounded-full text-sm font-bold transition-all duration-300 bg-white text-slate-950 shadow-lg flex items-center">
-                            <i data-lucide="briefcase" class="w-4 h-4 inline mr-2"></i> <span data-ml-key="toggle_exp">Expériences</span>
+                        <button type="button" onclick="switchLogTab('experience')" id="tab-log-exp" class="px-8 py-2.5 rounded-full text-sm font-bold transition-all duration-300 bg-white text-slate-950 shadow-lg flex items-center" aria-label="Afficher les expériences professionnelles" aria-pressed="true">
+                            <i data-lucide="briefcase" class="w-4 h-4 inline mr-2" aria-hidden="true"></i> <span data-ml-key="toggle_exp">Expériences</span>
                         </button>
-                        <button onclick="switchLogTab('education')" id="tab-log-edu" class="px-8 py-2.5 rounded-full text-sm font-bold text-slate-400 hover:text-white transition-all duration-300 flex items-center">
-                            <i data-lucide="graduation-cap" class="w-4 h-4 inline mr-2"></i> <span data-ml-key="toggle_edu">Formations</span>
+                        <button type="button" onclick="switchLogTab('education')" id="tab-log-edu" class="px-8 py-2.5 rounded-full text-sm font-bold text-slate-400 hover:text-white transition-all duration-300 flex items-center" aria-label="Afficher les formations" aria-pressed="false">
+                            <i data-lucide="graduation-cap" class="w-4 h-4 inline mr-2" aria-hidden="true"></i> <span data-ml-key="toggle_edu">Formations</span>
                         </button>
                     </div>
                 </div>
@@ -1410,7 +1411,7 @@
                 
                 <!-- Left: Logo + Copyright -->
                 <div class="flex flex-col gap-3">
-                    <a href="#" class="text-2xl font-bold text-white tracking-tight hover:opacity-80 transition-opacity">
+                    <a href="#" class="text-2xl font-bold text-white tracking-tight hover:opacity-80 transition-opacity" aria-label="Retour en haut de page - Accueil">
                         FB<span class="text-emerald-500">.</span>
                     </a>
                     <p class="text-slate-500 text-sm font-light">
@@ -1469,19 +1470,19 @@
             if (logId === 'experience') {
                 expList.classList.remove('hidden');
                 eduList.classList.add('hidden');
-                
+                expBtn.setAttribute('aria-pressed', 'true');
+                eduBtn.setAttribute('aria-pressed', 'false');
                 expBtn.classList.remove('text-slate-400');
                 expBtn.classList.add('bg-white', 'text-slate-950', 'shadow-lg');
-                
                 eduBtn.classList.add('text-slate-400');
                 eduBtn.classList.remove('bg-white', 'text-slate-950', 'shadow-lg');
             } else {
                 expList.classList.add('hidden');
                 eduList.classList.remove('hidden');
-                
+                expBtn.setAttribute('aria-pressed', 'false');
+                eduBtn.setAttribute('aria-pressed', 'true');
                 eduBtn.classList.remove('text-slate-400');
                 eduBtn.classList.add('bg-white', 'text-slate-950', 'shadow-lg');
-                
                 expBtn.classList.add('text-slate-400');
                 expBtn.classList.remove('bg-white', 'text-slate-950', 'shadow-lg');
             }
