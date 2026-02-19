@@ -1,0 +1,1667 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FB | Lead Data Analyst Portfolio</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    
+    <!-- Icons (Lucide) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        slate: {
+                            850: '#151e2e',
+                            900: '#0f172a',
+                            950: '#020617',
+                            1000: '#0b0f19', 
+                        },
+                        neon: {
+                            cyan: '#06b6d4',
+                            purple: '#8b5cf6',
+                            pink: '#ec4899',
+                            emerald: '#10b981'
+                        },
+                        card: {
+                            dark: '#111318', 
+                        }
+                    },
+                    animation: {
+                        'blob': 'blob 10s infinite',
+                        'float-slow': 'float 8s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-12px)' },
+                        }
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Smooth Scroll Padding for Fixed Header */
+        html {
+            scroll-padding-top: 120px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #334155; 
+            border-radius: 10px;
+        }
+
+        /* Standard Glass Card */
+        .glass-card {
+            background: rgba(30, 41, 59, 0.35);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1), inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+        }
+        
+        .glass-card:hover {
+            background: rgba(30, 41, 59, 0.55);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 25px 50px -12px rgba(6, 182, 212, 0.15), inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
+        }
+
+        .bg-noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Tech Tag Style */
+        .tech-tag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.6rem 1.4rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            background-color: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: 'JetBrains Mono', monospace;
+            transition: all 0.3s ease;
+        }
+        .tech-tag:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            background-color: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
+        }
+
+        /* Project Card Refined Styles */
+        .project-card-title {
+            margin-bottom: 1.5rem !important;
+        }
+
+        .project-card-subtitle {
+            color: #f59e0b !important;
+            font-size: 1.125rem !important;
+        }
+
+        .project-card-description {
+            max-width: 42rem !important;
+            text-align: justify !important;
+            line-height: 1.6 !important;
+        }
+
+        /* Skills Tab Animation */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .skill-dash {
+            height: 6px;
+            width: 24px;
+            border-radius: 4px;
+            background-color: #1e293b; 
+            transition: all 0.3s ease;
+        }
+        .skill-dash.active {
+            background-color: #10b981; 
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+        }
+        .skill-dash.active-cyan {
+            background-color: #06b6d4; 
+            box-shadow: 0 0 8px rgba(6, 182, 212, 0.6);
+        }
+        .skill-dash.active-purple {
+            background-color: #8b5cf6; 
+            box-shadow: 0 0 8px rgba(139, 92, 246, 0.6);
+        }
+        
+        /* Cyberpunk Dashboard Skills */
+        .skill-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        .skill-item:hover {
+            background: rgba(30, 41, 59, 0.5);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+        .skill-name {
+            color: #e2e8f0;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 60%;
+            transition: color 0.3s ease;
+        }
+        .skill-item:hover .skill-name {
+            color: #fff;
+        }
+        .skill-gauge {
+            flex: 1;
+            max-width: 100px;
+            height: 6px;
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+        /* 3 discrete marks */
+        .skill-gauge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 33.33%;
+            width: 1px;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 2;
+        }
+        .skill-gauge::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 66.66%;
+            width: 1px;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 2;
+        }
+        .skill-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        .skill-fill::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: white;
+            filter: blur(2px);
+            opacity: 0.8;
+        }
+        .skill-fill--emerald {
+            background: linear-gradient(90deg, #059669, #10b981, #34d399);
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.6), inset 0 1px 0 rgba(255,255,255,0.2);
+        }
+        .skill-fill--emerald::after {
+            box-shadow: 0 0 8px 3px rgba(52, 211, 153, 0.8);
+        }
+        .skill-fill--cyan {
+            background: linear-gradient(90deg, #0891b2, #06b6d4, #22d3ee);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.6), inset 0 1px 0 rgba(255,255,255,0.2);
+        }
+        .skill-fill--cyan::after {
+            box-shadow: 0 0 8px 3px rgba(34, 211, 238, 0.8);
+        }
+        .skill-fill--purple {
+            background: linear-gradient(90deg, #7c3aed, #8b5cf6, #a855f7);
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.6), inset 0 1px 0 rgba(255,255,255,0.2);
+        }
+        .skill-fill--purple::after {
+            box-shadow: 0 0 8px 3px rgba(168, 85, 247, 0.8);
+        }
+
+        /* Timeline Card Style */
+        .log-card {
+            background-color: #0b0f19;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .group:hover .log-card {
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+            background-color: #111520;
+        }
+        
+        .timeline-pill {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.35rem 0.85rem;
+            border-radius: 9999px;
+            background-color: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #94a3b8;
+        }
+
+        /* DNA ANIMATION V8 - Minimalist Bio-Digital (Flat Design + Majestic Motion) */
+        .dna-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            height: 320px;
+            width: 120px;
+            perspective: 800px;
+        }
+        .dna-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 8px;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+        
+        /* Source Unique - Flat Design Data Points */
+        .dna-node {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            margin-top: -4px;
+            will-change: transform, opacity;
+        }
+        
+        /* Brin A - Emeraude Néon (Flat + Subtle Glow) */
+        .dna-node--a {
+            background-color: #22c55e;
+            box-shadow: 0 0 6px 1px rgba(34, 197, 94, 0.4);
+            animation: helixRotateA 14s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+        }
+        
+        /* Brin B - Cyan Néon (MÊME traitement que A) */
+        .dna-node--b {
+            background-color: #06b6d4; 
+            box-shadow: 0 0 6px 1px rgba(6, 182, 212, 0.4);
+            animation: helixRotateB 14s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+        }
+        
+        .dna-line {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            height: 1px;
+            width: 0;
+            background: linear-gradient(90deg, rgba(34, 197, 94, 0.6), rgba(6, 182, 212, 0.6));
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            opacity: 0.3; 
+            animation: stretchLine 14s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+        }
+        
+        /* Keyframes MAJESTIC - Mouvement lent et hypnotique */
+        @keyframes helixRotateA {
+            0%, 100% { 
+                transform: translateX(45px) scale(1); 
+                z-index: 5; 
+                opacity: 0.95;
+                box-shadow: 0 0 6px 1px rgba(34, 197, 94, 0.4);
+            }
+            25% { 
+                transform: translateX(0px) scale(1.15); 
+                z-index: 10; 
+                opacity: 1;
+                box-shadow: 0 0 10px 2px rgba(34, 197, 94, 0.5);
+            }
+            50% { 
+                transform: translateX(-45px) scale(1); 
+                z-index: 5; 
+                opacity: 0.6;
+                box-shadow: 0 0 4px 1px rgba(34, 197, 94, 0.25);
+            }
+            75% { 
+                transform: translateX(0px) scale(0.85); 
+                z-index: 1; 
+                opacity: 0.4;
+                box-shadow: 0 0 3px 0px rgba(34, 197, 94, 0.15);
+            }
+        }
+        
+        /* B - Miroir parfait de A */
+        @keyframes helixRotateB {
+            0%, 100% { 
+                transform: translateX(-45px) scale(1); 
+                z-index: 5; 
+                opacity: 0.6;
+                box-shadow: 0 0 4px 1px rgba(6, 182, 212, 0.25);
+            }
+            25% { 
+                transform: translateX(0px) scale(0.85); 
+                z-index: 1; 
+                opacity: 0.4;
+                box-shadow: 0 0 3px 0px rgba(6, 182, 212, 0.15);
+            }
+            50% { 
+                transform: translateX(45px) scale(1); 
+                z-index: 5; 
+                opacity: 0.95;
+                box-shadow: 0 0 6px 1px rgba(6, 182, 212, 0.4);
+            }
+            75% { 
+                transform: translateX(0px) scale(1.15); 
+                z-index: 10; 
+                opacity: 1;
+                box-shadow: 0 0 10px 2px rgba(6, 182, 212, 0.5);
+            }
+        }
+        
+        @keyframes stretchLine {
+            0%, 100% { width: 90px; opacity: 0.35; }
+            25% { width: 0px; opacity: 0; }
+            50% { width: 90px; opacity: 0.35; }
+            75% { width: 0px; opacity: 0; }
+        }
+        .particle {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
+            animation: floatParticle 8s infinite ease-in-out;
+        }
+        @keyframes floatParticle {
+            0% { transform: translate(0, 0); opacity: 0; }
+            20% { opacity: var(--tw-opacity); }
+            80% { opacity: var(--tw-opacity); }
+            100% { transform: translate(var(--tw-translate-x), var(--tw-translate-y)); opacity: 0; }
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-300 font-sans min-h-screen selection:bg-neon-cyan selection:text-white overflow-x-hidden">
+
+    <div class="bg-noise"></div>
+
+    <!-- Background Ambience -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="absolute -top-20 -left-20 w-96 h-96 bg-neon-purple/20 rounded-full mix-blend-screen filter blur-[120px] opacity-30 animate-blob"></div>
+        <div class="absolute top-1/3 right-0 w-96 h-96 bg-neon-cyan/20 rounded-full mix-blend-screen filter blur-[120px] opacity-25 animate-blob animation-delay-2000"></div>
+    </div>
+
+    <!-- CAPSULE HEADER -->
+    <nav class="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
+        <div class="bg-slate-950/70 backdrop-blur-xl border border-white/10 rounded-full p-2 pl-6 pr-2 shadow-2xl shadow-black/20 max-w-4xl w-full flex justify-between items-center transition-all duration-300 hover:border-white/20">
+            
+            <a href="#" class="text-xl font-bold text-white tracking-tight mr-4 md:mr-8 hover:opacity-80 transition-opacity">
+                FB<span class="text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.6)]">.</span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-1">
+                <a href="#about" class="px-5 py-2.5 text-sm font-medium text-slate-400 hover:text-white transition-all duration-300 rounded-full hover:bg-white/5 hover:shadow-[0_0_15px_rgba(255,255,255,0.15)]" data-ml-key="nav_about">À propos</a>
+                <a href="#skills" class="px-5 py-2.5 text-sm font-medium text-slate-400 hover:text-white transition-all duration-300 rounded-full hover:bg-white/5 hover:shadow-[0_0_15px_rgba(255,255,255,0.15)]" data-ml-key="nav_skills">Compétences</a>
+                <a href="#projects" class="px-5 py-2.5 text-sm font-medium text-slate-400 hover:text-white transition-all duration-300 rounded-full hover:bg-white/5 hover:shadow-[0_0_15px_rgba(255,255,255,0.15)]" data-ml-key="nav_projects">Projets</a>
+                <a href="livrables.html" class="px-5 py-2.5 text-sm font-medium text-slate-400 hover:text-white transition-all duration-300 rounded-full hover:bg-white/5 hover:shadow-[0_0_15px_rgba(255,255,255,0.15)]" data-ml-key="nav_livrables">Livrables</a>
+                <a href="https://github.com/FlavienBardet/Portfolio" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 text-sm font-medium text-slate-400 hover:text-white transition-all duration-300 rounded-full hover:bg-white/5 hover:shadow-[0_0_15px_rgba(255,255,255,0.15)] inline-flex items-center gap-1.5">
+                    <i data-lucide="github" class="w-4 h-4"></i>
+                    <span>GitHub</span>
+                </a>
+            </div>
+
+            <!-- Language Toggle FR/EN - Dynamic -->
+            <div id="langToggle" class="hidden md:flex items-center gap-1 px-3 py-1.5 bg-slate-900/50 rounded-full border border-white/10 cursor-pointer hover:border-white/20 transition-all" onclick="toggleLanguage()">
+                <span id="langFR" class="text-white text-xs font-bold transition-colors">FR</span>
+                <span class="text-slate-600">/</span>
+                <span id="langEN" class="text-slate-500 text-xs font-bold transition-colors">EN</span>
+            </div>
+
+            <a href="assets/cv/cvflavienbardet.pdf" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-2 px-6 py-2.5 rounded-full bg-slate-900/50 border border-cyan-400/30 text-cyan-400 text-sm font-medium hover:bg-cyan-400/10 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] hover:border-cyan-400/80 transition-all duration-300 ml-auto md:ml-0">
+                <span>Mon CV</span>
+                <i data-lucide="arrow-up-right" class="w-4 h-4 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform"></i>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-40 pb-16">
+        
+        <!-- HERO SECTION (Ticket 1: alignements portrait/stat bar, bouton baseline, mots-clés) -->
+        <section class="mb-32 relative">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-end relative">
+                <!-- Colonne gauche : Stat bar, titre, pitch, CTA aligné bas avec photo -->
+                <div class="z-20 order-1 flex flex-col items-start text-left relative h-full min-h-0">
+                    <!-- Status Tags Bar -->
+                    <div class="inline-flex flex-wrap items-center gap-3 px-4 py-3 mb-8 rounded-full bg-slate-800/30 border border-slate-700/50 backdrop-blur-md">
+                        <div class="inline-flex items-center gap-2">
+                            <span class="relative flex h-2 w-2">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400 shadow-[0_0_6px_rgba(16,185,129,0.6)]"></span>
+                            </span>
+                            <span class="text-emerald-400 text-xs font-mono tracking-wide uppercase font-semibold" data-ml-key="hero_status">Open</span>
+                        </div>
+                        <span class="w-px h-4 bg-white/10"></span>
+                        <div class="inline-flex items-center gap-1.5">
+                            <i data-lucide="map-pin" class="w-3 h-3 text-fuchsia-400"></i>
+                            <span class="text-fuchsia-400 text-xs font-mono tracking-wide uppercase font-semibold" data-ml-key="hero_location">Toulouse</span>
+                        </div>
+                        <span class="w-px h-4 bg-white/10"></span>
+                        <div class="inline-flex items-center gap-1.5">
+                            <i data-lucide="laptop" class="w-3 h-3 text-indigo-400"></i>
+                            <span class="text-indigo-400 text-xs font-mono tracking-wide uppercase font-semibold" data-ml-key="hero_mode">Remote / Hybride</span>
+                        </div>
+                        <span class="w-px h-4 bg-white/10 hidden sm:block"></span>
+                        <div class="inline-flex items-center gap-1.5 hidden sm:flex">
+                            <i data-lucide="globe" class="w-3 h-3 text-cyan-400"></i>
+                            <span class="text-cyan-400 text-xs font-mono tracking-wide uppercase font-semibold" data-ml-key="hero_languages">FR / EN</span>
+                        </div>
+                    </div>
+                    <h1 class="text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-8 leading-tight">
+                        <span data-ml-key="hero_title_1">L'Intuition Humaine, </span><span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 drop-shadow-[0_0_15px_rgba(52,211,153,0.3)]" data-ml-key="hero_title_2">validée par la donnée.</span>
+                    </h1>
+                    <div class="max-w-lg flex-1 min-h-0 mb-8">
+                        <p class="text-lg text-slate-400 font-light leading-[1.6] max-w-xl" data-ml-key="hero_desc_1">
+                            Expert en diagnostic neurodéveloppemental reconverti dans l'<span class="font-semibold text-[#F59E0B]">IA</span>, j'essaie d'apporter une compréhension profonde du <span class="font-semibold text-[#F59E0B]">comportement humain</span> au cœur du code. Je recherche une <span class="font-semibold text-[#F59E0B]">alternance AI Engineer</span> (rythme <span class="font-semibold text-[#F59E0B]">4j/1j</span>) pour bâtir des outils où l'intelligence artificielle devient le catalyseur d'une amélioration concrète de l'accès et de la qualité des soins.
+                        </p>
+                    </div>
+                    <a href="#projects" class="group relative px-8 py-4 rounded-xl bg-emerald-500/10 border border-emerald-500/50 text-emerald-400 font-bold transition-all shadow-[0_0_20px_rgba(16,185,129,0.15)] hover:shadow-[0_0_30px_rgba(16,185,129,0.3)] hover:bg-emerald-500/20 w-fit mt-auto">
+                        <span class="relative z-10 flex items-center gap-2">
+                            <span data-ml-key="hero_cta">Voir mes Projets</span> <i data-lucide="eye" class="w-4 h-4"></i>
+                        </span>
+                    </a>
+                </div>
+
+                <!-- Colonne droite : Portrait (alignement droit avec Stat Bar en dessous) -->
+                <div class="z-10 relative order-2 w-full lg:max-w-xl ml-0 lg:ml-auto">
+                    <div class="relative w-full aspect-[4/5] rounded-[2rem] group">
+                        <div class="absolute -right-4 -top-4 w-2/3 h-2/3 bg-emerald-500/20 rounded-full blur-[80px] pointer-events-none -z-10"></div>
+                        <div class="absolute -left-4 -bottom-4 w-1/2 h-1/2 bg-blue-500/10 rounded-full blur-[60px] pointer-events-none -z-10"></div>
+                        <div class="w-full h-full rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl relative bg-slate-900">
+                            <img src="assets/images/photoprofil.jpg" alt="Flavien Bardet - Behavioral Data Strategist" class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Stat Bar : même largeur que le portrait, alignée à droite -->
+            <div class="flex justify-end mt-8 lg:mt-10">
+                <div class="glass-card rounded-2xl px-2 sm:px-4 py-6 w-full lg:w-full lg:max-w-xl overflow-hidden">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-0">
+                        <div class="flex flex-col justify-center items-center text-center h-[72px] px-2 group border-r border-white/10">
+                            <h3 class="text-2xl sm:text-3xl md:text-4xl font-extrabold leading-none text-yellow-400 drop-shadow-[0_0_10px_rgba(250,204,21,0.4)] transition-all group-hover:drop-shadow-[0_0_14px_rgba(250,204,21,0.6)] whitespace-nowrap" data-ml-key="stat_years">5 ans</h3>
+                            <p class="text-[10px] sm:text-[11px] text-slate-400 uppercase tracking-wider sm:tracking-widest font-semibold mt-2 whitespace-nowrap" data-ml-key="stat_years_label">Clinique</p>
+                        </div>
+                        <div class="flex flex-col justify-center items-center text-center h-[72px] px-2 group border-r-0 md:border-r border-white/10">
+                            <h3 class="text-2xl sm:text-3xl md:text-4xl font-extrabold leading-none text-emerald-400 drop-shadow-[0_0_10px_rgba(16,185,129,0.4)] transition-all group-hover:drop-shadow-[0_0_14px_rgba(16,185,129,0.6)] whitespace-nowrap" data-ml-key="stat_data_years">2 ans</h3>
+                            <p class="text-[10px] sm:text-[11px] text-slate-400 uppercase tracking-wider sm:tracking-widest font-semibold mt-2 whitespace-nowrap" data-ml-key="stat_data_label">Data & IA</p>
+                        </div>
+                        <div class="flex flex-col justify-center items-center text-center h-[72px] px-2 group border-r border-white/10 border-t md:border-t-0 pt-4 md:pt-0">
+                            <h3 class="text-2xl sm:text-3xl md:text-4xl font-extrabold leading-none text-purple-400 drop-shadow-[0_0_10px_rgba(168,85,247,0.4)] transition-all group-hover:drop-shadow-[0_0_14px_rgba(168,85,247,0.6)] whitespace-nowrap" data-ml-key="stat_certified">PSPO I</h3>
+                            <p class="text-[10px] sm:text-[11px] text-slate-400 uppercase tracking-wider sm:tracking-widest font-semibold mt-2 whitespace-nowrap" data-ml-key="stat_certified_label">Certifié</p>
+                        </div>
+                        <div class="flex flex-col justify-center items-center text-center h-[72px] px-2 group border-t md:border-t-0 pt-4 md:pt-0">
+                            <h3 class="text-2xl sm:text-3xl md:text-4xl font-extrabold leading-none text-cyan-400 drop-shadow-[0_0_10px_rgba(6,182,212,0.4)] transition-all group-hover:drop-shadow-[0_0_14px_rgba(6,182,212,0.6)] whitespace-nowrap" data-ml-key="stat_focus">Focus</h3>
+                            <p class="text-[10px] sm:text-[11px] text-slate-400 uppercase tracking-wider sm:tracking-widest font-semibold mt-2 whitespace-nowrap" data-ml-key="stat_focus_label">MedTech</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BENTO GRID -->
+        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 grid-rows-auto gap-6 mb-32">
+
+            <!-- 1. About Me -->
+            <div id="about" class="col-span-full glass-card rounded-[2rem] p-10 flex flex-col justify-center relative overflow-hidden group min-h-[320px]">
+                <!-- Filigrane ADN : centré verticalement, aligné à droite, marges de sécurité -->
+                <div class="absolute right-6 lg:right-10 top-1/2 -translate-y-1/2 p-8 opacity-[0.05] group-hover:opacity-[0.1] transition-opacity duration-700 pointer-events-none" aria-hidden="true">
+                    <i data-lucide="dna" class="w-64 h-64 text-emerald-400 block"></i>
+                </div>
+                <h3 class="text-emerald-400 text-sm font-mono uppercase font-bold tracking-wider mb-6 flex items-center gap-2">
+                    <i data-lucide="user" class="w-4 h-4"></i> <span data-ml-key="about_label">À Propos</span>
+                </h3>
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-8 leading-tight max-w-2xl" data-ml-key="about_title" data-ml-html="true">
+                    Décoder la Donnée. <br/><span class="text-slate-400">Comprendre l'Humain.</span>
+                </h2>
+                <div class="text-slate-400 text-lg text-justify leading-[1.6] font-light relative z-10 max-w-2xl">
+                    <p data-ml-key="about_p1" data-ml-html="true" class="mb-0">Pourquoi la science est-elle si difficile à exploiter ? C'est en constatant l'absence de <strong class="text-white font-semibold">templates standardisés</strong> dans les études scientifiques que j'ai décidé de plonger dans le monde des <strong class="text-white font-semibold">LLM</strong> : mon projet de reconversion est né du besoin d'automatiser l'<strong class="text-white font-semibold">extraction de données</strong> complexes pour libérer le temps des chercheurs. Mon expertise passée dans les troubles neurodéveloppementaux, couplée à mon engagement dans le monde de l'esprit critique, me confère une sensibilité unique aux <strong class="text-white font-semibold">biais cognitifs</strong> et à l'<strong class="text-white font-semibold">expérience utilisateur</strong>. Aujourd'hui, je quitte le diagnostic clinique pour l'ingénierie avec l'ambition de créer des outils capables d'améliorer la prise en charge et la <strong class="text-white font-semibold">compréhension de l'humain</strong> en santé ou ailleurs.</p>
+                </div>
+            </div>
+
+            <!-- 2. SKILLS - CYBERPUNK DASHBOARD LAYOUT -->
+            <div id="skills" class="col-span-full relative mt-12 mb-12 scroll-mt-32">
+                <!-- Section Header (aligné sur "Mes projets") -->
+                <div class="mb-10">
+                    <h2 class="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tighter" data-ml-key="skills_title" data-ml-html="true">
+                        Mes <span class="text-emerald-400">compétences</span>
+                    </h2>
+                    <div class="flex items-center gap-6">
+                        <div class="h-1 w-24 bg-emerald-500 rounded-full shadow-[0_0_15px_rgba(16,185,129,0.8)]"></div>
+                        <p class="text-emerald-400 font-mono text-sm md:text-base tracking-[0.15em] uppercase font-bold text-glow" data-ml-key="skills_subtitle">
+                            De l'Intuition clinique à l'impact Data
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Three Pillars Grid - Cyberpunk Dashboard -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    
+                    <!-- PILLAR 1: Data & AI (Vert Néon) -->
+                    <div class="flex flex-col">
+                        <!-- Pillar Header Bento -->
+                        <div class="glass-card rounded-2xl p-5 mb-4 border-emerald-500/20 hover:border-emerald-500/40 transition-all">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center">
+                                    <i data-lucide="database" class="w-5 h-5 text-emerald-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-emerald-400 font-bold text-sm uppercase tracking-wider">Data & AI</h3>
+                                    <p class="text-slate-500 text-xs">Intelligence & Données</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Skills List -->
+                        <div class="space-y-2">
+                            <div class="skill-item group">
+                                <span class="skill-name">Python (Pandas, NumPy)</span>
+                                <div class="skill-gauge shadow-inner"><div class="skill-fill skill-fill--emerald" style="width: 60%"></div></div>
+                            </div>
+                            <div class="skill-item group">
+                                <span class="skill-name">Machine Learning</span>
+                                <div class="skill-gauge shadow-inner"><div class="skill-fill skill-fill--emerald" style="width: 45%"></div></div>
+                            </div>
+                            <div class="skill-item group">
+                                <span class="skill-name">Power BI & Data Modeling</span>
+                                <div class="skill-gauge shadow-inner"><div class="skill-fill skill-fill--emerald" style="width: 65%"></div></div>
+                            </div>
+                            <div class="skill-item group">
+                                <span class="skill-name">GenAI (RAG, LangChain)</span>
+                                <div class="skill-gauge shadow-inner"><div class="skill-fill skill-fill--emerald" style="width: 50%"></div></div>
+                            </div>
+                            <div class="skill-item group">
+                                <span class="skill-name">Data Storytelling</span>
+                                <div class="skill-gauge shadow-inner"><div class="skill-fill skill-fill--emerald" style="width: 70%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- PILLAR 2: Product Management (Bleu Néon) -->
+                    <div class="flex flex-col">
+                        <!-- Pillar Header Bento -->
+                        <div class="glass-card rounded-2xl p-5 mb-4 border-cyan-500/20 hover:border-cyan-500/40 transition-all">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-cyan-500/20 flex items-center justify-center">
+                                    <i data-lucide="layout-dashboard" class="w-5 h-5 text-cyan-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-cyan-400 font-bold text-sm uppercase tracking-wider">Product</h3>
+                                    <p class="text-slate-500 text-xs">Stratégie & Management</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Skills List -->
+                        <div class="space-y-2">
+                            <div class="skill-item group">
+                                <span class="skill-name">Product Strategy & Roadmap</span>
+                                <div class="skill-gauge shadow-inner"><div class="skill-fill skill-fill--cyan" style="width: 55%"></div></div>
+                            </div>
+                            <div class="skill-item group">
+                                <span class="skill-name">User Stories & Personas</span>
+                                <div class="skill-gauge shadow-inner"><div class="skill-fill skill-fill--cyan" style="width: 70%"></div></div>
+                            </div>
+                            <div class="skill-item group">
+                                <span class="skill-name">Analyse ROI & Rentabilité</span>
+                                <div class="skill-gauge shadow-inner"><div class="skill-fill skill-fill--cyan" style="width: 50%"></div></div>
+                            </div>
+                            <div class="skill-item group">
+                                <span class="skill-name">Gouvernance & RGPD</span>
+                                <div class="skill-gauge shadow-inner"><div class="skill-fill skill-fill--cyan" style="width: 65%"></div></div>
+                            </div>
+                            <div class="skill-item group">
+                                <span class="skill-name">Agilité (Scrum)</span>
+                                <div class="skill-gauge shadow-inner"><div class="skill-fill skill-fill--cyan" style="width: 75%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- PILLAR 3: Recherche & Méthodologie (Violet Néon) -->
+                    <div class="flex flex-col">
+                        <!-- Pillar Header Bento -->
+                        <div class="glass-card rounded-2xl p-5 mb-4 border-purple-500/20 hover:border-purple-500/40 transition-all">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-purple-500/20 flex items-center justify-center">
+                                    <i data-lucide="flask-conical" class="w-5 h-5 text-purple-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-purple-400 font-bold text-sm uppercase tracking-wider">Recherche</h3>
+                                    <p class="text-slate-500 text-xs">Méthodologie & Sciences</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Skills List -->
+                        <div class="space-y-2">
+                            <div class="skill-item group">
+                                <span class="skill-name">Analyses Statistiques</span>
+                                <div class="skill-gauge shadow-inner"><div class="skill-fill skill-fill--purple" style="width: 75%"></div></div>
+                            </div>
+                            <div class="skill-item group">
+                                <span class="skill-name">Data Wrangling & ETL</span>
+                                <div class="skill-gauge shadow-inner"><div class="skill-fill skill-fill--purple" style="width: 60%"></div></div>
+                            </div>
+                            <div class="skill-item group">
+                                <span class="skill-name">Rigueur Scientifique</span>
+                                <div class="skill-gauge shadow-inner"><div class="skill-fill skill-fill--purple" style="width: 80%"></div></div>
+                            </div>
+                            <div class="skill-item group">
+                                <span class="skill-name">Communication</span>
+                                <div class="skill-gauge shadow-inner"><div class="skill-fill skill-fill--purple" style="width: 75%"></div></div>
+                            </div>
+                            <div class="skill-item group">
+                                <span class="skill-name">Analyse des Biais Cognitifs</span>
+                                <div class="skill-gauge shadow-inner"><div class="skill-fill skill-fill--purple" style="width: 85%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <!-- PROJECTS SECTION HEADER -->
+            <div id="projects" class="col-span-full pt-16 pb-4 scroll-mt-32">
+                <h2 class="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tighter" data-ml-key="projects_title" data-ml-html="true">
+                    Mes <span class="text-emerald-400">projets</span>
+                </h2>
+                <div class="flex items-center gap-6">
+                    <div class="h-1 w-24 bg-emerald-500 rounded-full shadow-[0_0_15px_rgba(16,185,129,0.8)]"></div>
+                    <p class="text-emerald-400 font-mono text-sm md:text-base tracking-[0.15em] uppercase font-bold text-glow" data-ml-key="projects_subtitle">
+                        Analyses & Études de cas
+                    </p>
+                </div>
+            </div>
+
+            <!-- Project 1: Étude de Marché Vanguard (Image Gauche) -->
+            <div class="glass-card col-span-full overflow-hidden group relative rounded-[2.5rem] bg-[#0b0f19] p-6 lg:p-8">
+                <div class="grid lg:grid-cols-2 items-stretch gap-6 lg:gap-8 relative z-10">
+                    <!-- Image Container (impair = gauche, hauteur alignée tags → boutons) -->
+                    <div class="relative group/image order-1 h-full min-h-[240px]">
+                        <div class="absolute inset-0 bg-cyan-500/10 blur-[80px] rounded-full opacity-30 group-hover/image:opacity-50 transition-opacity duration-700 animate-pulse-slow pointer-events-none"></div>
+                        <div class="relative overflow-hidden rounded-2xl border border-white/5 bg-slate-900/50 h-full min-h-0">
+                            <img src="assets/images/projet-vanguard.png" alt="Projet Vanguard - Analyse Gaming Steam" class="w-full h-full object-cover transition-transform duration-700 group-hover/image:scale-[1.03]">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#0b0f19]/60 via-transparent to-transparent pointer-events-none"></div>
+                        </div>
+                    </div>
+                    <!-- Content (flex pour aligner boutons en bas) -->
+                    <div class="flex flex-col py-4 lg:py-8 lg:pl-4 order-2">
+                        <div class="space-y-6 flex-1 flex flex-col">
+                            <div class="flex items-center gap-3">
+                                <span class="w-2.5 h-2.5 rounded-full bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,0.6)]"></span>
+                                <span class="text-cyan-500 font-mono text-xs font-bold tracking-[0.2em] uppercase">Strategy</span>
+                            </div>
+                            <div>
+                                <h3 class="project-card-title text-3xl md:text-4xl font-bold text-white mb-2 leading-tight tracking-tight">Étude de Marché : Niche Gaming & Rentabilité</h3>
+                                <p class="project-card-subtitle text-slate-500 text-base font-medium">Analyse stratégique Top 50 Steam</p>
+                            </div>
+                            <p class="project-card-description text-slate-400 text-sm leading-relaxed font-light max-w-lg">
+                                Lancer une nouvelle licence AAA sur Steam représente un risque financier de 20M€ dans un marché saturé. J'ai analysé les données de 50 000+ titres pour modéliser des scénarios de rentabilité et identifier une niche inexploitée en 'Océan Bleu'. En intégrant la psychologie des communautés, j'ai transformé l'appétence des joueurs plus âgés pour une expérience multijoueur moins toxique en une opportunité économique quantifiable, projetant un ROI de +40%.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                 <span class="tech-tag text-cyan-400 border-cyan-500/20">RECHERCHE DE NICHE</span>
+                                 <span class="tech-tag text-emerald-400 border-emerald-500/20">ROI</span>
+                                 <span class="tech-tag text-purple-400 border-purple-500/20">POWER BI</span>
+                                 <span class="tech-tag text-orange-400 border-orange-500/20">DAX</span>
+                            </div>
+                            <div class="pt-4 flex flex-wrap gap-3 mt-auto">
+                                <a href="projects/vanguard-strategy.html" class="inline-flex items-center gap-2 px-6 py-3 bg-white text-slate-950 text-sm font-bold rounded-full hover:bg-cyan-400 transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] group/btn">
+                                    <span>En savoir plus</span>
+                                    <i data-lucide="arrow-right" class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform"></i>
+                                </a>
+                                <a href="https://github.com/FlavienBardet/Portfolio/tree/main/projects/FB_P10_Project-Vanguard" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 bg-slate-950 border border-blue-500/50 text-blue-400 text-sm font-bold rounded-full hover:bg-blue-500/10 hover:border-blue-400 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-300 group/gh">
+                                    <i data-lucide="github" class="w-4 h-4"></i>
+                                    <span>GitHub</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2: Bottleneck Data Audit (Image Droite) -->
+            <div class="glass-card col-span-full overflow-hidden group relative rounded-[2.5rem] bg-[#0b0f19] p-6 lg:p-8">
+                <div class="grid lg:grid-cols-2 items-stretch gap-6 lg:gap-8 relative z-10">
+                    <!-- Content (flex pour aligner boutons en bas) -->
+                    <div class="flex flex-col py-4 lg:py-8 lg:pr-4 order-2 lg:order-1">
+                        <div class="space-y-6 flex-1 flex flex-col">
+                            <div class="flex items-center gap-3">
+                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.6)]"></span>
+                                <span class="text-emerald-500 font-mono text-xs font-bold tracking-[0.2em] uppercase">Data Quality</span>
+                            </div>
+                            <div>
+                                <h3 class="project-card-title text-3xl md:text-4xl font-bold text-white mb-2 leading-tight tracking-tight">Bottleneck : Data Audit & Quality Assurance</h3>
+                                <p class="project-card-subtitle text-slate-500 text-base font-medium">Sécurisation du Chiffre d'Affaires via Python</p>
+                            </div>
+                            <p class="project-card-description text-slate-400 text-sm leading-relaxed font-light max-w-lg">
+                                Face à une désynchronisation critique entre les stocks ERP et la vitrine Web, j'ai agi en tant que Data Detective pour réconcilier des systèmes incohérents. En développant des algorithmes de détection d'outliers (Z-Score & IQR) sous Python, j'ai isolé 111 produits orphelins et corrigé des erreurs de marge aberrantes allant jusqu'à -635%. Ce travail d'assainissement a permis de sécuriser le calcul du chiffre d'affaires et de garantir l'auditabilité financière de l'écosystème. J'ai ainsi transformé des données brutes et hétérogènes en un Golden Dataset fiable et prêt pour l'analyse stratégique.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                 <span class="tech-tag text-emerald-400 border-emerald-500/20">PYTHON (PANDAS)</span>
+                                 <span class="tech-tag text-purple-400 border-purple-500/20">Z-SCORE / IQR</span>
+                                 <span class="tech-tag text-cyan-400 border-cyan-500/20">DATA WRANGLING</span>
+                                 <span class="tech-tag text-orange-400 border-orange-500/20">AUDIT DE DONNÉES</span>
+                            </div>
+                            <div class="pt-4 flex flex-wrap gap-3 mt-auto">
+                                <a href="#" class="inline-flex items-center gap-2 px-6 py-3 bg-white text-slate-950 text-sm font-bold rounded-full hover:bg-emerald-400 transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] group/btn">
+                                    <span>En savoir plus</span>
+                                    <i data-lucide="arrow-right" class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform"></i>
+                                </a>
+                                <a href="https://github.com/FlavienBardet/Portfolio/tree/main/projects/FB_P06_Bottleneck-Data-Audit" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 bg-slate-950 border border-blue-500/50 text-blue-400 text-sm font-bold rounded-full hover:bg-blue-500/10 hover:border-blue-400 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-300 group/gh">
+                                    <i data-lucide="github" class="w-4 h-4"></i>
+                                    <span>GitHub</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Image Container (hauteur alignée tags → boutons, object-contain comme ML) -->
+                    <div class="relative group/image order-1 lg:order-2 h-full min-h-[240px]">
+                        <div class="absolute inset-0 bg-emerald-500/10 blur-[80px] rounded-full opacity-30 group-hover/image:opacity-50 transition-opacity duration-700 animate-pulse-slow pointer-events-none"></div>
+                        <div class="relative overflow-hidden rounded-2xl border border-white/5 bg-slate-900/50 h-full min-h-0 p-4 flex items-center justify-center">
+                            <img src="https://images.unsplash.com/photo-1518932945647-7a1c969f8be2?q=80&w=2670&auto=format&fit=crop" alt="Jupyter Notebook Analysis" class="w-full h-full object-contain transition-transform duration-700 group-hover/image:scale-[1.03]">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#0b0f19]/60 via-transparent to-transparent pointer-events-none"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3: Algorithmic Asset Valuation & ML (Image Gauche, même traitement que Bottleneck) -->
+            <div class="glass-card col-span-full overflow-hidden group relative rounded-[2.5rem] bg-[#0b0f19] p-6 lg:p-8">
+                <div class="grid lg:grid-cols-2 items-stretch gap-6 lg:gap-8 relative z-10">
+                    <!-- Image Container (impair = gauche, object-contain + padding) -->
+                    <div class="relative group/image order-1 h-full min-h-[240px]">
+                        <div class="absolute inset-0 bg-purple-500/10 blur-[80px] rounded-full opacity-30 group-hover/image:opacity-50 transition-opacity duration-700 animate-pulse-slow pointer-events-none"></div>
+                        <div class="relative overflow-hidden rounded-2xl border border-white/5 bg-slate-900/50 h-full min-h-0 p-4 flex items-center justify-center">
+                            <img src="assets/images/immo.PNG" alt="Valorisation algorithmique et Machine Learning - Pipelines Scikit-Learn" class="w-full h-full object-contain transition-transform duration-700 group-hover/image:scale-[1.02]" loading="lazy">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#0b0f19]/40 via-transparent to-transparent pointer-events-none"></div>
+                        </div>
+                    </div>
+                    <!-- Content (flex pour aligner boutons en bas) -->
+                    <div class="flex flex-col py-4 lg:py-8 lg:pl-4 order-2">
+                        <div class="space-y-6 flex-1 flex flex-col">
+                            <div class="flex items-center gap-3">
+                                <span class="w-2.5 h-2.5 rounded-full bg-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.6)]"></span>
+                                <span class="text-purple-500 font-mono text-xs font-bold tracking-[0.2em] uppercase">Data Science</span>
+                            </div>
+                            <div>
+                                <h3 class="project-card-title text-3xl md:text-4xl font-bold text-white mb-2 leading-tight tracking-tight">Algorithmic Asset Valuation & ML</h3>
+                                <p class="text-base font-medium text-amber-500">Arbitrage de portefeuille par Machine Learning</p>
+                            </div>
+                            <p class="project-card-description text-slate-400 text-sm font-light max-w-lg text-justify leading-[1.6]">
+                                Face à une restructuration stratégique d'actifs, j'ai développé un modèle prédictif pour arbitrer mathématiquement entre segments résidentiels et tertiaires. En implémentant des pipelines Scikit-Learn et une validation statistique rigoureuse, j'ai garanti une architecture "Production-Ready" sans fuite de données (Data Leakage). L'algorithme a révélé un potentiel de valorisation caché de +38% sur le segment Corporate, transformant l'intuition du marché en une décision d'investissement chiffrée.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="tech-tag text-emerald-400 border-emerald-500/20">PYTHON (SCIKIT-LEARN)</span>
+                                <span class="tech-tag text-purple-400 border-purple-500/20">ML PIPELINES</span>
+                                <span class="tech-tag text-cyan-400 border-cyan-500/20">VALIDATION STATISTIQUE</span>
+                                <span class="tech-tag text-amber-400 border-amber-500/20">ARBITRAGE FINANCIER</span>
+                            </div>
+                            <div class="pt-4 flex flex-wrap gap-3 mt-auto">
+                                <a href="https://github.com/FlavienBardet/Portfolio/tree/main/projects/FB_P08_Valuation-ML" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 bg-white text-slate-950 text-sm font-bold rounded-full hover:bg-purple-400 transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] group/btn">
+                                    <span>En savoir plus</span>
+                                    <i data-lucide="arrow-right" class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform"></i>
+                                </a>
+                                <a href="https://github.com/FlavienBardet/Portfolio/tree/main/projects/FB_P08_Valuation-ML" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 bg-slate-950 border border-blue-500/50 text-blue-400 text-sm font-bold rounded-full hover:bg-blue-500/10 hover:border-blue-400 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-300 group/gh">
+                                    <i data-lucide="github" class="w-4 h-4"></i>
+                                    <span>GitHub</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 4: AI Strategy & Conversational Intelligence (Image Droite) -->
+            <div class="glass-card col-span-full overflow-hidden group relative rounded-[2.5rem] bg-[#0b0f19] p-6 lg:p-8">
+                <div class="grid lg:grid-cols-2 items-stretch gap-6 lg:gap-8 relative z-10">
+                    <!-- Content (pair = droite, flex pour boutons en bas) -->
+                    <div class="flex flex-col py-4 lg:py-8 lg:pr-4 order-2 lg:order-1">
+                        <div class="space-y-6 flex-1 flex flex-col">
+                            <div class="flex items-center gap-3">
+                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.6)]"></span>
+                                <span class="text-emerald-500 font-mono text-xs font-bold tracking-[0.2em] uppercase">Engineering</span>
+                            </div>
+                            <div>
+                                <h3 class="project-card-title text-3xl md:text-4xl font-bold text-white mb-2 leading-tight tracking-tight">AI Strategy & Conversational Intelligence</h3>
+                                <p class="project-card-subtitle text-slate-500 text-base font-medium">Product Management & Architecture RAG (B2B)</p>
+                            </div>
+                            <p class="project-card-description text-slate-400 text-sm leading-relaxed font-light max-w-lg">
+                                Au sein d'AImanager360, j'ai piloté la conception d'un assistant conversationnel intelligent servant de pilier à un moteur de recommandation de solutions IA. En tant qu'AI Product Manager, j'ai modélisé les flux utilisateurs et assuré le Prompt Engineering pour aligner l'expérience UX avec les exigences de gouvernance (GDPR / EU AI Act). Ce projet a transformé l'interaction client en un levier de qualification stratégique, automatisant la génération de rapports de recommandations à haute valeur ajoutée.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="tech-tag text-emerald-400 border-emerald-500/20">IA GÉNÉRATIVE (LLM)</span>
+                                <span class="tech-tag text-emerald-400 border-emerald-500/20">RAG</span>
+                                <span class="tech-tag text-purple-400 border-purple-500/20">PROMPT ENGINEERING</span>
+                                <span class="tech-tag text-cyan-400 border-cyan-500/20">STRATÉGIE PRODUIT IA</span>
+                            </div>
+                            <div class="pt-4 flex flex-wrap gap-3 mt-auto">
+                                <a href="https://www.aimanager360.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 bg-white text-slate-950 text-sm font-bold rounded-full hover:bg-emerald-400 transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] group/btn">
+                                    <span>Voir le site officiel</span>
+                                    <i data-lucide="external-link" class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Image Container (hauteur alignée) -->
+                    <div class="relative group/image order-1 lg:order-2 h-full min-h-[240px]">
+                        <div class="absolute inset-0 bg-neon-cyan/10 blur-[80px] rounded-full opacity-40 group-hover/image:opacity-60 transition-opacity duration-700 animate-pulse-slow pointer-events-none"></div>
+                        <div class="relative overflow-hidden rounded-2xl border border-white/5 bg-slate-900/50 h-full min-h-0">
+                            <img src="assets/images/AI360image.png" alt="AI Strategy & Conversational Intelligence - AImanager360" class="w-full h-full object-cover transition-transform duration-700 group-hover/image:scale-[1.03]">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#0b0f19]/60 via-transparent to-transparent pointer-events-none"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 5: Dev'Immediat - Data Privacy & Governance (Image Gauche) -->
+            <div class="glass-card col-span-full overflow-hidden group relative rounded-[2.5rem] bg-[#0b0f19] p-6 lg:p-8">
+                <div class="grid lg:grid-cols-2 items-stretch gap-6 lg:gap-8 relative z-10">
+                    <!-- Image Container (impair = gauche, hauteur alignée) -->
+                    <div class="relative group/image order-1 h-full min-h-[240px]">
+                        <div class="absolute inset-0 bg-purple-500/10 blur-[80px] rounded-full opacity-40 group-hover/image:opacity-60 transition-opacity duration-700 animate-pulse-slow pointer-events-none"></div>
+                        <div class="relative overflow-hidden rounded-2xl border border-white/5 bg-slate-900/50 h-full min-h-0">
+                            <img src="https://images.unsplash.com/photo-1633265486064-086b219458ec?q=80&w=2670&auto=format&fit=crop" alt="Dev'Immediat - Data Privacy & Governance, conformité CNIL" class="w-full h-full object-cover transition-transform duration-700 group-hover/image:scale-[1.03]" loading="lazy">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#0b0f19]/60 via-transparent to-transparent pointer-events-none"></div>
+                        </div>
+                    </div>
+                    <!-- Content (flex pour boutons en bas) -->
+                    <div class="flex flex-col py-4 lg:py-8 lg:pl-4 order-2">
+                        <div class="space-y-6 flex-1 flex flex-col">
+                            <div class="flex items-center gap-3">
+                                <span class="w-2.5 h-2.5 rounded-full bg-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.6)]"></span>
+                                <span class="text-purple-500 font-mono text-xs font-bold tracking-[0.2em] uppercase">Legal & Compliance</span>
+                            </div>
+                            <div>
+                                <h3 class="project-card-title text-3xl md:text-4xl font-bold text-white mb-2 leading-tight tracking-tight">Dev'Immediat : Data Privacy & Governance</h3>
+                                <p class="text-base font-medium text-amber-500">Gestion de crise et conformité CNIL</p>
+                            </div>
+                            <p class="project-card-description text-slate-400 text-sm font-light max-w-lg text-justify leading-[1.6]">
+                                Face à une sanction de la CNIL gelant l'activité commerciale d'un assureur, j'ai orchestré l'audit des risques et la mise en conformité du CRM. En déployant un pipeline d'anonymisation sous Power Query, j'ai transformé des actifs de données "toxiques" en ressources 100% conformes tout en préservant 97% de leur utilité analytique. Cette mission de Crisis Management démontre ma capacité à sécuriser les opérations business par une gouvernance éthique et rigoureuse des données sensibles.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="tech-tag text-purple-400 border-purple-500/20">RGPD / GDPR</span>
+                                <span class="tech-tag text-emerald-400 border-emerald-500/20">DATA GOVERNANCE</span>
+                                <span class="tech-tag text-cyan-400 border-cyan-500/20">ANONYMISATION</span>
+                                <span class="tech-tag text-amber-400 border-amber-500/20">AUDIT DE CONFORMITÉ</span>
+                            </div>
+                            <div class="pt-4 flex flex-wrap gap-3 mt-auto">
+                                <a href="https://github.com/FlavienBardet/Portfolio/tree/main/projects/FB_P04_DevImmediat-Privacy" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 bg-slate-950 border border-blue-500/50 text-blue-400 text-sm font-bold rounded-full hover:bg-blue-500/10 hover:border-blue-400 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-300 group/gh">
+                                    <i data-lucide="github" class="w-4 h-4"></i>
+                                    <span>GitHub</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 6: Sanitoral - PMO & Delivery Intelligence (Image Droite) -->
+            <div class="glass-card col-span-full overflow-hidden group relative rounded-[2.5rem] bg-[#0b0f19] p-6 lg:p-8">
+                <div class="grid lg:grid-cols-2 items-stretch gap-6 lg:gap-8 relative z-10">
+                    <!-- Content (flex pour boutons en bas) -->
+                    <div class="flex flex-col py-4 lg:py-8 lg:pr-4 order-2 lg:order-1">
+                        <div class="space-y-6 flex-1 flex flex-col">
+                            <div class="flex items-center gap-3">
+                                <span class="w-2.5 h-2.5 rounded-full bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,0.6)]"></span>
+                                <span class="text-cyan-500 font-mono text-xs font-bold tracking-[0.2em] uppercase">Project Management</span>
+                            </div>
+                            <div>
+                                <h3 class="project-card-title text-3xl md:text-4xl font-bold text-white mb-2 leading-tight tracking-tight">Sanitoral : PMO & Delivery Intelligence</h3>
+                                <p class="text-base font-medium text-amber-500">Automatisation de la gouvernance et stratégie produit</p>
+                            </div>
+                            <p class="project-card-description text-slate-400 text-sm font-light max-w-lg text-justify leading-[1.6]">
+                                Face au blackout opérationnel d'un service PMO, j'ai orchestré la transition de reportings manuels fragmentés vers un système de gouvernance automatisé sous Power BI. En appliquant un cadre de Product Strategy Canvas, j'ai conçu une interface narrative centrée sur les besoins réels des décideurs pour garantir une adoption immédiate. Cette solution a automatisé 100% du flux de données (ETL via Power Query), libérant 4 heures par semaine pour chaque manager tout en sécurisant le pilotage des délais critiques.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="tech-tag text-emerald-400 border-emerald-500/20">POWER BI (ETL)</span>
+                                <span class="tech-tag text-cyan-400 border-cyan-500/20">PRODUCT STRATEGY CANVAS</span>
+                                <span class="tech-tag text-purple-400 border-purple-500/20">AGILE / UX DESIGN</span>
+                                <span class="tech-tag text-amber-400 border-amber-500/20">GOUVERNANCE DATA</span>
+                            </div>
+                            <div class="pt-4 flex flex-wrap gap-3 mt-auto">
+                                <a href="https://github.com/FlavienBardet/Portfolio/tree/main/projects/FB_P07_Sanitoral-PMO" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 bg-slate-950 border border-blue-500/50 text-blue-400 text-sm font-bold rounded-full hover:bg-blue-500/10 hover:border-blue-400 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-300 group/gh">
+                                    <i data-lucide="github" class="w-4 h-4"></i>
+                                    <span>GitHub</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Image Container (hauteur alignée) -->
+                    <div class="relative group/image order-1 lg:order-2 h-full min-h-[240px]">
+                        <div class="absolute inset-0 bg-emerald-500/10 blur-[80px] rounded-full opacity-40 group-hover/image:opacity-60 transition-opacity duration-700 animate-pulse-slow pointer-events-none"></div>
+                        <div class="relative overflow-hidden rounded-2xl border border-white/5 bg-slate-900/50 h-full min-h-0">
+                            <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=2670&auto=format&fit=crop" alt="Sanitoral - PMO & Delivery Intelligence, Power BI" class="w-full h-full object-cover transition-transform duration-700 group-hover/image:scale-[1.03]" loading="lazy">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#0b0f19]/60 via-transparent to-transparent pointer-events-none"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 7: Audit BI & Pilotage de rentabilité E-commerce (Image Gauche) -->
+            <div class="glass-card col-span-full overflow-hidden group relative rounded-[2.5rem] bg-[#0b0f19] p-6 lg:p-8">
+                <div class="grid lg:grid-cols-2 items-stretch gap-6 lg:gap-8 relative z-10">
+                    <!-- Image Container (impair = gauche, hauteur alignée) -->
+                    <div class="relative group/image order-1 h-full min-h-[240px]">
+                        <div class="absolute inset-0 bg-emerald-500/10 blur-[80px] rounded-full opacity-40 group-hover/image:opacity-60 transition-opacity duration-700 animate-pulse-slow pointer-events-none"></div>
+                        <div class="relative overflow-hidden rounded-2xl border border-white/5 bg-slate-900/50 h-full min-h-0">
+                            <img src="assets/images/projet9image.png" alt="Audit BI & Pilotage E-commerce" class="w-full h-full object-cover transition-transform duration-700 group-hover/image:scale-[1.03]">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#0b0f19]/60 via-transparent to-transparent pointer-events-none"></div>
+                        </div>
+                    </div>
+                    <!-- Content (flex pour boutons en bas) -->
+                    <div class="flex flex-col py-4 lg:py-8 lg:pl-4 order-2">
+                        <div class="space-y-6 flex-1 flex flex-col">
+                            <div class="flex items-center gap-3">
+                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.6)]"></span>
+                                <span class="text-emerald-500 font-mono text-xs font-bold tracking-[0.2em] uppercase">Business Intelligence</span>
+                            </div>
+                            <div>
+                                <h3 class="project-card-title text-3xl md:text-4xl font-bold text-white mb-2 leading-tight tracking-tight">Audit BI & Pilotage de rentabilité E-commerce</h3>
+                                <p class="project-card-subtitle text-slate-500 text-base font-medium">Optimisation des stocks et analyse de marge</p>
+                            </div>
+                            <p class="project-card-description text-slate-400 text-sm leading-relaxed font-light max-w-lg">
+                                Dans le cadre d'une mise à niveau des processus DATA d'une boutique e-commerce, j'ai piloté la transition de rapports manuels vers une architecture décisionnelle robuste sous Power BI. En concevant un modèle de données en étoile (Star Schema), j'ai réconcilié des flux ERP fragmentés pour créer une source de vérité unique et auditable. Cette visibilité a permis d'isoler 15% de stocks dormants et de démontrer l'érosion de la marge lors des promotions saisonnières. C'est la preuve de ma capacité à transformer une infrastructure complexe en un levier d'optimisation financière immédiat.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="tech-tag text-emerald-400 border-emerald-500/20">POWER BI</span>
+                                <span class="tech-tag text-emerald-400 border-emerald-500/20">MODÉLISATION EN ÉTOILE</span>
+                                <span class="tech-tag text-cyan-400 border-cyan-500/20">DAX AVANCÉ</span>
+                                <span class="tech-tag text-orange-400 border-orange-500/20">PILOTAGE DE RENTABILITÉ</span>
+                            </div>
+                            <div class="pt-4 flex flex-wrap gap-3 mt-auto">
+                                <a href="https://github.com/FlavienBardet/Portfolio/tree/main/projects/FB_P05_RetailInsight360" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 bg-slate-950 border border-blue-500/50 text-blue-400 text-sm font-bold rounded-full hover:bg-blue-500/10 hover:border-blue-400 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-300 group/gh">
+                                    <i data-lucide="github" class="w-4 h-4"></i>
+                                    <span>GitHub</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. PARCOURS / TIMELINE (Expériences & Formations) -->
+            <div id="experience" class="col-span-full pt-16 pb-4 scroll-mt-32">
+                <!-- Header (Style identique à "Mes projets") -->
+                <div class="mb-10">
+                    <h2 class="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tighter" data-ml-key="timeline_title" data-ml-html="true">
+                        Mon <span class="text-emerald-400">parcours</span>
+                    </h2>
+                    <div class="flex items-center gap-6">
+                        <div class="h-1 w-24 bg-emerald-500 rounded-full shadow-[0_0_15px_rgba(16,185,129,0.8)]"></div>
+                        <p class="text-emerald-400 font-mono text-sm md:text-base tracking-[0.15em] uppercase font-bold text-glow" data-ml-key="timeline_subtitle">
+                            Expériences & Formations
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Toggle -->
+                <div class="flex justify-center lg:justify-start mb-12">
+                    <div class="inline-flex p-1 bg-slate-900/80 rounded-full border border-white/10 backdrop-blur-md relative">
+                        <button onclick="switchLogTab('experience')" id="tab-log-exp" class="px-8 py-2.5 rounded-full text-sm font-bold transition-all duration-300 bg-white text-slate-950 shadow-lg flex items-center">
+                            <i data-lucide="briefcase" class="w-4 h-4 inline mr-2"></i> <span data-ml-key="toggle_exp">Expériences</span>
+                        </button>
+                        <button onclick="switchLogTab('education')" id="tab-log-edu" class="px-8 py-2.5 rounded-full text-sm font-bold text-slate-400 hover:text-white transition-all duration-300 flex items-center">
+                            <i data-lucide="graduation-cap" class="w-4 h-4 inline mr-2"></i> <span data-ml-key="toggle_edu">Formations</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Content Container with Timeline Line -->
+                <div class="w-full relative">
+                    <!-- Timeline Vertical Line with Gradient -->
+                    <div class="absolute left-4 md:left-6 top-0 bottom-0 w-px bg-gradient-to-b from-slate-800 via-emerald-900/50 to-slate-800 hidden md:block"></div>
+
+                    <!-- Experience List -->
+                    <div id="log-experience" class="space-y-6 relative">
+                        <!-- Card 1: MEDAE (Actuel) -->
+                        <div class="group relative pl-12 md:pl-16">
+                            <!-- Timeline Dot Container -->
+                            <div class="absolute left-4 md:left-6 top-8 -translate-x-1/2 w-4 h-4 hidden md:flex items-center justify-center">
+                                <div class="w-3 h-3 rounded-full bg-purple-500 border-2 border-slate-900 shadow-[0_0_15px_rgba(168,85,247,0.8)] group-hover:scale-125 transition-all duration-300"></div>
+                            </div>
+                            
+                            <div class="glass-card rounded-[2rem] p-6 lg:p-8 relative transition-all duration-300 hover:border-purple-500/30">
+                                <div class="flex flex-col lg:flex-row justify-between gap-6">
+                                    <div class="flex gap-5">
+                                        <div class="w-14 h-14 rounded-2xl bg-purple-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shrink-0">M</div>
+                                        <div class="flex-1">
+                                            <h3 class="text-xl lg:text-2xl font-bold text-white mb-1">BI Analyst & Chef de projet e-santé</h3>
+                                            <p class="text-purple-400 font-bold text-sm mb-4">MEDAE</p>
+                                            <p class="text-slate-400 text-sm lg:text-base leading-relaxed mb-4">Chef de projet e-santé et business data analyst. Pilotage de solutions GenAI, traduction des besoins cliniques des hôpitaux et EHPAD en workflows LLM et outils personnalisés, gestion de l'innovation technologique.</p>
+                                            <div class="flex flex-wrap gap-2">
+                                                <span class="tech-tag text-emerald-400 border-emerald-500/20">GENAI</span>
+                                                <span class="tech-tag text-emerald-400 border-emerald-500/20">LLM WORKFLOW</span>
+                                                <span class="tech-tag text-cyan-400 border-cyan-500/20">PRODUCT STRATEGY</span>
+                                                <span class="tech-tag text-purple-400 border-purple-500/20">E-SANTÉ</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-left lg:text-right shrink-0">
+                                        <p class="text-slate-400 font-mono text-sm">Août 2024 - Présent</p>
+                                        <span class="inline-block mt-2 px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-bold rounded-full">Actuel</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 2: AIManager360 -->
+                        <div class="group relative pl-12 md:pl-16">
+                            <div class="absolute left-4 md:left-6 top-8 -translate-x-1/2 w-4 h-4 hidden md:flex items-center justify-center">
+                                <div class="w-3 h-3 rounded-full bg-slate-700 border-2 border-slate-900 group-hover:bg-cyan-500 group-hover:shadow-[0_0_15px_rgba(6,182,212,0.8)] transition-all duration-300"></div>
+                            </div>
+                            
+                            <div class="glass-card rounded-[2rem] p-6 lg:p-8 relative transition-all duration-300 hover:border-cyan-500/30">
+                                <div class="flex flex-col lg:flex-row justify-between gap-6">
+                                    <div class="flex gap-5">
+                                        <div class="w-14 h-14 rounded-2xl bg-cyan-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shrink-0">A</div>
+                                        <div class="flex-1">
+                                            <h3 class="text-xl lg:text-2xl font-bold text-white mb-1">AI Product Manager</h3>
+                                            <p class="text-cyan-400 font-bold text-sm mb-4">AIManager360</p>
+                                            <p class="text-slate-400 text-sm lg:text-base leading-relaxed mb-4">Gestion du cycle de vie des produits IA, de la conception à la mise en production. Coordination entre les équipes techniques et métier.</p>
+                                            <div class="flex flex-wrap gap-2">
+                                                <span class="tech-tag text-emerald-400 border-emerald-500/20">IA STRATEGY</span>
+                                                <span class="tech-tag text-cyan-400 border-cyan-500/20">PRODUCT LIFECYCLE</span>
+                                                <span class="tech-tag text-cyan-400 border-cyan-500/20">STAKEHOLDERS</span>
+                                                <span class="tech-tag text-cyan-400 border-cyan-500/20">AGILE</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-left lg:text-right shrink-0">
+                                        <p class="text-slate-400 font-mono text-sm">Mai 2024 - Août 2024</p>
+                                        <p class="text-slate-600 text-xs mt-2">4 mois</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 3: Psychothérapeute (Plein Potentiel) -->
+                        <div class="group relative pl-12 md:pl-16">
+                            <div class="absolute left-4 md:left-6 top-8 -translate-x-1/2 w-4 h-4 hidden md:flex items-center justify-center">
+                                <div class="w-3 h-3 rounded-full bg-slate-700 border-2 border-slate-900 group-hover:bg-fuchsia-500 group-hover:shadow-[0_0_15px_rgba(217,70,239,0.8)] transition-all duration-300"></div>
+                            </div>
+                            
+                            <div class="glass-card rounded-[2rem] p-6 lg:p-8 relative transition-all duration-300 hover:border-fuchsia-500/30">
+                                <div class="flex flex-col lg:flex-row justify-between gap-6">
+                                    <div class="flex gap-5">
+                                        <div class="w-14 h-14 rounded-2xl bg-fuchsia-600 flex items-center justify-center text-white shadow-lg shrink-0">
+                                            <i data-lucide="brain" class="w-7 h-7"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="text-xl lg:text-2xl font-bold text-white mb-1">Psychothérapeute</h3>
+                                            <p class="text-fuchsia-400 font-bold text-sm mb-4">Plein Potentiel</p>
+                                            <p class="text-slate-400 text-sm lg:text-base leading-relaxed mb-4">Psychothérapeute spécialisé en neurodiversité (TDAH, autisme) et haut potentiel. Utilisation d'approches basées sur les preuves (TCC) et diagnostics cliniques.</p>
+                                            <div class="flex flex-wrap gap-2">
+                                                <span class="tech-tag text-purple-400 border-purple-500/20">CBT / TCC</span>
+                                                <span class="tech-tag text-purple-400 border-purple-500/20">NEURODIVERSITÉ</span>
+                                                <span class="tech-tag text-purple-400 border-purple-500/20">DIAGNOSTIC CLINIQUE</span>
+                                                <span class="tech-tag text-purple-400 border-purple-500/20">PSYCHOMÉTRIE</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-left lg:text-right shrink-0">
+                                        <p class="text-slate-400 font-mono text-sm">Juil. 2015 - Juin 2024</p>
+                                        <p class="text-slate-600 text-xs mt-2">9 ans</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Education List -->
+                    <div id="log-education" class="space-y-6 relative hidden">
+                        <!-- Card 1: IBM & Scrum.org -->
+                        <div class="group relative pl-12 md:pl-16">
+                            <div class="absolute left-4 md:left-6 top-8 -translate-x-1/2 w-4 h-4 hidden md:flex items-center justify-center">
+                                <div class="w-3 h-3 rounded-full bg-slate-700 border-2 border-slate-900 group-hover:bg-cyan-500 group-hover:shadow-[0_0_15px_rgba(6,182,212,0.8)] transition-all duration-300"></div>
+                            </div>
+                            
+                            <div class="glass-card rounded-[2rem] p-6 lg:p-8 relative transition-all duration-300 hover:border-cyan-500/30">
+                                <div class="flex flex-col lg:flex-row justify-between gap-6">
+                                    <div class="flex gap-5">
+                                        <div class="w-14 h-14 rounded-2xl bg-cyan-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shrink-0">I</div>
+                                        <div class="flex-1">
+                                            <h3 class="text-xl lg:text-2xl font-bold text-white mb-1">AI Product Manager & Developer</h3>
+                                            <p class="text-cyan-400 font-bold text-sm mb-4">IBM & Scrum.org</p>
+                                            <p class="text-slate-400 text-sm lg:text-base leading-relaxed mb-4">Double certification couvrant le cycle de vie des produits IA, le développement Python pour l'IA et la gestion de produit Agile (PSPO I).</p>
+                                            <div class="flex flex-wrap gap-2">
+                                                <span class="tech-tag text-cyan-400 border-cyan-500/20">PRODUCT MGMT</span>
+                                                <span class="tech-tag text-emerald-400 border-emerald-500/20">PYTHON</span>
+                                                <span class="tech-tag text-cyan-400 border-cyan-500/20">AGILE</span>
+                                                <span class="tech-tag text-cyan-400 border-cyan-500/20">PSPO I</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-left lg:text-right shrink-0">
+                                        <p class="text-slate-400 font-mono text-sm">2023 - 2024</p>
+                                        <span class="inline-block mt-2 px-3 py-1 bg-cyan-500/20 text-cyan-400 text-xs font-bold rounded-full">Certification</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 2: OpenClassrooms -->
+                        <div class="group relative pl-12 md:pl-16">
+                            <div class="absolute left-4 md:left-6 top-8 -translate-x-1/2 w-4 h-4 hidden md:flex items-center justify-center">
+                                <div class="w-3 h-3 rounded-full bg-slate-700 border-2 border-slate-900 group-hover:bg-emerald-500 group-hover:shadow-[0_0_15px_rgba(16,185,129,0.8)] transition-all duration-300"></div>
+                            </div>
+                            
+                            <div class="glass-card rounded-[2rem] p-6 lg:p-8 relative transition-all duration-300 hover:border-emerald-500/30">
+                                <div class="flex flex-col lg:flex-row justify-between gap-6">
+                                    <div class="flex gap-5">
+                                        <div class="w-14 h-14 rounded-2xl bg-emerald-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shrink-0">O</div>
+                                        <div class="flex-1">
+                                            <h3 class="text-xl lg:text-2xl font-bold text-white mb-1">Data Analyst</h3>
+                                            <p class="text-emerald-400 font-bold text-sm mb-4">OpenClassrooms</p>
+                                            <p class="text-slate-400 text-sm lg:text-base leading-relaxed mb-4">Focus sur l'analyse des besoins métier, la modélisation UML et la structuration de l'information complexe.</p>
+                                            <div class="flex flex-wrap gap-2">
+                                                 <span class="tech-tag text-cyan-400 border-cyan-500/20">BUSINESS ANALYSIS</span>
+                                                 <span class="tech-tag text-emerald-400 border-emerald-500/20">UML MODELING</span>
+                                                 <span class="tech-tag text-cyan-400 border-cyan-500/20">REQUIREMENTS</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-left lg:text-right shrink-0">
+                                        <p class="text-slate-400 font-mono text-sm">2021 - Présent</p>
+                                        <span class="inline-block mt-2 px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-bold rounded-full">Diplôme</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 3: UCLouvain -->
+                        <div class="group relative pl-12 md:pl-16">
+                            <div class="absolute left-4 md:left-6 top-8 -translate-x-1/2 w-4 h-4 hidden md:flex items-center justify-center">
+                                <div class="w-3 h-3 rounded-full bg-slate-700 border-2 border-slate-900 group-hover:bg-fuchsia-500 group-hover:shadow-[0_0_15px_rgba(217,70,239,0.8)] transition-all duration-300"></div>
+                            </div>
+                            
+                            <div class="glass-card rounded-[2rem] p-6 lg:p-8 relative transition-all duration-300 hover:border-fuchsia-500/30">
+                                <div class="flex flex-col lg:flex-row justify-between gap-6">
+                                    <div class="flex gap-5">
+                                        <div class="w-14 h-14 rounded-2xl bg-fuchsia-600 flex items-center justify-center text-white shadow-lg shrink-0">
+                                            <i data-lucide="graduation-cap" class="w-7 h-7"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="text-xl lg:text-2xl font-bold text-white mb-1">Licence Sciences Psychologiques et de l'éducation</h3>
+                                            <p class="text-fuchsia-400 font-bold text-sm mb-4">UCLouvain - Université catholique de Louvain</p>
+                                            <p class="text-slate-400 text-sm lg:text-base leading-relaxed mb-4">Fondamentaux en psychologie clinique, méthodologie scientifique et statistiques.</p>
+                                            <div class="flex flex-wrap gap-2">
+                                                <span class="tech-tag text-purple-400 border-purple-500/20">PSYCHOLOGIE CLINIQUE</span>
+                                                <span class="tech-tag text-purple-400 border-purple-500/20">MÉTHODOLOGIE</span>
+                                                <span class="tech-tag text-purple-400 border-purple-500/20">STATISTIQUES</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-left lg:text-right shrink-0">
+                                        <p class="text-slate-400 font-mono text-sm">Sept. 2011 - Août 2014</p>
+                                        <span class="inline-block mt-2 px-3 py-1 bg-fuchsia-500/20 text-fuchsia-400 text-xs font-bold rounded-full">Diplôme</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 1 : PRE-FOOTER (Call To Action - Glassmorphism) -->
+            <div class="col-span-full py-20 relative overflow-hidden mt-12">
+                <!-- Glassmorphism Container -->
+                <div class="glass-card rounded-[2.5rem] p-12 lg:p-16 bg-slate-900/50 border border-slate-700 backdrop-blur-md">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    
+                    <!-- Left: Text Content -->
+                        <div class="text-center lg:text-left">
+                            <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 tracking-tight leading-[1.1]" data-ml-key="cta_title" data-ml-html="true">
+                            Prêt à transformer <br/>
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">vos données en impact ?</span>
+                        </h2>
+                            <p class="text-slate-400 text-lg md:text-xl mb-10 max-w-lg mx-auto lg:mx-0 font-light leading-relaxed" data-ml-key="cta_desc">
+                            Disponible pour des opportunités en Data Science & Product Management. Construisons ensemble des systèmes intelligents.
+                        </p>
+                        
+                            <a href="mailto:flavien.bardet@email.com" class="group inline-flex items-center gap-3 px-8 py-4 bg-emerald-500/10 border border-emerald-500/50 text-emerald-400 font-bold rounded-full transition-all duration-300 hover:shadow-[0_0_30px_rgba(16,185,129,0.3)] hover:bg-emerald-500/20">
+                                <span data-ml-key="cta_button">Démarrer une conversation</span>
+                            <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+
+                        <!-- Right: Digital Cortex Visual - Twin-Rendering DNA Animation -->
+                        <div class="relative h-[350px] w-full flex items-center justify-center">
+                        <div class="dna-container">
+                                <!-- Hélice ADN avec Symétrie Parfaite (Twin-Rendering) -->
+                                <!-- Les deux brins utilisent EXACTEMENT le même système de glow -->
+                                
+                             <!-- Row 1 -->
+                                <div class="dna-row">
+                                    <div class="dna-node dna-node--a" style="animation-delay: 0s"></div>
+                                    <div class="dna-line" style="animation-delay: 0s"></div>
+                                    <div class="dna-node dna-node--b" style="animation-delay: 0s"></div>
+                             </div>
+                             <!-- Row 2 -->
+                             <div class="dna-row">
+                                    <div class="dna-node dna-node--a" style="animation-delay: -0.5s"></div>
+                                    <div class="dna-line" style="animation-delay: -0.5s"></div>
+                                    <div class="dna-node dna-node--b" style="animation-delay: -0.5s"></div>
+                             </div>
+                             <!-- Row 3 -->
+                             <div class="dna-row">
+                                    <div class="dna-node dna-node--a" style="animation-delay: -1s"></div>
+                                    <div class="dna-line" style="animation-delay: -1s"></div>
+                                    <div class="dna-node dna-node--b" style="animation-delay: -1s"></div>
+                             </div>
+                             <!-- Row 4 -->
+                             <div class="dna-row">
+                                    <div class="dna-node dna-node--a" style="animation-delay: -1.5s"></div>
+                                    <div class="dna-line" style="animation-delay: -1.5s"></div>
+                                    <div class="dna-node dna-node--b" style="animation-delay: -1.5s"></div>
+                             </div>
+                             <!-- Row 5 -->
+                             <div class="dna-row">
+                                    <div class="dna-node dna-node--a" style="animation-delay: -2s"></div>
+                                    <div class="dna-line" style="animation-delay: -2s"></div>
+                                    <div class="dna-node dna-node--b" style="animation-delay: -2s"></div>
+                             </div>
+                             <!-- Row 6 -->
+                             <div class="dna-row">
+                                    <div class="dna-node dna-node--a" style="animation-delay: -2.5s"></div>
+                                    <div class="dna-line" style="animation-delay: -2.5s"></div>
+                                    <div class="dna-node dna-node--b" style="animation-delay: -2.5s"></div>
+                             </div>
+                             <!-- Row 7 -->
+                             <div class="dna-row">
+                                    <div class="dna-node dna-node--a" style="animation-delay: -3s"></div>
+                                    <div class="dna-line" style="animation-delay: -3s"></div>
+                                    <div class="dna-node dna-node--b" style="animation-delay: -3s"></div>
+                             </div>
+                             <!-- Row 8 -->
+                             <div class="dna-row">
+                                    <div class="dna-node dna-node--a" style="animation-delay: -3.5s"></div>
+                                    <div class="dna-line" style="animation-delay: -3.5s"></div>
+                                    <div class="dna-node dna-node--b" style="animation-delay: -3.5s"></div>
+                             </div>
+                             <!-- Row 9 -->
+                             <div class="dna-row">
+                                    <div class="dna-node dna-node--a" style="animation-delay: -4s"></div>
+                                    <div class="dna-line" style="animation-delay: -4s"></div>
+                                    <div class="dna-node dna-node--b" style="animation-delay: -4s"></div>
+                             </div>
+                             <!-- Row 10 -->
+                             <div class="dna-row">
+                                    <div class="dna-node dna-node--a" style="animation-delay: -4.5s"></div>
+                                    <div class="dna-line" style="animation-delay: -4.5s"></div>
+                                    <div class="dna-node dna-node--b" style="animation-delay: -4.5s"></div>
+                             </div>
+                        </div>
+
+                         <!-- Dancing Particles -->
+                        <div class="absolute w-full h-full pointer-events-none">
+                            <div class="particle w-1 h-1 bg-emerald-400" style="top: 20%; left: 30%; --tw-translate-x: 20px; --tw-translate-y: -20px; animation-delay: 0s;"></div>
+                            <div class="particle w-1.5 h-1.5 bg-cyan-400" style="top: 60%; left: 70%; --tw-translate-x: -30px; --tw-translate-y: 10px; animation-delay: 1s;"></div>
+                            <div class="particle w-1 h-1 bg-white" style="top: 40%; left: 80%; --tw-translate-x: 10px; --tw-translate-y: -40px; animation-delay: 2s;"></div>
+                            <div class="particle w-1 h-1 bg-emerald-500" style="top: 80%; left: 20%; --tw-translate-x: -20px; --tw-translate-y: -20px; animation-delay: 3s;"></div>
+                            <div class="particle w-1.5 h-1.5 bg-purple-400" style="top: 10%; left: 50%; --tw-translate-x: 30px; --tw-translate-y: 20px; animation-delay: 4s;"></div>
+                             <div class="particle w-1 h-1 bg-cyan-500" style="top: 50%; left: 10%; animation-delay: 1.5s; --tw-translate-x: 15px; --tw-translate-y: -15px;"></div>
+                             <div class="particle w-1 h-1 bg-white" style="top: 70%; left: 60%; animation-delay: 2.5s; --tw-translate-x: -10px; --tw-translate-y: 10px;"></div>
+                             <div class="particle w-1 h-1 bg-emerald-300" style="top: 30%; left: 90%; animation-delay: 3.5s; --tw-translate-x: -25px; --tw-translate-y: 25px;"></div>
+                             <div class="particle w-1.5 h-1.5 bg-emerald-400" style="top: 15%; left: 75%; animation-delay: 0.5s; --tw-translate-x: 10px; --tw-translate-y: -10px;"></div>
+                             <div class="particle w-1 h-1 bg-purple-300" style="top: 85%; left: 40%; animation-delay: 4.5s; --tw-translate-x: -20px; --tw-translate-y: 20px;"></div>
+                             <div class="particle w-1 h-1 bg-cyan-300" style="top: 5%; left: 20%; animation-delay: 2.2s; --tw-translate-x: 15px; --tw-translate-y: 15px;"></div>
+                             <div class="particle w-1 h-1 bg-emerald-200" style="top: 35%; left: 15%; --tw-translate-x: 25px; --tw-translate-y: -15px; animation-delay: 1.2s;"></div>
+                             <div class="particle w-1.5 h-1.5 bg-white" style="top: 90%; left: 65%; --tw-translate-x: -15px; --tw-translate-y: -25px; animation-delay: 3.8s;"></div>
+                             <div class="particle w-1 h-1 bg-purple-500" style="top: 45%; left: 45%; --tw-translate-x: 30px; --tw-translate-y: 30px; animation-delay: 2.8s;"></div>
+                             <div class="particle w-1 h-1 bg-cyan-200" style="top: 10%; left: 85%; --tw-translate-x: -20px; --tw-translate-y: 10px; animation-delay: 0.8s;"></div>
+                             <div class="particle w-1 h-1 bg-emerald-600" style="top: 75%; left: 5%; --tw-translate-x: 20px; --tw-translate-y: -30px; animation-delay: 4.2s;"></div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- FOOTER (Minimaliste & Harmonisé) -->
+    <footer class="bg-slate-950 border-t border-slate-800 py-12 relative z-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <!-- Main Footer Content -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+                
+                <!-- Left: Logo + Copyright -->
+                <div class="flex flex-col gap-3">
+                    <a href="#" class="text-2xl font-bold text-white tracking-tight hover:opacity-80 transition-opacity">
+                        FB<span class="text-emerald-500">.</span>
+                    </a>
+                    <p class="text-slate-500 text-sm font-light">
+                        AI Product Manager & Data Analyst
+                    </p>
+                    <p class="text-slate-600 text-xs">© 2025 FB. All rights reserved.</p>
+                </div>
+                
+                <!-- Right: Links + Socials -->
+                <div class="flex flex-col md:flex-row items-start md:items-center gap-8">
+                    <!-- Navigation Links -->
+                    <div class="flex flex-wrap gap-6 text-sm">
+                        <a href="#projects" class="text-slate-400 hover:text-emerald-400 hover:drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] transition-all" data-ml-key="footer_projects">Projets</a>
+                        <a href="#skills" class="text-slate-400 hover:text-emerald-400 hover:drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] transition-all" data-ml-key="footer_skills">Compétences</a>
+                        <a href="#experience" class="text-slate-400 hover:text-emerald-400 hover:drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] transition-all" data-ml-key="footer_experience">Parcours</a>
+                        <a href="livrables.html" class="text-slate-400 hover:text-emerald-400 hover:drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] transition-all" data-ml-key="footer_livrables">Livrables</a>
+                </div>
+
+                    <!-- Social Icons -->
+                    <div class="flex items-center gap-4">
+                        <a href="https://linkedin.com/in/flavien-bardet" target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] transition-all" aria-label="LinkedIn">
+                            <i data-lucide="linkedin" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://github.com/flavien-bardet" target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] transition-all" aria-label="GitHub">
+                            <i data-lucide="github" class="w-5 h-5"></i>
+                        </a>
+                        <a href="mailto:flavien.bardet@email.com" class="text-slate-500 hover:text-emerald-400 hover:drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] transition-all" aria-label="Email">
+                            <i data-lucide="mail" class="w-5 h-5"></i>
+                        </a>
+            </div>
+
+                    <!-- Legal Links -->
+                    <div class="flex gap-4 text-xs text-slate-600">
+                        <a href="#" class="hover:text-slate-400 transition-colors" data-ml-key="footer_legal">Mentions Légales</a>
+                        <a href="#" class="hover:text-slate-400 transition-colors" data-ml-key="footer_privacy">Confidentialité</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Ensure DOM is loaded before running scripts
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Icons
+            lucide.createIcons();
+        });
+
+        // --- LOGS TAB LOGIC (New) ---
+        function switchLogTab(logId) {
+            const expList = document.getElementById('log-experience');
+            const eduList = document.getElementById('log-education');
+            const expBtn = document.getElementById('tab-log-exp');
+            const eduBtn = document.getElementById('tab-log-edu');
+
+            if (logId === 'experience') {
+                expList.classList.remove('hidden');
+                eduList.classList.add('hidden');
+                
+                expBtn.classList.remove('text-slate-400');
+                expBtn.classList.add('bg-white', 'text-slate-950', 'shadow-lg');
+                
+                eduBtn.classList.add('text-slate-400');
+                eduBtn.classList.remove('bg-white', 'text-slate-950', 'shadow-lg');
+            } else {
+                expList.classList.add('hidden');
+                eduList.classList.remove('hidden');
+                
+                eduBtn.classList.remove('text-slate-400');
+                eduBtn.classList.add('bg-white', 'text-slate-950', 'shadow-lg');
+                
+                expBtn.classList.add('text-slate-400');
+                expBtn.classList.remove('bg-white', 'text-slate-950', 'shadow-lg');
+            }
+        }
+
+        // --- MULTILANGUAGE SYSTEM (askask11 inspired) ---
+        const translations = {
+            fr: {
+                // Navigation
+                nav_about: "À propos",
+                nav_skills: "Compétences",
+                nav_projects: "Projets",
+                
+                // Hero Section
+                hero_status: "Open for projects",
+                hero_title_1: "L'Intuition Humaine, ",
+                hero_title_2: "validée par la donnée.",
+                hero_desc_1: "Expert en diagnostic neurodéveloppemental reconverti dans l'IA, j'essaie d'apporter une compréhension profonde du comportement humain au cœur du code. Je recherche une alternance AI Engineer (rythme 4j/1j) pour bâtir des outils où l'intelligence artificielle devient le catalyseur d'une amélioration concrète de l'accès et de la qualité des soins.",
+                hero_cta: "Voir mes Projets",
+                
+                // Stats
+                stat_years: "5 ans",
+                stat_years_label: "Clinique",
+                stat_data_years: "2 ans",
+                stat_data_label: "Data & IA",
+                stat_certified: "PSPO I",
+                stat_certified_label: "Certifié",
+                stat_focus: "Focus",
+                stat_focus_label: "MedTech",
+                
+                // Skills Section
+                skills_title: 'Mes <span class="text-emerald-400">compétences</span>',
+                skills_subtitle: "De l'Intuition clinique à l'impact Data",
+                skills_pillar_1: "Data & AI",
+                skills_pillar_2: "Product Management",
+                skills_pillar_3: "Recherche & Méthodologie",
+                
+                // About
+                about_label: "À Propos",
+                about_title: 'Décoder la Donnée. <br/><span class="text-slate-400">Comprendre l\'Humain.</span>',
+                about_p1: 'Pourquoi la science est-elle si difficile à exploiter ? C\'est en constatant l\'absence de templates standardisés dans les études scientifiques que j\'ai décidé de plonger dans le monde des LLM : mon projet de reconversion est né du besoin d\'automatiser l\'extraction de données complexes pour libérer le temps des chercheurs. Mon expertise passée dans les troubles neurodéveloppementaux, couplée à mon engagement dans le monde de l\'esprit critique, me confère une sensibilité unique aux biais cognitifs et à l\'expérience utilisateur. Aujourd\'hui, je quitte le diagnostic clinique pour l\'ingénierie avec l\'ambition de créer des outils capables d\'améliorer la prise en charge et la compréhension de l\'humain en santé ou ailleurs.',
+                
+                // Projects Section
+                projects_title: 'Mes <span class="text-emerald-400">projets</span>',
+                projects_subtitle: "Analyses & Études de cas",
+                
+                // Timeline Section
+                timeline_title: 'Mon <span class="text-emerald-400">parcours</span>',
+                timeline_subtitle: "Expériences & Formations",
+                toggle_exp: "Expériences",
+                toggle_edu: "Formations",
+                
+                // CTA Section
+                cta_title: 'Prêt à transformer <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">vos données en impact ?</span>',
+                cta_desc: "Disponible pour des opportunités en Data Science & Product Management. Construisons ensemble des systèmes intelligents.",
+                cta_button: "Démarrer une conversation",
+                
+                // Footer
+                footer_projects: "Projets",
+                footer_skills: "Compétences",
+                footer_experience: "Parcours",
+                footer_legal: "Mentions Légales",
+                footer_privacy: "Confidentialité"
+            },
+            en: {
+                // Navigation
+                nav_about: "About",
+                nav_skills: "Skills",
+                nav_projects: "Projects",
+                
+                // Hero Section
+                hero_status: "Open for projects",
+                hero_title_1: "Human Intuition, ",
+                hero_title_2: "validated by data.",
+                hero_desc_1: "Expert in neurodevelopmental diagnosis reconverted to AI, I strive to bring a deep understanding of human behavior into the heart of code. I am looking for an AI Engineer work-study (4 days/1 day rhythm) to build tools where artificial intelligence becomes the catalyst for concrete improvement in access to and quality of care.",
+                hero_cta: "View my Projects",
+                
+                // Stats
+                stat_years: "5 yrs",
+                stat_years_label: "Clinical",
+                stat_data_years: "2 yrs",
+                stat_data_label: "Data & AI",
+                stat_certified: "PSPO I",
+                stat_certified_label: "Certified",
+                stat_focus: "Focus",
+                stat_focus_label: "MedTech",
+                
+                // Skills Section
+                skills_title: 'My <span class="text-emerald-400">Skills</span>',
+                skills_subtitle: "From clinical intuition to Data impact",
+                skills_pillar_1: "Data & AI",
+                skills_pillar_2: "Product Management",
+                skills_pillar_3: "Research & Methodology",
+                
+                // About
+                about_label: "About",
+                about_title: 'Decode the Data. <br/><span class="text-slate-400">Understand the Human.</span>',
+                about_p1: 'Why is science so hard to leverage? It was upon noticing the lack of standardized templates in scientific studies that I decided to dive into the world of LLMs: my reconversion project was born from the need to automate the extraction of complex data to free researchers\' time. My past expertise in neurodevelopmental disorders, combined with my commitment to critical thinking, gives me a unique sensitivity to cognitive biases and user experience. Today, I am leaving clinical diagnosis for engineering with the ambition to create tools capable of improving the care and understanding of humans in health and beyond.',
+                
+                // Projects Section
+                projects_title: 'My <span class="text-emerald-400">Projects</span>',
+                projects_subtitle: "Case Studies & Deployments",
+                
+                // Timeline Section
+                timeline_title: 'My <span class="text-emerald-400">Journey</span>',
+                timeline_subtitle: "Experience & Education",
+                toggle_exp: "Experience",
+                toggle_edu: "Education",
+                
+                // CTA Section
+                cta_title: 'Ready to transform <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">your data into impact?</span>',
+                cta_desc: "Available for opportunities in Data Science & Product Management. Let's build intelligent systems together.",
+                cta_button: "Start a conversation",
+                
+                // Footer
+                footer_projects: "Projects",
+                footer_skills: "Skills",
+                footer_experience: "Experience",
+                footer_legal: "Legal Notice",
+                footer_privacy: "Privacy"
+            }
+        };
+
+        let currentLang = 'fr';
+
+        /**
+         * Apply translations to all elements with data-ml-key attribute
+         */
+        function applyTranslations(lang) {
+            const elements = document.querySelectorAll('[data-ml-key]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-ml-key');
+                const useHtml = el.hasAttribute('data-ml-html');
+                
+                if (translations[lang] && translations[lang][key]) {
+                    if (useHtml) {
+                        el.innerHTML = translations[lang][key];
+                    } else {
+                        el.textContent = translations[lang][key];
+                    }
+                }
+            });
+            
+            // Update lang attribute
+            document.documentElement.setAttribute('lang', lang);
+        }
+
+        /**
+         * Toggle between FR and EN languages
+         */
+        function toggleLanguage() {
+            currentLang = currentLang === 'fr' ? 'en' : 'fr';
+            applyTranslations(currentLang);
+            updateLangToggleUI();
+        }
+
+        /**
+         * Update language toggle UI to reflect current language
+         */
+        function updateLangToggleUI() {
+            const frEl = document.getElementById('langFR');
+            const enEl = document.getElementById('langEN');
+            
+            if (currentLang === 'fr') {
+                frEl.classList.add('text-white');
+                frEl.classList.remove('text-slate-500');
+                enEl.classList.add('text-slate-500');
+                enEl.classList.remove('text-white');
+            } else {
+                enEl.classList.add('text-white');
+                enEl.classList.remove('text-slate-500');
+                frEl.classList.add('text-slate-500');
+                frEl.classList.remove('text-white');
+            }
+        }
+
+        // Initialize with default language (FR)
+        document.addEventListener('DOMContentLoaded', function() {
+            applyTranslations(currentLang);
+            updateLangToggleUI();
+        });
+    </script>
+</body>
+</html>
+</html>
+</html>
+</html>
+</html>
+</html>
+</html>

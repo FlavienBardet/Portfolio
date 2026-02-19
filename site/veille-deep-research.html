@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FB | Veille - Deep Research & IA Agentique</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Icons (Lucide) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        slate: {
+                            850: '#151e2e',
+                            900: '#0f172a',
+                            950: '#020617',
+                            1000: '#0b0f19', 
+                        },
+                        neon: {
+                            cyan: '#06b6d4',
+                            purple: '#8b5cf6',
+                            pink: '#ec4899',
+                            emerald: '#10b981'
+                        },
+                        card: {
+                            dark: '#111318', 
+                        }
+                    },
+                    animation: {
+                        'blob': 'blob 10s infinite',
+                        'float-slow': 'float 8s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-12px)' },
+                        }
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html {
+            scroll-padding-top: 100px;
+        }
+
+        .glass-card {
+            background: rgba(30, 41, 59, 0.35);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1), inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+        }
+        
+        .glass-card:hover {
+            background: rgba(30, 41, 59, 0.55);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .bg-noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Spotlight effect for hero */
+        .spotlight-green {
+            position: absolute;
+            width: 600px;
+            height: 400px;
+            background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.05) 40%, transparent 70%);
+            filter: blur(60px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Split screen hover effect */
+        .split-new-world {
+            transition: all 0.4s ease;
+        }
+        .split-new-world:hover {
+            box-shadow: 0 0 60px -10px rgba(16, 185, 129, 0.3), inset 0 1px 0 0 rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        /* Tool card hover */
+        .tool-card {
+            transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+        }
+        .tool-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px -12px rgba(6, 182, 212, 0.2);
+            border-color: rgba(6, 182, 212, 0.3);
+        }
+
+        /* KPI glow */
+        .kpi-number {
+            text-shadow: 0 0 40px rgba(16, 185, 129, 0.3);
+        }
+
+        /* ========================================= */
+        /* HEADER AUDIO PLAYER - Purple Theme       */
+        /* ========================================= */
+        
+        .header-player {
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.1), 0 2px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        .header-player:hover {
+            box-shadow: 0 4px 25px rgba(139, 92, 246, 0.2), 0 4px 15px rgba(0, 0, 0, 0.4);
+            border-color: rgba(139, 92, 246, 0.4);
+        }
+        
+        /* Play button pulse when playing */
+        .header-player.is-playing .play-icon-btn {
+            animation: pulse-purple 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-purple {
+            0%, 100% { filter: drop-shadow(0 0 4px rgba(139, 92, 246, 0.4)); }
+            50% { filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.7)); }
+        }
+
+        /* Visualizer Bars - Purple Theme */
+        .viz-bar {
+            width: 3px;
+            height: 4px;
+            background: #a855f7;
+            border-radius: 2px;
+            transition: all 0.15s ease;
+            opacity: 0.4;
+        }
+        
+        /* Playing state - bars animate with stagger */
+        .header-player.is-playing .viz-bar {
+            opacity: 1;
+        }
+        .header-player.is-playing .viz-bar:nth-child(1) {
+            animation: viz-bounce 0.45s ease-in-out infinite;
+            animation-delay: 0ms;
+        }
+        .header-player.is-playing .viz-bar:nth-child(2) {
+            animation: viz-bounce 0.45s ease-in-out infinite;
+            animation-delay: 150ms;
+        }
+        .header-player.is-playing .viz-bar:nth-child(3) {
+            animation: viz-bounce 0.45s ease-in-out infinite;
+            animation-delay: 300ms;
+        }
+        
+        @keyframes viz-bounce {
+            0%, 100% { 
+                height: 4px;
+                transform: scaleY(1);
+            }
+            50% { 
+                height: 14px;
+                transform: scaleY(1);
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-300 font-sans min-h-screen selection:bg-neon-cyan selection:text-white overflow-x-hidden">
+
+    <div class="bg-noise"></div>
+
+    <!-- Background Ambience -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="absolute -top-20 -left-20 w-96 h-96 bg-neon-purple/20 rounded-full mix-blend-screen filter blur-[120px] opacity-30 animate-blob"></div>
+        <div class="absolute top-1/3 right-0 w-96 h-96 bg-neon-emerald/20 rounded-full mix-blend-screen filter blur-[120px] opacity-25 animate-blob animation-delay-2000"></div>
+    </div>
+
+    <!-- HEADER NAVIGATION (Flex: Retour | Audio Player) -->
+    <nav class="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            
+            <!-- Left: Bouton Retour -->
+            <a href="livrables.html" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-slate-900/60 border border-white/10 text-slate-400 text-sm font-medium hover:bg-slate-900/80 hover:text-white hover:border-white/20 transition-all duration-300 backdrop-blur-md">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                <span class="hidden sm:inline">Retour aux Livrables</span>
+                <span class="sm:hidden">Retour</span>
+            </a>
+            
+            <!-- Right: Custom Audio Player -->
+            <div id="headerPlayer" class="header-player flex items-center gap-3 px-4 py-2 rounded-full bg-slate-900/80 border border-slate-700/50 backdrop-blur-md cursor-pointer" onclick="toggleHeaderAudio()">
+                
+                <!-- Play/Pause Icon -->
+                <div class="play-icon-btn text-purple-400 transition-all">
+                    <svg id="headerPlayIcon" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                    <svg id="headerPauseIcon" class="w-4 h-4 hidden" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                    </svg>
+                </div>
+                
+                <!-- Track Info -->
+                <div class="flex flex-col">
+                    <span class="text-xs font-bold text-slate-200">Podcast NotebookLM</span>
+                    <span class="text-[10px] text-slate-400 hidden sm:block">Résumé Audio • IA</span>
+                </div>
+                
+                <!-- Visualizer Bars -->
+                <div class="flex items-end gap-0.5 h-4 ml-1">
+                    <div class="viz-bar"></div>
+                    <div class="viz-bar"></div>
+                    <div class="viz-bar"></div>
+                </div>
+                
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hidden Audio Element -->
+    <audio id="headerAudio" preload="auto">
+        <source src="assets/audio/deep_research_audio.m4a" type="audio/mp4">
+        <source src="assets/audio/deep_research_audio.m4a" type="audio/x-m4a">
+        Votre navigateur ne supporte pas l'élément audio.
+    </audio>
+
+    <!-- Main Content -->
+    <main class="relative z-10">
+        
+        <!-- ============================================ -->
+        <!-- TICKET 1 : HERO SECTION -->
+        <!-- ============================================ -->
+        <section class="relative min-h-[70vh] flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 pt-24 pb-16 overflow-hidden">
+            
+            <!-- Spotlight Effect (Vert Néon diffus) -->
+            <div class="spotlight-green top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+            
+            <!-- Hero Content -->
+            <div class="relative z-10 text-center max-w-4xl mx-auto">
+                <!-- Badge -->
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 mb-8">
+                    <i data-lucide="radar" class="w-4 h-4 text-emerald-400"></i>
+                    <span class="text-emerald-400 text-xs font-mono tracking-wide uppercase font-bold">Veille Technologique</span>
+                </div>
+                
+                <!-- Main Title -->
+                <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tight leading-[1.1]">
+                    Deep Research : <br/>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-400 to-emerald-400">La Rupture Agentique</span>
+                </h1>
+                
+                <!-- Subtitle -->
+                <p class="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed font-light">
+                    Du 'Search' au 'Reasoning' : Comment les agents autonomes transforment la chaîne de valeur de l'analyste,<br/>
+                    <span class="text-slate-300 font-medium">de la collecte de données à la décision stratégique.</span>
+                </p>
+            </div>
+        </section>
+
+        <!-- Intro Contextuelle -->
+        <section class="px-4 sm:px-6 lg:px-8 pb-20">
+            <div class="max-w-3xl mx-auto text-center">
+                <p class="text-slate-300 text-base md:text-lg leading-relaxed">
+                    Nous assistons à un <strong class="text-white">changement de paradigme fondamental</strong>. L'époque où l'analyste passait 80% de son temps à collecter l'information est révolue. Grâce aux architectures de <em class="text-emerald-400">'Reasoning Loops'</em>, nous passons d'une logique de récupération de documents (Information Retrieval) à une logique de <strong class="text-white">découverte de connaissances</strong>, permettant de traiter des corpus massifs (Régulations Aéronautiques, Normes MedTech) en quelques minutes.
+                </p>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- TICKET 2 : SPLIT SCREEN COMPARATIF -->
+        <!-- ============================================ -->
+        <section class="px-4 sm:px-6 lg:px-8 pb-24">
+            <div class="max-w-6xl mx-auto">
+                
+                <!-- Section Header -->
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">
+                        Avant / Après : Le Changement de Paradigme
+                    </h2>
+                    <p class="text-slate-400 max-w-xl mx-auto">
+                        Comparaison entre l'approche traditionnelle et la recherche agentique.
+                    </p>
+                </div>
+
+                <!-- Split Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-0 rounded-[2rem] overflow-hidden border border-slate-800">
+                    
+                    <!-- Colonne Gauche : L'Ancien Monde -->
+                    <div class="bg-slate-900 p-8 md:p-10 border-b md:border-b-0 md:border-r border-slate-800">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center">
+                                <i data-lucide="search" class="w-5 h-5 text-red-400/70"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-white font-bold text-lg">Recherche Traditionnelle</h3>
+                                <p class="text-slate-500 text-sm">(Google, Bases documentaires)</p>
+                            </div>
+                        </div>
+                        
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3">
+                                <div class="w-5 h-5 rounded-full bg-red-500/10 flex items-center justify-center mt-0.5 shrink-0">
+                                    <i data-lucide="x" class="w-3 h-3 text-red-400/70"></i>
+                                </div>
+                                <div>
+                                    <p class="text-slate-300 font-medium">Sourcing manuel intensif</p>
+                                    <p class="text-slate-500 text-sm">1h à 4h de recherche par sujet</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <div class="w-5 h-5 rounded-full bg-red-500/10 flex items-center justify-center mt-0.5 shrink-0">
+                                    <i data-lucide="x" class="w-3 h-3 text-red-400/70"></i>
+                                </div>
+                                <div>
+                                    <p class="text-slate-300 font-medium">Bruit élevé (SEO & Pubs)</p>
+                                    <p class="text-slate-500 text-sm">Filtrage humain chronophage des résultats sponsorisés</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <div class="w-5 h-5 rounded-full bg-red-500/10 flex items-center justify-center mt-0.5 shrink-0">
+                                    <i data-lucide="x" class="w-3 h-3 text-red-400/70"></i>
+                                </div>
+                                <div>
+                                    <p class="text-slate-300 font-medium">Lecture linéaire obligatoire</p>
+                                    <p class="text-slate-500 text-sm">Parcours séquentiel document par document</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <div class="w-5 h-5 rounded-full bg-red-500/10 flex items-center justify-center mt-0.5 shrink-0">
+                                    <i data-lucide="x" class="w-3 h-3 text-red-400/70"></i>
+                                </div>
+                                <div>
+                                    <p class="text-slate-300 font-medium">Sortie : Liste de liens</p>
+                                    <p class="text-slate-500 text-sm">Non structurée, nécessite consolidation manuelle</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Colonne Droite : Le Nouveau Monde -->
+                    <div class="split-new-world bg-slate-900/50 p-8 md:p-10 relative">
+                        <!-- Subtle glow background -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-cyan-500/5 pointer-events-none"></div>
+                        
+                        <div class="relative z-10">
+                            <div class="flex items-center gap-3 mb-6">
+                                <div class="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center">
+                                    <i data-lucide="sparkles" class="w-5 h-5 text-emerald-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-white font-bold text-lg">Deep Research</h3>
+                                    <p class="text-emerald-400/70 text-sm">(IA Agentique)</p>
+                                </div>
+                            </div>
+                            
+                            <ul class="space-y-4">
+                                <li class="flex items-start gap-3">
+                                    <div class="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center mt-0.5 shrink-0">
+                                        <i data-lucide="check" class="w-3 h-3 text-emerald-400"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-white font-medium">Sourcing automatisé</p>
+                                        <p class="text-slate-400 text-sm">3 à 30 minutes par sujet complexe</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <div class="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center mt-0.5 shrink-0">
+                                        <i data-lucide="check" class="w-3 h-3 text-emerald-400"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-white font-medium">Filtrage sémantique & Synthèse</p>
+                                        <p class="text-slate-400 text-sm">Extraction intelligente des informations pertinentes</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <div class="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center mt-0.5 shrink-0">
+                                        <i data-lucide="check" class="w-3 h-3 text-emerald-400"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-white font-medium">Lecture parallèle (50+ sources)</p>
+                                        <p class="text-slate-400 text-sm">Exploration simultanée de centaines de documents</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <div class="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center mt-0.5 shrink-0">
+                                        <i data-lucide="check" class="w-3 h-3 text-emerald-400"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-white font-medium">Sortie : Rapport d'audit structuré</p>
+                                        <p class="text-slate-400 text-sm">Avec citations, sources et recommandations</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- TICKET 3 : MÉTHODOLOGIE & BENCHMARK -->
+        <!-- ============================================ -->
+        
+        <!-- Section Méthodologie CRAA -->
+        <section class="px-4 sm:px-6 lg:px-8 pb-24">
+            <div class="max-w-6xl mx-auto">
+                
+                <!-- Section Header -->
+                <div class="mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-3 tracking-tight">
+                        Méthodologie : Le Cycle <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-emerald-400 to-purple-400">CRAA</span>
+                    </h2>
+                    <div class="flex items-center gap-4">
+                        <div class="h-1 w-16 bg-gradient-to-r from-cyan-500 via-emerald-500 to-purple-500 rounded-full"></div>
+                        <p class="text-slate-500 font-mono text-sm uppercase tracking-wider">Mon workflow personnel de recherche augmentée</p>
+                    </div>
+                </div>
+
+                <!-- CRAA Pipeline - Vertical Timeline Layout -->
+                <div class="relative max-w-4xl mx-auto">
+                    <!-- Vertical Connector Line -->
+                    <div class="absolute left-[60px] md:left-[80px] top-0 bottom-0 w-px bg-gradient-to-b from-cyan-500/50 via-emerald-500/50 via-pink-500/50 to-purple-500/50"></div>
+                    
+                    <div class="space-y-6">
+                        
+                        <!-- Step 1: CADRAGE -->
+                        <div class="group flex gap-6 md:gap-8 items-start">
+                            <!-- Left: Step Block -->
+                            <div class="shrink-0 w-[120px] md:w-[160px] bg-slate-900/60 backdrop-blur-md border border-cyan-500/30 rounded-2xl p-4 text-center relative z-10 group-hover:border-cyan-500 group-hover:shadow-[0_0_30px_rgba(6,182,212,0.15)] transition-all duration-300">
+                                <span class="text-cyan-400 font-mono text-xl md:text-2xl font-bold">C1</span>
+                                <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mx-auto my-2">
+                                    <i data-lucide="message-circle" class="w-5 h-5 text-cyan-400"></i>
+                                </div>
+                                <p class="text-cyan-400 font-mono text-xs uppercase tracking-wider font-bold">Cadrage</p>
+                            </div>
+                            <!-- Right: Description -->
+                            <div class="flex-1 pt-2">
+                                <h4 class="text-white font-bold text-lg mb-1">Interview Agentique</h4>
+                                <p class="text-slate-400 text-sm leading-relaxed">
+                                    Utilisation de l'IA pour <strong class="text-slate-300">préciser le périmètre</strong> (juridictions, années, segments) avant toute recherche. L'objectif est de transformer un besoin vague en brief actionnable avec des critères de filtrage stricts.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 2: RECHERCHE -->
+                        <div class="group flex gap-6 md:gap-8 items-start">
+                            <!-- Left: Step Block -->
+                            <div class="shrink-0 w-[120px] md:w-[160px] bg-slate-900/60 backdrop-blur-md border border-emerald-500/30 rounded-2xl p-4 text-center relative z-10 group-hover:border-emerald-500 group-hover:shadow-[0_0_30px_rgba(16,185,129,0.15)] transition-all duration-300">
+                                <span class="text-emerald-400 font-mono text-xl md:text-2xl font-bold">R2</span>
+                                <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mx-auto my-2">
+                                    <i data-lucide="globe" class="w-5 h-5 text-emerald-400"></i>
+                                </div>
+                                <p class="text-emerald-400 font-mono text-xs uppercase tracking-wider font-bold">Recherche</p>
+                            </div>
+                            <!-- Right: Description -->
+                            <div class="flex-1 pt-2">
+                                <h4 class="text-white font-bold text-lg mb-1">Agentic Deep Research</h4>
+                                <p class="text-slate-400 text-sm leading-relaxed">
+                                    Déploiement d'<strong class="text-slate-300">agents autonomes</strong> pour la planification, la navigation web et la synthèse multi-sources (50+ sources). La machine explore pendant que je me concentre sur l'analyse stratégique.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 3: AUDIT -->
+                        <div class="group flex gap-6 md:gap-8 items-start">
+                            <!-- Left: Step Block -->
+                            <div class="shrink-0 w-[120px] md:w-[160px] bg-slate-900/60 backdrop-blur-md border border-pink-500/30 rounded-2xl p-4 text-center relative z-10 group-hover:border-pink-500 group-hover:shadow-[0_0_30px_rgba(236,72,153,0.15)] transition-all duration-300">
+                                <span class="text-pink-400 font-mono text-xl md:text-2xl font-bold">A3</span>
+                                <div class="w-10 h-10 rounded-xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center mx-auto my-2">
+                                    <i data-lucide="shield-check" class="w-5 h-5 text-pink-400"></i>
+                                </div>
+                                <p class="text-pink-400 font-mono text-xs uppercase tracking-wider font-bold">Audit</p>
+                            </div>
+                            <!-- Right: Description -->
+                            <div class="flex-1 pt-2">
+                                <h4 class="text-white font-bold text-lg mb-1">Human-in-the-Loop</h4>
+                                <p class="text-slate-400 text-sm leading-relaxed">
+                                    Vérification critique via <strong class="text-slate-300">Click-through Audit</strong> et revue contradictoire via un second modèle. Élimination des hallucinations par croisement des sources primaires.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 4: ACTION -->
+                        <div class="group flex gap-6 md:gap-8 items-start">
+                            <!-- Left: Step Block -->
+                            <div class="shrink-0 w-[120px] md:w-[160px] bg-slate-900/60 backdrop-blur-md border border-purple-500/30 rounded-2xl p-4 text-center relative z-10 group-hover:border-purple-500 group-hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] transition-all duration-300">
+                                <span class="text-purple-400 font-mono text-xl md:text-2xl font-bold">A4</span>
+                                <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center mx-auto my-2">
+                                    <i data-lucide="zap" class="w-5 h-5 text-purple-400"></i>
+                                </div>
+                                <p class="text-purple-400 font-mono text-xs uppercase tracking-wider font-bold">Action</p>
+                            </div>
+                            <!-- Right: Description -->
+                            <div class="flex-1 pt-2">
+                                <h4 class="text-white font-bold text-lg mb-1">Assemblage & Impact</h4>
+                                <p class="text-slate-400 text-sm leading-relaxed">
+                                    <strong class="text-slate-300">Contextualisation des résultats</strong> pour les projets stratégiques (ex: AéroWorld) et intégration dans des dashboards Power BI ou rapports décisionnels.
+                                </p>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+
+        <!-- Section Benchmark Outils (Data-Dense) -->
+        <section class="px-4 sm:px-6 lg:px-8 pb-24">
+            <div class="max-w-6xl mx-auto">
+                
+                <!-- Section Header -->
+                <div class="mb-10">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-3 tracking-tight">
+                        Panorama des <span class="text-cyan-400">Outils</span>
+                    </h2>
+                    <div class="flex items-center gap-4">
+                        <div class="h-1 w-16 bg-cyan-500 rounded-full"></div>
+                        <p class="text-slate-500 font-mono text-sm uppercase tracking-wider">Benchmark comparatif 2024-2025</p>
+                    </div>
+                </div>
+
+                <!-- Tools Grid (3 Cards - Standardized Height) -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    
+                    <!-- Tool Card 1: ChatGPT Deep Research -->
+                    <div class="tool-card glass-card rounded-2xl border border-slate-800 relative overflow-hidden flex flex-col h-full">
+                        <!-- Header -->
+                        <div class="p-5 pb-4 flex-1">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 flex items-center justify-center border border-white/10">
+                                    <i data-lucide="bot" class="w-5 h-5 text-emerald-400"></i>
+                                </div>
+                                <h3 class="text-white font-bold text-lg">ChatGPT Deep Research</h3>
+                            </div>
+                            
+                            <p class="text-slate-400 text-sm leading-relaxed">
+                                Focus sur le <strong class="text-white">raisonnement complexe</strong> et la planification de tâches multi-étapes. Capable de produire des dossiers de fond structurés (100+ sources).
+                            </p>
+                        </div>
+                        
+                        <!-- Metrics Grid -->
+                        <div class="grid grid-cols-3 border-y border-slate-700/50 bg-slate-900/30">
+                            <div class="p-3 text-center border-r border-slate-700/50">
+                                <p class="text-white font-bold text-sm">10-30 min</p>
+                                <p class="text-slate-500 text-[10px] uppercase tracking-wider">Temps</p>
+                            </div>
+                            <div class="p-3 text-center border-r border-slate-700/50">
+                                <p class="text-white font-bold text-sm">100+</p>
+                                <p class="text-slate-500 text-[10px] uppercase tracking-wider">Sources</p>
+                            </div>
+                            <div class="p-3 text-center">
+                                <p class="text-white font-bold text-sm">20$/mo</p>
+                                <p class="text-slate-500 text-[10px] uppercase tracking-wider">Coût</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Verdict -->
+                        <div class="p-4 bg-slate-800/50 mt-auto">
+                            <div class="flex items-start gap-2">
+                                <i data-lucide="user-check" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i>
+                                <p class="text-slate-300 text-xs leading-relaxed italic">
+                                    "Ma référence pour les recherches approfondies nécessitant une planification autonome."
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tool Card 2: Gemini Deep Research -->
+                    <div class="tool-card glass-card rounded-2xl border border-slate-800 relative overflow-hidden flex flex-col h-full">
+                        <!-- Header -->
+                        <div class="p-5 pb-4 flex-1">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center border border-white/10">
+                                    <i data-lucide="sparkles" class="w-5 h-5 text-purple-400"></i>
+                                </div>
+                                <h3 class="text-white font-bold text-lg">Gemini Deep Research</h3>
+                            </div>
+                            
+                            <p class="text-slate-400 text-sm leading-relaxed">
+                                Expert du <strong class="text-white">contexte massif</strong> (1M+ tokens). Idéal pour croiser des manuels techniques FAA/EASA avec des données internes Workspace.
+                            </p>
+                        </div>
+                        
+                        <!-- Metrics Grid -->
+                        <div class="grid grid-cols-3 border-y border-slate-700/50 bg-slate-900/30">
+                            <div class="p-3 text-center border-r border-slate-700/50">
+                                <p class="text-white font-bold text-sm">~10 min</p>
+                                <p class="text-slate-500 text-[10px] uppercase tracking-wider">Temps</p>
+                            </div>
+                            <div class="p-3 text-center border-r border-slate-700/50">
+                                <p class="text-white font-bold text-sm">1M+</p>
+                                <p class="text-slate-500 text-[10px] uppercase tracking-wider">Tokens</p>
+                            </div>
+                            <div class="p-3 text-center">
+                                <p class="text-white font-bold text-sm">20$/mo</p>
+                                <p class="text-slate-500 text-[10px] uppercase tracking-wider">Coût</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Verdict -->
+                        <div class="p-4 bg-slate-800/50 mt-auto">
+                            <div class="flex items-start gap-2">
+                                <i data-lucide="user-check" class="w-4 h-4 text-purple-400 mt-0.5 shrink-0"></i>
+                                <p class="text-slate-300 text-xs leading-relaxed italic">
+                                    "L'outil ultime pour ingérer des bibliothèques entières de docs techniques (Aéro/MedTech)."
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tool Card 3: NotebookLM -->
+                    <div class="tool-card glass-card rounded-2xl border border-slate-800 relative overflow-hidden flex flex-col h-full">
+                        <!-- Header -->
+                        <div class="p-5 pb-4 flex-1">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-yellow-500/20 to-orange-500/20 flex items-center justify-center border border-white/10">
+                                    <i data-lucide="mic" class="w-5 h-5 text-yellow-400"></i>
+                                </div>
+                                <h3 class="text-white font-bold text-lg">Google NotebookLM</h3>
+                            </div>
+                            
+                            <p class="text-slate-400 text-sm leading-relaxed">
+                                Outil de synthèse sur <strong class="text-white">corpus fermé</strong>. Garantit un ancrage (grounding) total aux documents sources pour éliminer les hallucinations.
+                            </p>
+                        </div>
+                        
+                        <!-- Metrics Grid -->
+                        <div class="grid grid-cols-3 border-y border-slate-700/50 bg-slate-900/30">
+                            <div class="p-3 text-center border-r border-slate-700/50">
+                                <p class="text-white font-bold text-sm">Audio</p>
+                                <p class="text-slate-500 text-[10px] uppercase tracking-wider">Format</p>
+                            </div>
+                            <div class="p-3 text-center border-r border-slate-700/50">
+                                <p class="text-white font-bold text-sm">50</p>
+                                <p class="text-slate-500 text-[10px] uppercase tracking-wider">Sources</p>
+                            </div>
+                            <div class="p-3 text-center">
+                                <p class="text-white font-bold text-sm">Gratuit</p>
+                                <p class="text-slate-500 text-[10px] uppercase tracking-wider">Coût</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Verdict -->
+                        <div class="p-4 bg-slate-800/50 mt-auto">
+                            <div class="flex items-start gap-2">
+                                <i data-lucide="user-check" class="w-4 h-4 text-yellow-400 mt-0.5 shrink-0"></i>
+                                <p class="text-slate-300 text-xs leading-relaxed italic">
+                                    "Mon outil de finalisation : synthèses audio parfaites pour briefer une équipe."
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- SECTION ROI & IMPACT MÉTIER -->
+        <!-- ============================================ -->
+        
+        <section class="px-4 sm:px-6 lg:px-8 pb-20">
+            <div class="max-w-6xl mx-auto">
+                
+                <!-- Section Header -->
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">
+                        ROI & <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Impact Métier</span>
+                    </h2>
+                    <p class="text-slate-400 max-w-xl mx-auto">
+                        Métriques vérifiées issues de mon expérimentation terrain.
+                    </p>
+                </div>
+
+                <!-- KPI Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    
+                    <!-- KPI Card 1: Productivité (Vert) -->
+                    <div class="glass-card rounded-2xl border border-slate-800 overflow-hidden hover:border-emerald-500/30 transition-all duration-300 hover:-translate-y-1">
+                        <div class="p-6">
+                            <!-- Icon & Badge -->
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+                                    <i data-lucide="clock" class="w-6 h-6 text-emerald-400"></i>
+                                </div>
+                                <span class="text-emerald-400 text-xs font-bold tracking-wider uppercase">Impact</span>
+                            </div>
+                            
+                            <!-- KPI Number -->
+                            <p class="kpi-number text-4xl font-bold text-white mb-2">-75% à -90%</p>
+                            <h4 class="text-emerald-400 font-bold text-lg mb-3">Temps de Sourcing</h4>
+                            
+                            <!-- Context -->
+                            <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                                Réduction drastique du temps de collecte sur les corpus réglementaires.
+                            </p>
+                            
+                            <!-- Impact Metric -->
+                            <div class="bg-emerald-500/10 border border-emerald-500/20 rounded-lg px-4 py-2 mb-4">
+                                <p class="text-emerald-400 font-mono text-sm font-bold">4h → 15-30 min / requête</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Source Badge -->
+                        <div class="px-6 py-3 bg-slate-900/50 border-t border-slate-800">
+                            <a href="https://www.reddit.com/r/singularity/" target="_blank" rel="noopener noreferrer" class="text-slate-500 text-[10px] hover:text-emerald-400 transition-colors">Source: Reddit r/Singularity</a>
+                        </div>
+                    </div>
+                    
+                    <!-- KPI Card 2: Stratégie (Violet) -->
+                    <div class="glass-card rounded-2xl border border-slate-800 overflow-hidden hover:border-purple-500/30 transition-all duration-300 hover:-translate-y-1">
+                        <div class="p-6">
+                            <!-- Icon & Badge -->
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
+                                    <i data-lucide="zap" class="w-6 h-6 text-purple-400"></i>
+                                </div>
+                                <span class="text-purple-400 text-xs font-bold tracking-wider uppercase">Impact</span>
+                            </div>
+                            
+                            <!-- KPI Number -->
+                            <p class="kpi-number text-5xl font-bold text-white mb-2">x15</p>
+                            <h4 class="text-purple-400 font-bold text-lg mb-3">Time-to-Insight</h4>
+                            
+                            <!-- Context -->
+                            <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                                Accélération de la prise de décision grâce aux synthèses structurées.
+                            </p>
+                            
+                            <!-- Impact Metric -->
+                            <div class="bg-purple-500/10 border border-purple-500/20 rounded-lg px-4 py-2 mb-4">
+                                <p class="text-purple-400 font-mono text-sm font-bold">Dossier prêt en < 15min</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Source Badge -->
+                        <div class="px-6 py-3 bg-slate-900/50 border-t border-slate-800">
+                            <a href="https://www.thinkwithgoogle.com/" target="_blank" rel="noopener noreferrer" class="text-slate-500 text-[10px] hover:text-purple-400 transition-colors">Source: Think with Google</a>
+                        </div>
+                    </div>
+                    
+                    <!-- KPI Card 3: Qualité (Bleu) -->
+                    <div class="glass-card rounded-2xl border border-slate-800 overflow-hidden hover:border-cyan-500/30 transition-all duration-300 hover:-translate-y-1">
+                        <div class="p-6">
+                            <!-- Icon & Badge -->
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center">
+                                    <i data-lucide="signal" class="w-6 h-6 text-cyan-400"></i>
+                                </div>
+                                <span class="text-cyan-400 text-xs font-bold tracking-wider uppercase">Impact</span>
+                            </div>
+                            
+                            <!-- KPI Number -->
+                            <p class="kpi-number text-5xl font-bold text-white mb-2">x5 à x10</p>
+                            <h4 class="text-cyan-400 font-bold text-lg mb-3">Couverture Sources</h4>
+                            
+                            <!-- Context -->
+                            <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                                Capacité à croiser des sources hétérogènes (Web, PDF, Académique).
+                            </p>
+                            
+                            <!-- Impact Metric -->
+                            <div class="bg-cyan-500/10 border border-cyan-500/20 rounded-lg px-4 py-2 mb-4">
+                                <p class="text-cyan-400 font-mono text-sm font-bold">Traitement 10 → 100+ sources</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Source Badge -->
+                        <div class="px-6 py-3 bg-slate-900/50 border-t border-slate-800">
+                            <a href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer" class="text-slate-500 text-[10px] hover:text-cyan-400 transition-colors">Source: Perplexity vs OpenAI Report</a>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- SECTION CONCLUSION : L'ANALYSTE AUGMENTÉ -->
+        <!-- ============================================ -->
+        
+        <section class="px-4 sm:px-6 lg:px-8 pb-24">
+            <div class="max-w-4xl mx-auto">
+                
+                <!-- Glassmorphism Conclusion Card -->
+                <div class="relative bg-slate-900/60 backdrop-blur-xl border border-slate-700/50 rounded-[2rem] p-8 md:p-12 overflow-hidden">
+                    
+                    <!-- Decorative gradient glow -->
+                    <div class="absolute -top-20 -right-20 w-40 h-40 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                    <div class="absolute -bottom-20 -left-20 w-40 h-40 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                    
+                    <!-- Content -->
+                    <div class="relative z-10">
+                        
+                        <!-- Section Header -->
+                        <div class="mb-8">
+                            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 mb-4">
+                                <i data-lucide="target" class="w-4 h-4 text-emerald-400"></i>
+                                <span class="text-emerald-400 text-xs font-mono uppercase tracking-wider font-bold">Synthèse</span>
+                            </div>
+                            <h2 class="text-2xl md:text-3xl font-bold text-white mb-2">
+                                Conclusion : Vers une <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Analyse de Haute Précision</span>
+                            </h2>
+                        </div>
+                        
+                        <!-- Paragraphs -->
+                        <div class="space-y-6 text-slate-300 leading-relaxed">
+                            
+                            <!-- Paragraphe 1: La Vision -->
+                            <div class="flex gap-4">
+                                <div class="shrink-0 w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mt-1">
+                                    <i data-lucide="lightbulb" class="w-4 h-4 text-emerald-400"></i>
+                                </div>
+                                <p>
+                                    La transition vers l'<strong class="text-white">IA Agentique</strong> n'est pas une simple évolution d'outil, mais une <strong class="text-emerald-400">refonte complète de la valeur ajoutée de l'analyste</strong>. Nous passons d'un rôle de collecteur-synthétiseur à celui d'architecte stratégique, capable de piloter des agents autonomes pour explorer des corpus massifs en quelques minutes.
+                                </p>
+                            </div>
+                            
+                            <!-- Paragraphe 2: Le Garde-fou Humain -->
+                            <div class="flex gap-4">
+                                <div class="shrink-0 w-8 h-8 rounded-lg bg-pink-500/10 border border-pink-500/20 flex items-center justify-center mt-1">
+                                    <i data-lucide="shield-check" class="w-4 h-4 text-pink-400"></i>
+                                </div>
+                                <p>
+                                    Dans des secteurs hautement régulés comme l'<strong class="text-white">aéronautique</strong> ou la <strong class="text-white">MedTech</strong>, la responsabilité et l'audit final incombent toujours à l'expert humain. Le workflow <strong class="text-pink-400">"Human-in-the-Loop"</strong> garantit que chaque insight est validé, sourcé et auditable avant d'influencer une décision critique.
+                                </p>
+                            </div>
+                            
+                            <!-- Paragraphe 3: L'Impact AéroWorld -->
+                            <div class="flex gap-4">
+                                <div class="shrink-0 w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mt-1">
+                                    <i data-lucide="rocket" class="w-4 h-4 text-cyan-400"></i>
+                                </div>
+                                <p>
+                                    Pour <strong class="text-white">AéroWorld</strong>, cette approche réduit drastiquement le <strong class="text-cyan-400">"Time-to-Insight"</strong>, permettant de transformer l'incertitude technologique en avantage concurrentiel. L'analyste augmenté devient le garant d'une prise de décision éclairée, rapide et conforme aux exigences réglementaires.
+                                </p>
+                            </div>
+                            
+                        </div>
+                        
+                        <!-- CTA Button -->
+                        <div class="mt-10 text-center">
+                            <a href="assets/pdf/article_veille.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 px-8 py-4 bg-emerald-500/10 border border-emerald-500/40 text-emerald-400 font-bold rounded-full hover:bg-emerald-500/20 hover:shadow-[0_0_30px_rgba(16,185,129,0.25)] transition-all duration-300 text-lg group">
+                                <i data-lucide="download" class="w-5 h-5"></i>
+                                <span>Télécharger le Rapport Complet (PDF)</span>
+                                <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-950 border-t border-slate-800 py-12 relative z-20">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+                
+                <!-- Left: Logo + Copyright -->
+                <div class="flex flex-col gap-3">
+                    <a href="index.html" class="text-2xl font-bold text-white tracking-tight hover:opacity-80 transition-opacity">
+                        FB<span class="text-emerald-500">.</span>
+                    </a>
+                    <p class="text-slate-500 text-sm font-light">
+                        Behavioral Data Strategist
+                    </p>
+                    <p class="text-slate-600 text-xs">© 2025 FB. All rights reserved.</p>
+                </div>
+                
+                <!-- Right: Links + Socials -->
+                <div class="flex flex-col md:flex-row items-start md:items-center gap-8">
+                    <!-- Navigation Links -->
+                    <div class="flex flex-wrap gap-6 text-sm">
+                        <a href="index.html#projects" class="text-slate-400 hover:text-emerald-400 hover:drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] transition-all">Projets</a>
+                        <a href="index.html#skills" class="text-slate-400 hover:text-emerald-400 hover:drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] transition-all">Compétences</a>
+                        <a href="livrables.html" class="text-slate-400 hover:text-emerald-400 hover:drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] transition-all">Livrables</a>
+                        <a href="https://github.com/FlavienBardet/Portfolio" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-emerald-400 hover:drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] transition-all">Code Source</a>
+                    </div>
+
+                    <!-- Social Icons -->
+                    <div class="flex items-center gap-4">
+                        <a href="https://www.linkedin.com/in/flavien-bardet-38649a18b/" target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] transition-all" aria-label="LinkedIn">
+                            <i data-lucide="linkedin" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://github.com/FlavienBardet/Portfolio" target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] transition-all" aria-label="GitHub">
+                            <i data-lucide="github" class="w-5 h-5"></i>
+                        </a>
+                        <a href="mailto:issadun@gmail.com" class="text-slate-500 hover:text-emerald-400 hover:drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] transition-all" aria-label="Email">
+                            <i data-lucide="mail" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+            initHeaderAudio();
+        });
+
+        // ============================================
+        // HEADER AUDIO PLAYER - NotebookLM Podcast
+        // ============================================
+        
+        let headerIsPlaying = false;
+        
+        /**
+         * Initialise le lecteur audio du header
+         */
+        function initHeaderAudio() {
+            const audio = document.getElementById('headerAudio');
+            if (!audio) return;
+
+            // Gestion de la fin de lecture
+            audio.addEventListener('ended', function() {
+                headerIsPlaying = false;
+                updateHeaderPlayerUI();
+            });
+
+            // Gestion des erreurs de chargement
+            audio.addEventListener('error', function(e) {
+                console.warn('Audio file not found or format not supported.');
+            });
+        }
+
+        /**
+         * Toggle Play/Pause pour le header player
+         */
+        function toggleHeaderAudio() {
+            const audio = document.getElementById('headerAudio');
+            if (!audio) return;
+            
+            if (headerIsPlaying) {
+                // Pause
+                audio.pause();
+                headerIsPlaying = false;
+            } else {
+                // Play
+                const playPromise = audio.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        headerIsPlaying = true;
+                        updateHeaderPlayerUI();
+                    }).catch(error => {
+                        // Mode démo si le fichier n'existe pas encore
+                        console.log('Demo mode: simulating playback animation');
+                        headerIsPlaying = true;
+                        updateHeaderPlayerUI();
+                    });
+                } else {
+                    headerIsPlaying = true;
+                }
+            }
+            
+            updateHeaderPlayerUI();
+        }
+
+        /**
+         * Met à jour l'interface visuelle du header player
+         */
+        function updateHeaderPlayerUI() {
+            const player = document.getElementById('headerPlayer');
+            const playIcon = document.getElementById('headerPlayIcon');
+            const pauseIcon = document.getElementById('headerPauseIcon');
+            
+            if (!player || !playIcon || !pauseIcon) return;
+            
+            if (headerIsPlaying) {
+                // Playing state
+                playIcon.classList.add('hidden');
+                pauseIcon.classList.remove('hidden');
+                player.classList.add('is-playing');
+            } else {
+                // Paused state
+                playIcon.classList.remove('hidden');
+                pauseIcon.classList.add('hidden');
+                player.classList.remove('is-playing');
+            }
+        }
+    </script>
+</body>
+</html>
+

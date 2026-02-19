@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FB | Livrables - Projet Aéroworld</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Icons (Lucide) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        slate: {
+                            850: '#151e2e',
+                            900: '#0f172a',
+                            950: '#020617',
+                            1000: '#0b0f19', 
+                        },
+                        neon: {
+                            cyan: '#06b6d4',
+                            purple: '#8b5cf6',
+                            pink: '#ec4899',
+                            emerald: '#10b981'
+                        },
+                        card: {
+                            dark: '#111318', 
+                        }
+                    },
+                    animation: {
+                        'blob': 'blob 10s infinite',
+                        'float-slow': 'float 8s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-12px)' },
+                        }
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html {
+            scroll-padding-top: 120px;
+        }
+
+        .glass-card {
+            background: rgba(30, 41, 59, 0.35);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1), inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+        }
+        
+        .glass-card:hover {
+            background: rgba(30, 41, 59, 0.55);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 25px 50px -12px rgba(6, 182, 212, 0.15), inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
+        }
+
+        .bg-noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Neon border effect for master card */
+        .neon-border-cyan {
+            position: relative;
+        }
+        .neon-border-cyan::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.4), rgba(16, 185, 129, 0.2), rgba(139, 92, 246, 0.3));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        /* Livrable card hover effects */
+        .livrable-card {
+            transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+        }
+        .livrable-card:hover {
+            transform: translateY(-6px);
+        }
+        .livrable-card--cyan:hover {
+            box-shadow: 0 20px 40px -12px rgba(6, 182, 212, 0.25);
+            border-color: rgba(6, 182, 212, 0.4);
+        }
+        .livrable-card--emerald:hover {
+            box-shadow: 0 20px 40px -12px rgba(16, 185, 129, 0.25);
+            border-color: rgba(16, 185, 129, 0.4);
+        }
+        .livrable-card--purple:hover {
+            box-shadow: 0 20px 40px -12px rgba(139, 92, 246, 0.25);
+            border-color: rgba(139, 92, 246, 0.4);
+        }
+
+        /* Expandable Card Styles */
+        .expandable-card {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .expandable-card.is-expanded {
+            border-color: rgba(6, 182, 212, 0.5);
+            box-shadow: 0 25px 60px -12px rgba(6, 182, 212, 0.2);
+        }
+        .expanded-content {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+                        opacity 0.4s ease-in-out,
+                        margin 0.5s ease-in-out;
+            margin-top: 0;
+        }
+        .expandable-card.is-expanded .expanded-content {
+            max-height: 800px;
+            opacity: 1;
+            margin-top: 2rem;
+        }
+        .expand-btn-icon {
+            transition: transform 0.3s ease;
+        }
+        .expandable-card.is-expanded .expand-btn-icon {
+            transform: rotate(180deg);
+        }
+        .phase-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.25rem;
+            transition: all 0.3s ease;
+        }
+        .phase-card:hover {
+            background: rgba(30, 41, 59, 0.5);
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-300 font-sans min-h-screen selection:bg-neon-cyan selection:text-white overflow-x-hidden">
+
+    <div class="bg-noise"></div>
+
+    <!-- Background Ambience -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="absolute -top-20 -left-20 w-96 h-96 bg-neon-purple/20 rounded-full mix-blend-screen filter blur-[120px] opacity-30 animate-blob"></div>
+        <div class="absolute top-1/3 right-0 w-96 h-96 bg-neon-cyan/20 rounded-full mix-blend-screen filter blur-[120px] opacity-25 animate-blob animation-delay-2000"></div>
+        <div class="absolute bottom-1/4 left-1/3 w-72 h-72 bg-neon-emerald/15 rounded-full mix-blend-screen filter blur-[100px] opacity-20 animate-blob animation-delay-4000"></div>
+    </div>
+
+    <!-- CAPSULE HEADER -->
+    <nav class="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
+        <div class="bg-slate-950/70 backdrop-blur-xl border border-white/10 rounded-full p-2 pl-6 pr-2 shadow-2xl shadow-black/20 max-w-4xl w-full flex justify-between items-center transition-all duration-300 hover:border-white/20">
+            
+            <a href="index.html" class="text-xl font-bold text-white tracking-tight mr-4 md:mr-8 hover:opacity-80 transition-opacity">
+                FB<span class="text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.6)]">.</span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-1">
+                <a href="index.html#about" class="px-5 py-2.5 text-sm font-medium text-slate-400 hover:text-white transition-all duration-300 rounded-full hover:bg-white/5 hover:shadow-[0_0_15px_rgba(255,255,255,0.15)]">À propos</a>
+                <a href="index.html#skills" class="px-5 py-2.5 text-sm font-medium text-slate-400 hover:text-white transition-all duration-300 rounded-full hover:bg-white/5 hover:shadow-[0_0_15px_rgba(255,255,255,0.15)]">Compétences</a>
+                <a href="index.html#projects" class="px-5 py-2.5 text-sm font-medium text-slate-400 hover:text-white transition-all duration-300 rounded-full hover:bg-white/5 hover:shadow-[0_0_15px_rgba(255,255,255,0.15)]">Projets</a>
+                <a href="livrables.html" class="px-5 py-2.5 text-sm font-medium text-emerald-400 transition-all duration-300 rounded-full bg-emerald-500/10">Livrables</a>
+                <a href="https://github.com/FlavienBardet/Portfolio" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 text-sm font-medium text-slate-400 hover:text-white transition-all duration-300 rounded-full hover:bg-white/5 hover:shadow-[0_0_15px_rgba(255,255,255,0.15)] inline-flex items-center gap-1.5">
+                    <i data-lucide="github" class="w-4 h-4"></i>
+                    <span>GitHub</span>
+                </a>
+            </div>
+
+            <a href="assets/cv/cvflavienbardet.pdf" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-2 px-6 py-2.5 rounded-full bg-slate-900/50 border border-cyan-400/30 text-cyan-400 text-sm font-medium hover:bg-cyan-400/10 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] hover:border-cyan-400/80 transition-all duration-300 ml-auto md:ml-0">
+                <span>Mon CV</span>
+                <i data-lucide="arrow-up-right" class="w-4 h-4 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform"></i>
+            </a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION - Mission Aéroworld -->
+    <section class="relative z-10 pt-32 pb-16 overflow-hidden">
+        <!-- Background gradient -->
+        <div class="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950/95 to-slate-950"></div>
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute bottom-0 right-1/4 w-72 h-72 bg-emerald-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+        
+        <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Breadcrumb -->
+            <div class="flex items-center gap-4 mb-8">
+                <a href="index.html" class="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                    <span>Retour au portfolio</span>
+                </a>
+                <span class="text-slate-600">|</span>
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30">
+                    <i data-lucide="award" class="w-3 h-3 text-purple-400"></i>
+                    <span class="text-purple-400 text-xs font-mono tracking-wide uppercase font-bold">PSPO I / Data Analyst</span>
+                </div>
+            </div>
+            
+            <!-- Hero Content -->
+            <div class="max-w-4xl">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-emerald-500/20 flex items-center justify-center border border-white/10">
+                        <i data-lucide="plane" class="w-6 h-6 text-cyan-400"></i>
+                    </div>
+                    <div>
+                        <p class="text-cyan-400 font-mono text-xs uppercase tracking-widest font-bold">Projet Fil Rouge • OpenClassrooms</p>
+                    </div>
+                </div>
+                
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 tracking-tight leading-[1.1]">
+                    Modernisation de l'écosystème <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-emerald-400 to-purple-400">Data</span>
+                </h1>
+                
+                <p class="text-slate-400 text-lg md:text-xl leading-relaxed mb-8 max-w-3xl">
+                    Portfolio de livrables stratégiques pour la modernisation d'AéroWorld. Ce dossier regroupe l'audit, la veille technologique et l'architecture décisionnelle conçus pour piloter la transformation numérique d'une structure historique de 50 ans vers une culture <strong class="text-emerald-400 font-medium">Data-Driven</strong>.
+                </p>
+                
+                <div class="flex flex-wrap gap-3">
+                    <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-sm font-mono">
+                        <i data-lucide="sparkles" class="w-4 h-4"></i> STRATÉGIE IA
+                    </span>
+                    <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-sm font-mono">
+                        <i data-lucide="database" class="w-4 h-4"></i> MODERNISATION DATA
+                    </span>
+                    <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 text-sm font-mono">
+                        <i data-lucide="search" class="w-4 h-4"></i> AUDIT ARCHITECTURE
+                    </span>
+                    <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-sm font-mono">
+                        <i data-lucide="trending-up" class="w-4 h-4"></i> VALEUR MÉTIER
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+
+        <!-- GRILLE DE LIVRABLES -->
+        <section>
+            <!-- Section Header -->
+            <div class="mb-10">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-3 tracking-tight">
+                    Documents & Ressources
+                </h2>
+                <div class="flex items-center gap-4">
+                    <div class="h-1 w-16 bg-gradient-to-r from-emerald-500 via-cyan-500 to-purple-500 rounded-full"></div>
+                    <p class="text-slate-500 font-mono text-sm uppercase tracking-wider">Livrables de certification</p>
+                </div>
+            </div>
+
+            <!-- Full-width cards, alternance image gauche / droite -->
+            <div class="space-y-6">
+                
+                <!-- CARTE 1: Analyse du Besoin — Image gauche / Texte droite -->
+                <div class="glass-card rounded-[2rem] overflow-hidden border border-slate-800 group hover:border-cyan-500/40 transition-all duration-300 p-6 lg:p-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center">
+                        <div class="relative order-1">
+                            <div class="relative rounded-2xl overflow-hidden border border-white/5 bg-slate-900/50 aspect-[4/3]">
+                                <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80" alt="Audit et analyse de besoins documentaires" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" loading="lazy">
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent pointer-events-none"></div>
+                            </div>
+                        </div>
+                        <div class="order-2 flex flex-col justify-center py-2">
+                            <div class="flex items-start gap-4 mb-4">
+                                <div class="w-12 h-12 rounded-xl bg-cyan-500/20 flex items-center justify-center shrink-0 border border-cyan-500/20">
+                                    <i data-lucide="file-search" class="w-6 h-6 text-cyan-400"></i>
+                                </div>
+                                <div>
+                                    <span class="text-cyan-400 font-mono text-xs uppercase tracking-wider font-bold">Strategic Audit</span>
+                                    <h3 class="text-white font-bold text-xl mt-1">Analyse du Besoin</h3>
+                                </div>
+                            </div>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                                Diagnostic des enjeux Big Data et interopérabilité. Identification des trois piliers métiers (R&D, Maintenance, Sécurité) pour transformer Aéroworld en entreprise Data-Driven.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-5">
+                                <span class="px-2.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono">Diagnostic</span>
+                                <span class="px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono">Big Data</span>
+                                <span class="px-2.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono">Auditabilité</span>
+                            </div>
+                            <a href="assets/pdf/Projet_11_Analyse_besoin.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-900/80 border border-cyan-500/40 text-cyan-400 text-sm font-bold rounded-xl hover:bg-cyan-500/10 hover:shadow-[0_0_20px_rgba(6,182,212,0.2)] transition-all group/btn w-fit">
+                                <i data-lucide="external-link" class="w-4 h-4"></i>
+                                <span>Consulter le PDF</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARTE 2: Veille Technologique — Texte gauche / Image droite -->
+                <div class="glass-card rounded-[2rem] overflow-hidden border border-slate-800 group hover:border-emerald-500/40 transition-all duration-300 p-6 lg:p-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center">
+                        <div class="order-2 lg:order-1 flex flex-col justify-center py-2">
+                            <div class="flex items-start gap-4 mb-4">
+                                <div class="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center shrink-0 border border-emerald-500/20">
+                                    <i data-lucide="radar" class="w-6 h-6 text-emerald-400"></i>
+                                </div>
+                                <div>
+                                    <span class="text-emerald-400 font-mono text-xs uppercase tracking-wider font-bold">Data & AI</span>
+                                    <h3 class="text-white font-bold text-xl mt-1">Veille Technologique</h3>
+                                </div>
+                            </div>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                                Étude sur l'impact des agents IA autonomes (Deep Research) sur les pratiques d'analyse de données. Benchmark des solutions et implications métier.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-5">
+                                <span class="px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono">LLM Agents</span>
+                                <span class="px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono">Autonomous AI</span>
+                            </div>
+                            <a href="veille-deep-research.html" class="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-900/80 border border-emerald-500/40 text-emerald-400 text-sm font-bold rounded-xl hover:bg-emerald-500/10 hover:shadow-[0_0_20px_rgba(16,185,129,0.2)] transition-all group/btn w-fit">
+                                <i data-lucide="book-open" class="w-4 h-4"></i>
+                                <span>Lire l'étude</span>
+                            </a>
+                        </div>
+                        <div class="relative order-1 lg:order-2">
+                            <div class="relative rounded-2xl overflow-hidden border border-white/5 bg-slate-900/50 aspect-[4/3]">
+                                <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&q=80" alt="Veille technologique et données" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" loading="lazy">
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent pointer-events-none"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARTE 3: Cahier des Charges — Image gauche / Texte droite -->
+                <div class="glass-card rounded-[2rem] overflow-hidden border border-slate-800 group hover:border-emerald-500/40 transition-all duration-300 p-6 lg:p-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center">
+                        <div class="relative order-1">
+                            <div class="relative rounded-2xl overflow-hidden border border-white/5 bg-slate-900/50 aspect-[4/3]">
+                                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80" alt="Cahier des charges et spécifications" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" loading="lazy">
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent pointer-events-none"></div>
+                            </div>
+                        </div>
+                        <div class="order-2 flex flex-col justify-center py-2">
+                            <div class="flex items-start gap-4 mb-4">
+                                <div class="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center shrink-0 border border-emerald-500/20">
+                                    <i data-lucide="clipboard-check" class="w-6 h-6 text-emerald-400"></i>
+                                </div>
+                                <div>
+                                    <span class="text-emerald-400 font-mono text-xs uppercase tracking-wider font-bold">Specification</span>
+                                    <h3 class="text-white font-bold text-xl mt-1">Cahier des Charges</h3>
+                                </div>
+                            </div>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                                Blueprint de l'écosystème numérique. Objectifs SMART, charte Bio-Digital et architecture hybride pour répondre aux exigences d'auditabilité.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-5">
+                                <span class="px-2.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono">SMART</span>
+                                <span class="px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono">Architecture Hybride</span>
+                            </div>
+                            <a href="assets/pdf/cahier-des-charges-aeroworld.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-900/80 border border-emerald-500/40 text-emerald-400 text-sm font-bold rounded-xl hover:bg-emerald-500/10 hover:shadow-[0_0_20px_rgba(16,185,129,0.2)] transition-all group/btn w-fit">
+                                <i data-lucide="download" class="w-4 h-4"></i>
+                                <span>Consulter le PDF</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARTE 4: Guide Power BI — Texte gauche / Image droite -->
+                <div class="glass-card rounded-[2rem] overflow-hidden border border-slate-800 group hover:border-purple-500/40 transition-all duration-300 p-6 lg:p-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center">
+                        <div class="order-2 lg:order-1 flex flex-col justify-center py-2">
+                            <div class="flex items-start gap-4 mb-4">
+                                <div class="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center shrink-0 border border-purple-500/20">
+                                    <i data-lucide="layout-dashboard" class="w-6 h-6 text-purple-400"></i>
+                                </div>
+                                <div>
+                                    <span class="text-purple-400 font-mono text-xs uppercase tracking-wider font-bold">Méthodologie</span>
+                                    <h3 class="text-white font-bold text-xl mt-1">Guide Visualisations Power BI</h3>
+                                </div>
+                            </div>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                                Manuel pratique expliquant comment sélectionner le graphique optimal pour chaque besoin métier et structurer les données dans Power Query pour garantir des analyses fiables.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-5">
+                                <span class="px-2.5 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-mono">Méthodologie</span>
+                                <span class="px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono">Power BI</span>
+                                <span class="px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono">Data Modeling</span>
+                                <span class="px-2.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono">Storytelling</span>
+                            </div>
+                            <a href="assets/pdf/guide-methodologique-powerbi.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-900/80 border border-purple-500/40 text-purple-400 text-sm font-bold rounded-xl hover:bg-purple-500/10 hover:shadow-[0_0_20px_rgba(168,85,247,0.2)] transition-all group/btn w-fit">
+                                <i data-lucide="book-open" class="w-4 h-4"></i>
+                                <span>Ouvrir le Guide (PDF)</span>
+                            </a>
+                        </div>
+                        <div class="relative order-1 lg:order-2">
+                            <div class="relative rounded-2xl overflow-hidden border border-white/5 bg-slate-900/50 aspect-[4/3]">
+                                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt="Tableaux de bord et visualisations de données" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" loading="lazy">
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent pointer-events-none"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARTE 5: Pilotage Opérationnel — Image gauche / Texte droite -->
+                <div class="glass-card rounded-[2rem] overflow-hidden border border-slate-800 group hover:border-cyan-500/40 transition-all duration-300 p-6 lg:p-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center">
+                        <div class="relative order-1">
+                            <div class="relative rounded-2xl overflow-hidden border border-white/5 bg-slate-900/50 aspect-[4/3]">
+                                <img src="assets/images/diagramme_gantt.png" alt="Diagramme de Gantt - Planning Projet Portfolio" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" loading="lazy">
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent pointer-events-none"></div>
+                            </div>
+                        </div>
+                        <div class="order-2 flex flex-col justify-center py-2">
+                            <div class="flex items-start gap-4 mb-4">
+                                <div class="w-12 h-12 rounded-xl bg-cyan-500/20 flex items-center justify-center shrink-0 border border-cyan-500/20">
+                                    <i data-lucide="gantt-chart" class="w-6 h-6 text-cyan-400"></i>
+                                </div>
+                                <div>
+                                    <span class="text-cyan-400 font-mono text-xs uppercase tracking-wider font-bold">Project Management</span>
+                                    <h3 class="text-white font-bold text-xl mt-1">Pilotage Opérationnel</h3>
+                                </div>
+                            </div>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                                Suivi du projet Portfolio : Définition des objectifs SMART et orchestration agile sur 8 semaines. Le projet est segmenté en 4 phases clés : Cadrage stratégique, Data Preparation (Sourcing & Veille), Développement assisté par IA, et Recette finale (QA & Soutenance).
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-5">
+                                <span class="px-2.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono">Agile</span>
+                                <span class="px-2.5 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-mono">Rigueur Méthodologique</span>
+                            </div>
+                            <div class="flex flex-col sm:flex-row gap-3">
+                                <button onclick="toggleGanttCard()" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-slate-900/80 border border-cyan-500/40 text-cyan-400 text-sm font-bold rounded-xl hover:bg-cyan-500/10 hover:shadow-[0_0_20px_rgba(6,182,212,0.2)] transition-all group/btn">
+                                    <i data-lucide="calendar" class="w-4 h-4"></i>
+                                    <span>Voir le planning</span>
+                                </button>
+                                <a href="assets/data/diagramme_gantt.pbix" download class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-slate-900/80 border border-slate-600/40 text-slate-300 text-sm font-bold rounded-xl hover:bg-slate-800/80 hover:border-cyan-500/40 hover:text-cyan-400 hover:shadow-[0_0_20px_rgba(6,182,212,0.2)] transition-all group/btn">
+                                    <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                                    <span>Télécharger le Dashboard (PBIX)</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARTE 6: Démonstration Technique — Texte gauche / Miniature vidéo droite -->
+                <div class="glass-card rounded-[2rem] overflow-hidden border border-slate-800 group hover:border-purple-500/40 transition-all duration-300 p-6 lg:p-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center">
+                        <div class="order-2 lg:order-1 flex flex-col justify-center py-2">
+                            <div class="flex items-start gap-4 mb-4">
+                                <div class="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center shrink-0 border border-purple-500/20">
+                                    <i data-lucide="video" class="w-6 h-6 text-purple-400"></i>
+                                </div>
+                                <div>
+                                    <span class="text-purple-400 font-mono text-xs uppercase tracking-wider font-bold">Présentation</span>
+                                    <h3 class="text-white font-bold text-xl mt-1">Démonstration Technique</h3>
+                                </div>
+                            </div>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                                Présentation vidéo du projet RAG Assistant et de l'architecture technique déployée pour Aéroworld.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-5">
+                                <span class="px-2.5 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-mono">RAG</span>
+                                <span class="px-2.5 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-mono">Architecture</span>
+                            </div>
+                            <a href="https://youtu.be/xWFJPHgiWbM" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 bg-white text-slate-950 text-sm font-bold rounded-full hover:bg-purple-400 transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] group/btn w-fit">
+                                <i data-lucide="play" class="w-4 h-4"></i>
+                                <span>Regarder la démonstration</span>
+                            </a>
+                        </div>
+                        <div class="relative order-1 lg:order-2">
+                            <a href="https://youtu.be/xWFJPHgiWbM" target="_blank" rel="noopener noreferrer" class="block relative rounded-2xl overflow-hidden border border-white/5 bg-slate-900/50 aspect-[4/3] group/thumb">
+                                <img src="https://img.youtube.com/vi/xWFJPHgiWbM/maxresdefault.jpg" alt="Miniature - Démonstration Technique Projet Aéroworld" class="w-full h-full object-cover transition-transform duration-300 group-hover/thumb:scale-[1.02]" loading="lazy">
+                                <div class="absolute inset-0 flex items-center justify-center bg-slate-900/30 group-hover/thumb:bg-slate-900/10 transition-colors pointer-events-none">
+                                    <span class="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center text-slate-950 shadow-xl group-hover/thumb:scale-110 transition-transform">
+                                        <i data-lucide="play" class="w-8 h-8 ml-1"></i>
+                                    </span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+
+        <!-- SECTION PLANNING EXPANDABLE (Hidden Modal) -->
+        <div id="ganttModal" class="fixed inset-0 z-50 hidden">
+            <div class="absolute inset-0 bg-slate-950/90 backdrop-blur-sm" onclick="toggleGanttCard()"></div>
+            <div class="relative z-10 max-w-4xl mx-auto mt-20 p-6">
+                <div class="glass-card rounded-[2rem] p-6 md:p-8 border border-cyan-500/30">
+                    <!-- Header -->
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-bold text-white flex items-center gap-3">
+                            <i data-lucide="gantt-chart" class="w-6 h-6 text-cyan-400"></i>
+                            Rétroplanning & Pilotage
+                        </h3>
+                        <button onclick="toggleGanttCard()" class="p-2 rounded-lg bg-slate-800/50 border border-slate-700 text-slate-400 hover:text-white transition-all">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Phases Grid -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                        <div class="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
+                            <span class="text-blue-400 font-mono text-xs font-bold">S1-S2</span>
+                            <h4 class="text-white font-bold mt-1">Cadrage</h4>
+                            <p class="text-slate-400 text-xs mt-1">Conception & Specs</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+                            <span class="text-emerald-400 font-mono text-xs font-bold">S3-S4</span>
+                            <h4 class="text-white font-bold mt-1">Data Prep</h4>
+                            <p class="text-slate-400 text-xs mt-1">Préparation contenus</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-purple-500/10 border border-purple-500/20">
+                            <span class="text-purple-400 font-mono text-xs font-bold">S5-S7</span>
+                            <h4 class="text-white font-bold mt-1">Dév & IA</h4>
+                            <p class="text-slate-400 text-xs mt-1">IA-Assisted Coding</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-cyan-500/10 border border-cyan-500/20">
+                            <span class="text-cyan-400 font-mono text-xs font-bold">S8</span>
+                            <h4 class="text-white font-bold mt-1">Launch</h4>
+                            <p class="text-slate-400 text-xs mt-1">Tests & Mise en ligne</p>
+                        </div>
+                    </div>
+                    
+                    <p class="text-slate-500 text-sm text-center">
+                        <i data-lucide="info" class="w-4 h-4 inline mr-1"></i>
+                        8 semaines • 15 jours de production effective
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-950 border-t border-slate-800 py-12 relative z-20 mt-16">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+                
+                <!-- Left: Logo + Copyright -->
+                <div class="flex flex-col gap-3">
+                    <a href="index.html" class="text-2xl font-bold text-white tracking-tight hover:opacity-80 transition-opacity">
+                        FB<span class="text-emerald-500">.</span>
+                    </a>
+                    <p class="text-slate-500 text-sm font-light">
+                        Behavioral Data Strategist
+                    </p>
+                    <p class="text-slate-600 text-xs">© 2025 FB. All rights reserved.</p>
+                </div>
+                
+                <!-- Right: Links + Socials -->
+                <div class="flex flex-col md:flex-row items-start md:items-center gap-8">
+                    <!-- Navigation Links -->
+                    <div class="flex flex-wrap gap-6 text-sm">
+                        <a href="index.html#projects" class="text-slate-400 hover:text-emerald-400 hover:drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] transition-all">Projets</a>
+                        <a href="index.html#skills" class="text-slate-400 hover:text-emerald-400 hover:drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] transition-all">Compétences</a>
+                        <a href="livrables.html" class="text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.3)]">Livrables</a>
+                        <a href="https://github.com/FlavienBardet/Portfolio" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-emerald-400 hover:drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] transition-all">GitHub</a>
+                    </div>
+
+                    <!-- Social Icons -->
+                    <div class="flex items-center gap-4">
+                        <a href="https://www.linkedin.com/in/flavien-bardet-38649a18b/" target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] transition-all" aria-label="LinkedIn">
+                            <i data-lucide="linkedin" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://github.com/FlavienBardet/Portfolio" target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] transition-all" aria-label="GitHub">
+                            <i data-lucide="github" class="w-5 h-5"></i>
+                        </a>
+                        <a href="mailto:flavien.bardet@email.com" class="text-slate-500 hover:text-emerald-400 hover:drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] transition-all" aria-label="Email">
+                            <i data-lucide="mail" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+        });
+
+        // ============================================
+        // GANTT EXPANDABLE CARD - Interactive Logic
+        // ============================================
+        
+        /**
+         * Toggle l'affichage du modal Gantt
+         */
+        function toggleGanttCard() {
+            const modal = document.getElementById('ganttModal');
+            
+            if (!modal) return;
+            
+            modal.classList.toggle('hidden');
+            
+            // Bloquer le scroll du body quand le modal est ouvert
+            if (!modal.classList.contains('hidden')) {
+                document.body.style.overflow = 'hidden';
+                lucide.createIcons();
+            } else {
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Fermer le modal avec Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('ganttModal');
+                if (modal && !modal.classList.contains('hidden')) {
+                    toggleGanttCard();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

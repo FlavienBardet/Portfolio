@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithmic Asset Valuation & ML | FB Portfolio</title>
+    <meta name="description" content="Arbitrage de portefeuille immobilier par Machine Learning : valorisation Scikit-Learn pour Les plus Beaux Logis de Paris.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Icons (Lucide) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        slate: {
+                            850: '#151e2e',
+                            900: '#0f172a',
+                            950: '#020617',
+                            1000: '#0b0f19',
+                        },
+                        neon: {
+                            cyan: '#06b6d4',
+                            purple: '#8b5cf6',
+                            pink: '#ec4899',
+                            emerald: '#10b981',
+                        },
+                        card: { dark: '#111318', },
+                    },
+                    animation: {
+                        'blob': 'blob 10s infinite',
+                        'float-slow': 'float 8s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-12px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html { scroll-padding-top: 100px; }
+        .bg-noise {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.35);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1), inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+        }
+        .tech-tag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            background-color: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: 'JetBrains Mono', monospace;
+            transition: all 0.3s ease;
+        }
+        .tech-tag:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            background-color: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
+        }
+        .kpi-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .kpi-card:hover {
+            border-color: rgba(245, 158, 11, 0.3);
+            transform: translateY(-2px);
+        }
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            margin: 3rem 0;
+        }
+        /* Code Block (style IDE) */
+        .code-block {
+            background: #0b0f19;
+            border: 1px solid rgba(245, 158, 11, 0.15);
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+        .code-header {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .code-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .code-block .code-body {
+            max-height: 320px;
+            overflow-y: auto;
+            overflow-x: auto;
+        }
+        .code-block .code-body::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .code-block .code-body::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 4px;
+        }
+        .code-block .code-body::-webkit-scrollbar-thumb {
+            background: rgba(245, 158, 11, 0.4);
+            border-radius: 4px;
+        }
+        .code-block .code-body::-webkit-scrollbar-thumb:hover {
+            background: rgba(245, 158, 11, 0.6);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-300 font-sans min-h-screen selection:bg-amber-500 selection:text-white overflow-x-hidden">
+
+    <div class="bg-noise"></div>
+
+    <!-- Background Ambience (Ambre / Or) -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="absolute -top-20 -left-20 w-96 h-96 bg-amber-500/20 rounded-full mix-blend-screen filter blur-[120px] opacity-30 animate-blob"></div>
+        <div class="absolute top-1/3 right-0 w-96 h-96 bg-amber-500/15 rounded-full mix-blend-screen filter blur-[120px] opacity-25 animate-blob" style="animation-delay: 2s"></div>
+    </div>
+
+    <!-- BACK NAVIGATION -->
+    <nav class="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
+        <div class="bg-slate-950/70 backdrop-blur-xl border border-white/10 rounded-full p-2 pl-4 pr-4 shadow-2xl shadow-black/20 max-w-4xl w-full flex justify-between items-center transition-all duration-300 hover:border-white/20">
+            <a href="../index.html" class="group flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm font-medium">
+                <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform"></i>
+                <span>Retour au Portfolio</span>
+            </a>
+            <div class="flex items-center gap-4">
+                <a href="../index.html#projects" class="group flex items-center gap-2 px-5 py-2 rounded-full bg-slate-900/50 border border-amber-400/30 text-amber-400 text-sm font-medium hover:bg-amber-400/10 hover:border-amber-400/80 transition-all duration-300">
+                    <span>Tous les Projets</span>
+                    <i data-lucide="grid-3x3" class="w-4 h-4"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-16">
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+
+            <!-- LEFT COLUMN - SIDEBAR -->
+            <aside class="lg:col-span-4 lg:sticky lg:top-32 lg:self-start">
+                <div class="space-y-8">
+                    <div class="flex items-center gap-3">
+                        <span class="w-3 h-3 rounded-full bg-amber-500 shadow-[0_0_12px_rgba(245,158,11,0.6)]"></span>
+                        <span class="text-amber-500 font-mono text-xs font-bold tracking-[0.2em] uppercase">Machine Learning</span>
+                    </div>
+
+                    <div>
+                        <h1 class="text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight tracking-tight">
+                            Algorithmic Asset Valuation & ML
+                        </h1>
+                        <p class="text-lg font-light" style="color: #F59E0B;">
+                            Arbitrage de portefeuille par Machine Learning
+                        </p>
+                    </div>
+
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tech-tag text-amber-400 border-amber-500/20">PYTHON (SCIKIT-LEARN)</span>
+                        <span class="tech-tag text-amber-400 border-amber-500/20">ML PIPELINES</span>
+                        <span class="tech-tag text-amber-400 border-amber-500/20">VALIDATION STATISTIQUE</span>
+                        <span class="tech-tag text-amber-400 border-amber-500/20">ARBITRAGE FINANCIER</span>
+                    </div>
+
+                    <div class="glass-card rounded-2xl p-6 space-y-4">
+                        <div class="flex items-center gap-4">
+                            <i data-lucide="calendar" class="w-5 h-5 text-amber-500/80"></i>
+                            <div>
+                                <p class="text-xs text-slate-500 uppercase tracking-wider">Horizon</p>
+                                <p class="text-white font-medium">Juillet 2025</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <i data-lucide="users" class="w-5 h-5 text-amber-500/80"></i>
+                            <div>
+                                <p class="text-xs text-slate-500 uppercase tracking-wider">Rôle</p>
+                                <p class="text-white font-medium">Consultant Business Intelligence / Data Scientist</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <i data-lucide="building-2" class="w-5 h-5 text-amber-500/80"></i>
+                            <div>
+                                <p class="text-xs text-slate-500 uppercase tracking-wider">Secteur</p>
+                                <p class="text-white font-medium">Immobilier de Luxe (Paris)</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <i data-lucide="briefcase" class="w-5 h-5 text-amber-500/80"></i>
+                            <div>
+                                <p class="text-xs text-slate-500 uppercase tracking-wider">Client</p>
+                                <p class="text-white font-medium">Les plus Beaux Logis de Paris</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col gap-3">
+                        <a href="https://github.com/FlavienBardet/Portfolio/tree/main/projects/FB_P08_Valuation-ML" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center gap-2 px-6 py-3 bg-amber-500/10 border border-amber-500/50 text-amber-400 font-bold rounded-xl hover:bg-amber-500/20 transition-all">
+                            <i data-lucide="external-link" class="w-5 h-5"></i>
+                            <span>Voir sur GitHub</span>
+                        </a>
+                        <a href="#downloads" class="group flex items-center justify-center gap-2 px-6 py-3 bg-slate-900/50 border border-white/10 text-white font-medium rounded-xl hover:bg-white/5 hover:border-white/20 transition-all">
+                            <i data-lucide="download" class="w-5 h-5"></i>
+                            <span>Télécharger les Livrables</span>
+                        </a>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- RIGHT COLUMN - CONTENT -->
+            <article class="lg:col-span-8 space-y-12">
+
+                <!-- SECTION: Challenge - L'Arbitrage Stratégique -->
+                <section id="challenge">
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="w-2 h-8 bg-amber-500 rounded-full"></span>
+                        Challenge : L'Arbitrage Stratégique
+                    </h2>
+                    <div class="space-y-4 text-slate-400 leading-relaxed">
+                        <p>
+                            Face à une restructuration majeure, la société « Les plus Beaux Logis de Paris » devait arbitrer entre ses actifs Résidentiels et Corporate. L'enjeu : identifier mathématiquement le segment présentant le plus fort potentiel de valorisation au 31 décembre 2022 pour optimiser la trésorerie.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+                        <div class="glass-card rounded-xl p-5">
+                            <div class="flex justify-center mb-4"><i data-lucide="database" class="w-8 h-8 text-amber-400"></i></div>
+                            <h4 class="text-white font-bold mb-2">26 196 Transactions</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed" style="line-height: 1.6">Analyse sur 5 ans (2017-2021) pour une base d'entraînement massive.</p>
+                        </div>
+                        <div class="glass-card rounded-xl p-5">
+                            <div class="flex justify-center mb-4"><i data-lucide="target" class="w-8 h-8 text-amber-400"></i></div>
+                            <h4 class="text-white font-bold mb-2">MAPE &lt; 10%</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed" style="line-height: 1.6">Objectif de fiabilité chirurgical pour des décisions chiffrées en millions d'euros.</p>
+                        </div>
+                        <div class="glass-card rounded-xl p-5">
+                            <div class="flex justify-center mb-4"><i data-lucide="trending-up" class="w-8 h-8 text-amber-400"></i></div>
+                            <h4 class="text-white font-bold mb-2">Segment Corporate</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed" style="line-height: 1.6">Un marché moins liquide (7% des transactions) mais à très haute valeur ajoutée.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="section-divider"></div>
+
+                <!-- SECTION: Méthodologie - Clean Code & Robustesse -->
+                <section id="methodologie">
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="w-2 h-8 bg-amber-500 rounded-full"></span>
+                        Méthodologie : Clean Code & Robustesse
+                    </h2>
+
+                    <div class="space-y-6">
+                        <div class="glass-card rounded-xl p-6">
+                            <div class="flex justify-center mb-3"><i data-lucide="layers" class="w-8 h-8 text-amber-400"></i></div>
+                            <h4 class="text-white font-bold mb-2">Architecture Robuste</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed" style="line-height: 1.6">Utilisation de Pipelines Scikit-Learn pour encapsuler le Feature Engineering (StandardScaler) et le modèle (Gradient Boosting), garantissant l'absence totale de Data Leakage.</p>
+                        </div>
+                        <div class="glass-card rounded-xl p-6">
+                            <div class="flex justify-center mb-3"><i data-lucide="check-circle" class="w-8 h-8 text-amber-400"></i></div>
+                            <h4 class="text-white font-bold mb-2">Validation Scientifique</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed" style="line-height: 1.6">Validation systématique des hypothèses (R² de 98.6%) et tests de normalité des résidus pour assurer l'objectivité des prédictions.</p>
+                        </div>
+                        <div class="glass-card rounded-xl p-6">
+                            <div class="flex justify-center mb-3"><i data-lucide="wrench" class="w-8 h-8 text-amber-400"></i></div>
+                            <h4 class="text-white font-bold mb-2">Feature Engineering</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed" style="line-height: 1.6">Nettoyage chirurgical des outliers (biens de luxe hors-norme) et encodage géographique par arrondissement pour stabiliser l'algorithme.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="section-divider"></div>
+
+                <!-- SECTION: Résultats Visuels (Visuels A, B, C) -->
+                <section id="resultats">
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="w-2 h-8 bg-amber-500 rounded-full"></span>
+                        Résultats Visuels & Insights ML
+                    </h2>
+
+                    <!-- Visuel A : Évolution Temporelle -->
+                    <div class="glass-card rounded-2xl p-6 mb-8">
+                        <h3 class="text-white font-bold mb-4 flex items-center gap-2">
+                            <i data-lucide="trending-up" class="w-5 h-5 text-amber-400"></i>
+                            Visuel A : Évolution Temporelle : Analyse de la Non-linéarité
+                        </h3>
+                        <div class="relative rounded-2xl overflow-hidden border border-amber-500/20 bg-slate-900/50 p-4 mb-4 flex items-center justify-center min-h-[240px]">
+                            <img src="../assets/images/prixevol.PNG" alt="Nuage de points - évolution temporelle des prix 2017-2021" class="w-full h-auto max-w-4xl mx-auto object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="min-h-[200px] hidden flex items-center justify-center rounded-xl border-2 border-dashed border-amber-500/30 bg-slate-800/50 text-slate-500 text-sm font-mono absolute inset-0">
+                                <span>prixevol.PNG</span>
+                            </div>
+                        </div>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-2" style="line-height: 1.6">Le nuage de points confirme une corrélation positive nette entre 2017 et mi-2021, avec des « strates » visuelles révélant des ventes groupées. Cependant, le plafonnement observé dès mi-2021 impose une vigilance : le modèle intègre cette rupture de tendance pour éviter toute surestimation des biens dans le contexte actuel.</p>
+                        <p class="text-slate-500 text-xs italic">La dispersion verticale souligne que la date seule ne suffit pas ; l'intégration de la surface et de la localisation reste primordiale.</p>
+                    </div>
+
+                    <!-- Visuel B : Corrélation & Pearson -->
+                    <div class="glass-card rounded-2xl p-6 mb-8">
+                        <h3 class="text-white font-bold mb-4 flex items-center gap-2">
+                            <i data-lucide="bar-chart-3" class="w-5 h-5 text-amber-400"></i>
+                            Visuel B : Corrélation & Analyse des Outliers
+                        </h3>
+                        <div class="relative rounded-2xl overflow-hidden border border-amber-500/20 bg-slate-900/50 p-4 mb-4 flex items-center justify-center min-h-[240px]">
+                            <img src="../assets/images/pearson.PNG" alt="Coefficient de Pearson - Prix prédit vs réel" class="w-full h-auto max-w-4xl mx-auto object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="min-h-[200px] hidden flex items-center justify-center rounded-xl border-2 border-dashed border-amber-500/30 bg-slate-800/50 text-slate-500 text-sm font-mono absolute inset-0">
+                                <span>pearson.PNG</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-4 mb-3 text-sm">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 font-mono"><strong>Coefficient de Pearson :</strong> 0.980</span>
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 font-mono"><strong>R² :</strong> 96.1%</span>
+                        </div>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-2" style="line-height: 1.6">Les biens atypiques (ex. 631 m² dans le 11e ou 855 m² dans le 6e) sont parfaitement qualifiés par le modèle : bien que s'écartant de la moyenne parisienne (jusqu'à 16,8 %), ils restent en phase avec leurs marchés locaux respectifs (écart &lt; 3 %).</p>
+                    </div>
+
+                    <!-- Visuel C : Validation & Performance -->
+                    <div class="glass-card rounded-2xl p-6 mb-8">
+                        <h3 class="text-white font-bold mb-4 flex items-center gap-2">
+                            <i data-lucide="line-chart" class="w-5 h-5 text-amber-400"></i>
+                            Visuel C : Validation & Performance
+                        </h3>
+                        <div class="relative rounded-2xl overflow-hidden border border-amber-500/20 bg-slate-900/50 p-4 mb-4 flex items-center justify-center min-h-[240px]">
+                            <img src="../assets/images/performance.PNG" alt="Prix Prédit vs Prix Réel - ligne de prédiction parfaite" class="w-full h-auto max-w-4xl mx-auto object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="min-h-[200px] hidden flex items-center justify-center rounded-xl border-2 border-dashed border-amber-500/30 bg-slate-800/50 text-slate-500 text-sm font-mono absolute inset-0">
+                                <span>performance.PNG</span>
+                            </div>
+                        </div>
+                        <p class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 font-mono text-sm mb-3"><strong>MAPE (Erreur Moyenne Absolue) :</strong> 9.56%</p>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-2" style="line-height: 1.6">Validation sur un jeu de test indépendant (33 % des données). Avec une erreur inférieure à notre seuil critique de 10 %, le modèle est validé comme outil fiable pour l'aide à la décision stratégique.</p>
+                        <p class="text-slate-500 text-xs italic">La ligne de prédiction parfaite illustre la robustesse visuelle du modèle.</p>
+                    </div>
+
+                    <!-- Extrait de Code : Pipeline Scikit-Learn -->
+                    <h3 class="text-xl font-bold text-white mb-4 mt-10 flex items-center gap-3">
+                        <span class="w-2 h-6 bg-amber-500 rounded-full flex-shrink-0"></span>
+                        Extrait de Code : Pipeline de Prétraitement et Modélisation (Scikit-Learn)
+                    </h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <div class="code-dot bg-red-500"></div>
+                            <div class="code-dot bg-yellow-500"></div>
+                            <div class="code-dot bg-green-500"></div>
+                            <span class="text-slate-500 text-xs font-mono ml-2">valuation_pipeline.py</span>
+                        </div>
+                        <pre class="code-body p-6 text-sm font-mono"><code class="text-slate-300"><span class="text-slate-500"># --- Imports Nécessaires pour la Préparation et le Modeling ---</span>
+<span class="text-purple-400">from</span> sklearn.model_selection <span class="text-purple-400">import</span> train_test_split
+<span class="text-purple-400">from</span> sklearn.preprocessing <span class="text-purple-400">import</span> StandardScaler, OneHotEncoder
+<span class="text-purple-400">from</span> sklearn.compose <span class="text-purple-400">import</span> ColumnTransformer
+<span class="text-purple-400">from</span> sklearn.pipeline <span class="text-purple-400">import</span> Pipeline
+<span class="text-purple-400">from</span> sklearn.base <span class="text-purple-400">import</span> BaseEstimator, TransformerMixin
+<span class="text-purple-400">from</span> sklearn.linear_model <span class="text-purple-400">import</span> LinearRegression
+<span class="text-purple-400">from</span> sklearn.metrics <span class="text-purple-400">import</span> mean_absolute_percentage_error
+<span class="text-purple-400">from</span> sklearn.metrics <span class="text-purple-400">import</span> r2_score
+
+
+<span class="text-slate-500"># --- 1. Définition des Features et de la cible ---</span>
+features = [<span class="text-amber-400">'surface_reelle'</span>, <span class="text-amber-400">'code_postal'</span>, <span class="text-amber-400">'code_type_local'</span>, <span class="text-amber-400">'date_mutation'</span>]
+target = <span class="text-amber-400">'valeur_fonciere'</span>
+X = df[features]
+y = df[target]
+
+<span class="text-slate-500"># --- 2. Séparation Temporelle avec Cut-off ---</span>
+<span class="text-purple-400">print</span>(<span class="text-amber-400">"Séparation des données avec une césure temporelle..."</span>)
+date_cesure = pd.Timestamp(<span class="text-amber-400">'2021-01-01'</span>)
+
+<span class="text-slate-500"># Données d'entraînement = tout ce qui est AVANT 2021</span>
+X_train = X[X[<span class="text-amber-400">'date_mutation'</span>] &lt; date_cesure]
+y_train = y[X[<span class="text-amber-400">'date_mutation'</span>] &lt; date_cesure]
+
+<span class="text-slate-500"># Données de test = tout ce qui est PENDANT et APRÈS 2021</span>
+X_test = X[X[<span class="text-amber-400">'date_mutation'</span>] &gt;= date_cesure]
+y_test = y[X[<span class="text-amber-400">'date_mutation'</span>] &gt;= date_cesure]
+
+<span class="text-purple-400">print</span>(<span class="text-amber-400">f"Entraînement sur {len(X_train)} transactions (jusqu'à fin 2020)."</span>)
+<span class="text-purple-400">print</span>(<span class="text-amber-400">f"Test sur {len(X_test)} transactions (à partir de 2021)."</span>)
+
+<span class="text-slate-500"># ===================================================================</span>
+<span class="text-slate-500"># Étape 3: Définition du Pipeline de Prétraitement</span>
+<span class="text-slate-500"># ===================================================================</span>
+
+<span class="text-slate-500"># Classe personnalisée pour transformer la date</span>
+<span class="text-purple-400">class</span> <span class="text-amber-400">DateTransformer</span>(BaseEstimator, TransformerMixin):
+    <span class="text-purple-400">def</span> <span class="text-amber-400">fit</span>(<span class="text-slate-300">self</span>, X, y=<span class="text-purple-400">None</span>):
+        <span class="text-purple-400">return</span> <span class="text-slate-300">self</span>
+    <span class="text-purple-400">def</span> <span class="text-amber-400">transform</span>(<span class="text-slate-300">self</span>, X, y=<span class="text-purple-400">None</span>):
+        X_transformed = X.copy()
+        <span class="text-slate-500"># On utilise la date la plus ancienne de l'ensemble d'entraînement comme référence</span>
+        start_date = X_train[<span class="text-amber-400">'date_mutation'</span>].min()
+        X_transformed[<span class="text-amber-400">'days_since_start'</span>] = (X_transformed[<span class="text-amber-400">'date_mutation'</span>] - start_date).dt.days
+        <span class="text-purple-400">return</span> X_transformed[[<span class="text-amber-400">'days_since_start'</span>]]
+
+<span class="text-slate-500"># Définition des transformateurs pour chaque type de colonne</span>
+numeric_features = [<span class="text-amber-400">'surface_reelle'</span>]
+categorical_features = [<span class="text-amber-400">'code_postal'</span>, <span class="text-amber-400">'code_type_local'</span>]
+date_features = [<span class="text-amber-400">'date_mutation'</span>]
+
+<span class="text-slate-500"># Création du préprocesseur qui appliquera la bonne transformation à la bonne colonne</span>
+preprocessor = ColumnTransformer(
+    transformers=[
+        (<span class="text-amber-400">'num'</span>, StandardScaler(), numeric_features),
+        (<span class="text-amber-400">'cat'</span>, OneHotEncoder(handle_unknown=<span class="text-amber-400">'ignore'</span>), categorical_features),
+        (<span class="text-amber-400">'date'</span>, DateTransformer(), date_features)
+    ])
+
+<span class="text-slate-500"># ===================================================================</span>
+<span class="text-slate-500"># Étape 4: Création du Pipeline Final (Préprocesseur + Modèle)</span>
+<span class="text-slate-500"># ===================================================================</span>
+<span class="text-slate-500"># Instanciation du modèle de régression linéaire</span>
+regressor = LinearRegression()
+
+<span class="text-slate-500"># Création du pipeline complet</span>
+model_pipeline = Pipeline(steps=[
+    (<span class="text-amber-400">'preprocessor'</span>, preprocessor),
+    (<span class="text-amber-400">'regressor'</span>, regressor)
+])
+
+<span class="text-purple-400">print</span>(<span class="text-amber-400">"\nEntraînement du pipeline sur les données de 2017-2020..."</span>)
+model_pipeline.fit(X_train, y_train)
+
+<span class="text-purple-400">print</span>(<span class="text-amber-400">"Évaluation du pipeline sur les données de 2021..."</span>)
+predictions = model_pipeline.predict(X_test)
+mape = mean_absolute_percentage_error(y_test, predictions)
+
+<span class="text-purple-400">print</span>(<span class="text-amber-400">f"\nPERFORMANCE (Split Temporel) : MAPE = {mape:.2%}"</span>)</code></pre>
+                    </div>
+                </section>
+
+                <div class="section-divider"></div>
+
+                <!-- SECTION: Impact & ROI - Pépite +38% -->
+                <section id="impact">
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="w-2 h-8 bg-amber-500 rounded-full"></span>
+                        Résultats & Impact ROI
+                    </h2>
+
+                    <div class="space-y-6">
+                        <div class="glass-card rounded-2xl p-6 border-amber-500/20">
+                            <h3 class="text-amber-400 font-bold mb-3 flex items-center gap-2">
+                                <i data-lucide="sparkles" class="w-5 h-5"></i>
+                                L'Insight à 38%
+                            </h3>
+                            <p class="text-slate-400 leading-relaxed" style="line-height: 1.6">Le modèle a détecté une sous-estimation systématique des actifs Corporate en zone périurbaine (<strong class="text-white">1 900€/m² marché</strong> vs <strong class="text-amber-400">2 620€/m² ML</strong>).</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="kpi-card text-center">
+                                <p class="text-3xl font-bold text-amber-400 mb-1">98M€</p>
+                                <p class="text-xs text-slate-500 uppercase tracking-wider">Valorisation Portefeuille Corporate</p>
+                            </div>
+                            <div class="kpi-card text-center">
+                                <p class="text-3xl font-bold text-slate-300 mb-1">71M€</p>
+                                <p class="text-xs text-slate-500 uppercase tracking-wider">Segment Résidentiel</p>
+                            </div>
+                        </div>
+
+                        <p class="text-slate-400 leading-relaxed" style="line-height: 1.6">Le portefeuille Corporate atteint <strong class="text-white">98M€</strong>, surpassant de près de <strong class="text-amber-400">38%</strong> le segment résidentiel (71M€).</p>
+
+                        <div class="glass-card rounded-xl p-6 bg-amber-500/5 border-amber-500/30">
+                            <h4 class="text-white font-bold mb-2">Recommandation Finale</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed" style="line-height: 1.6">Pivot stratégique pour conserver et renforcer le parc de bureaux, transformant l'intuition initiale en décision data-driven.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="section-divider"></div>
+
+                <!-- SECTION: Téléchargements -->
+                <section id="downloads">
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="w-2 h-8 bg-amber-500 rounded-full"></span>
+                        Livrables
+                    </h2>
+
+                    <div class="glass-card rounded-2xl p-8">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <a href="https://github.com/FlavienBardet/Portfolio/blob/main/projects/FB_P08_Valuation-ML/docs/Bardet_Flavien_Pr%C3%A9sentation_072025.pdf" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-4 p-6 rounded-xl bg-amber-500/5 border border-amber-500/30 hover:border-amber-500/60 hover:bg-amber-500/10 transition-all">
+                                <div class="w-14 h-14 rounded-xl bg-amber-500/20 flex items-center justify-center shrink-0">
+                                    <i data-lucide="file-text" class="w-7 h-7 text-amber-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-bold mb-1">Présentation Stratégique</h4>
+                                    <p class="text-slate-400 text-sm">PDF</p>
+                                </div>
+                                <i data-lucide="external-link" class="w-5 h-5 text-amber-400 ml-auto group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                            <a href="https://github.com/FlavienBardet/Portfolio/blob/main/projects/FB_P08_Valuation-ML/scripts/Bardet_Flavien_Notebook_072025.ipynb" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-4 p-6 rounded-xl bg-amber-500/5 border border-amber-500/30 hover:border-amber-500/60 hover:bg-amber-500/10 transition-all">
+                                <div class="w-14 h-14 rounded-xl bg-amber-500/20 flex items-center justify-center shrink-0">
+                                    <i data-lucide="file-code" class="w-7 h-7 text-amber-400" aria-hidden="true"></i>
+                                </div>
+                                <div class="min-w-0 flex-1">
+                                    <h4 class="text-white font-bold mb-1">Notebook Jupyter</h4>
+                                    <p class="text-slate-400 text-sm truncate">Notebook</p>
+                                </div>
+                                <i data-lucide="external-link" class="w-5 h-5 text-amber-400 shrink-0 group-hover:translate-x-1 transition-transform" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- NAVIGATION PROJETS -->
+                <div class="flex justify-end items-center pt-12 border-t border-white/5">
+                    <a href="../index.html#projects" class="group flex items-center gap-2 text-amber-400 hover:text-amber-300 transition-colors">
+                        <span>Tous les projets</span>
+                        <i data-lucide="grid-3x3" class="w-4 h-4"></i>
+                    </a>
+                </div>
+
+            </article>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-black border-t border-white/10 py-8 relative z-20">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
+            <p>© 2025 FB. All rights reserved.</p>
+            <div class="flex items-center gap-6">
+                <a href="../index.html#contact" class="hover:text-amber-400 transition-colors">Contact</a>
+                <a href="../index.html#projects" class="hover:text-amber-400 transition-colors">Projets</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+            var imgs = document.querySelectorAll('img[onerror*="nextElementSibling"]');
+            imgs.forEach(function(img) {
+                var fallback = img.nextElementSibling;
+                if (fallback && img.naturalWidth === 0) fallback.style.display = 'flex';
+            });
+        });
+    </script>
+</body>
+</html>

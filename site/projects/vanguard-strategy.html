@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet Vanguard - Étude Stratégique Gaming | FB Portfolio</title>
+    <meta name="description" content="Conquérir le Marché du Shooter Coopératif (PVE) : Analyse stratégique et recommandation business pour un lancement produit à 20M€">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Icons (Lucide) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        slate: {
+                            850: '#151e2e',
+                            900: '#0f172a',
+                            950: '#020617',
+                            1000: '#0b0f19',
+                        },
+                        neon: {
+                            cyan: '#06b6d4',
+                            purple: '#8b5cf6',
+                            pink: '#ec4899',
+                            emerald: '#10b981',
+                            orange: '#f97316'
+                        },
+                        card: {
+                            dark: '#111318',
+                        }
+                    },
+                    animation: {
+                        'blob': 'blob 10s infinite',
+                        'float-slow': 'float 8s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-12px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html {
+            scroll-padding-top: 100px;
+        }
+
+        .bg-noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: rgba(30, 41, 59, 0.35);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1), inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+        }
+
+        /* Tech Tag Style */
+        .tech-tag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            background-color: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: 'JetBrains Mono', monospace;
+            transition: all 0.3s ease;
+        }
+        .tech-tag:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            background-color: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
+        }
+
+        /* KPI Card */
+        .kpi-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .kpi-card:hover {
+            border-color: rgba(6, 182, 212, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Section divider */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            margin: 3rem 0;
+        }
+
+        /* Sidebar scrollable + glass (Tickets 1 & 2) */
+        .sidebar-glass {
+            background: rgba(15, 23, 42, 0.35);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1), inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .sidebar-glass:hover {
+            border-color: rgba(6, 182, 212, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1), inset 0 1px 0 0 rgba(255, 255, 255, 0.05), 0 0 20px rgba(6, 182, 212, 0.08);
+        }
+
+        /* Sidebar compact (Tickets 18–19) */
+        .sidebar-compact {
+            width: 280px;
+            padding: 1rem;
+        }
+        .sidebar-compact .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+        .sidebar-compact .info-cell {
+            padding: 0.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-300 font-sans min-h-screen selection:bg-neon-cyan selection:text-white overflow-x-hidden">
+
+    <div class="bg-noise"></div>
+
+    <!-- Background Ambience (charte cyan/emerald, pas orange) -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="absolute -top-20 -left-20 w-96 h-96 bg-neon-cyan/20 rounded-full mix-blend-screen filter blur-[120px] opacity-30 animate-blob"></div>
+        <div class="absolute top-1/3 right-0 w-96 h-96 bg-neon-cyan/20 rounded-full mix-blend-screen filter blur-[120px] opacity-25 animate-blob animation-delay-2000"></div>
+    </div>
+
+    <!-- BACK NAVIGATION -->
+    <nav class="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
+        <div class="bg-slate-950/70 backdrop-blur-xl border border-white/10 rounded-full p-2 pl-4 pr-4 shadow-2xl shadow-black/20 max-w-4xl w-full flex justify-between items-center transition-all duration-300 hover:border-white/20">
+
+            <a href="../index.html" class="group flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm font-medium">
+                <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform"></i>
+                <span>Retour au Portfolio</span>
+            </a>
+
+            <div class="flex items-center gap-4">
+                <a href="../index.html#projects" class="group flex items-center gap-2 px-5 py-2 rounded-full bg-slate-900/50 border border-cyan-400/30 text-cyan-400 text-sm font-medium hover:bg-cyan-400/10 hover:border-cyan-400/80 hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all duration-300">
+                    <span>Tous les Projets</span>
+                    <i data-lucide="grid-3x3" class="w-4 h-4"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="relative z-10 pt-32 pb-16">
+        <!-- SIDEBAR FIXED (desktop only, 280px) - Tickets 24-25 : sans titre, tech tags + infos + boutons -->
+        <aside class="hidden lg:block fixed left-0 top-24 bottom-0 z-20 w-[280px] sidebar-glass rounded-none rounded-r-2xl border-l-0 border-t-0 border-b-0 p-5 space-y-4">
+            <!-- Tech tags (grid 2x2) -->
+            <div class="grid grid-cols-2 gap-1.5">
+                <span class="tech-tag text-xs py-1 px-3 text-cyan-400 border-cyan-500/20">RECHERCHE DE NICHE</span>
+                <span class="tech-tag text-xs py-1 px-3 text-emerald-400 border-emerald-500/20">ROI</span>
+                <span class="tech-tag text-xs py-1 px-3 text-purple-400 border-purple-500/20">POWER BI</span>
+                <span class="tech-tag text-xs py-1 px-3 text-purple-400 border-purple-500/20">DAX</span>
+            </div>
+
+            <div class="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" aria-hidden="true"></div>
+
+            <!-- Infos projet (grid 2x2) -->
+            <div class="info-grid">
+                <div class="info-cell">
+                    <p class="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Horizon</p>
+                    <p class="text-sm font-medium text-white">2025</p>
+                </div>
+                <div class="info-cell">
+                    <p class="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Rôle</p>
+                    <p class="text-sm font-medium text-white">Business Analyst</p>
+                </div>
+                <div class="info-cell">
+                    <p class="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Secteur</p>
+                    <p class="text-sm font-medium text-white">Gaming/AAA</p>
+                </div>
+                <div class="info-cell">
+                    <p class="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Budget</p>
+                    <p class="text-sm font-medium text-white">20M€</p>
+                </div>
+            </div>
+
+            <div class="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" aria-hidden="true"></div>
+
+            <!-- Boutons -->
+            <div class="flex flex-col gap-2">
+                <a href="https://github.com/FlavienBardet/Portfolio/tree/main/projects/FB_P10_Project-Vanguard" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 w-full py-2 px-4 text-sm bg-slate-950 border border-blue-500/50 text-blue-400 font-medium rounded-xl hover:border-blue-500 hover:bg-blue-500/10 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all">
+                    <i data-lucide="external-link" class="w-4 h-4 shrink-0" aria-hidden="true"></i>
+                    <span>Voir sur GitHub</span>
+                </a>
+                <a href="#downloads" class="flex items-center justify-center gap-2 w-full py-2 px-4 text-sm bg-slate-900/50 border border-white/10 text-white font-medium rounded-xl hover:bg-white/5 hover:border-white/20 transition-all">
+                    <i data-lucide="download" class="w-4 h-4 shrink-0" aria-hidden="true"></i>
+                    <span>Télécharger les Livrables</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- CONTENU PRINCIPAL (ml 280px sur desktop) -->
+        <div class="lg:ml-[280px] max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- SIDEBAR MOBILE (sans titre, même structure que desktop - Tickets 24-25) -->
+            <aside class="lg:hidden sidebar-glass rounded-2xl p-5 space-y-4 mb-8">
+                <div class="grid grid-cols-2 gap-1.5">
+                    <span class="tech-tag text-xs py-1 px-3 text-cyan-400 border-cyan-500/20">RECHERCHE DE NICHE</span>
+                    <span class="tech-tag text-xs py-1 px-3 text-emerald-400 border-emerald-500/20">ROI</span>
+                    <span class="tech-tag text-xs py-1 px-3 text-purple-400 border-purple-500/20">POWER BI</span>
+                    <span class="tech-tag text-xs py-1 px-3 text-purple-400 border-purple-500/20">DAX</span>
+                </div>
+                <div class="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" aria-hidden="true"></div>
+                <div class="info-grid">
+                    <div class="info-cell"><p class="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Horizon</p><p class="text-sm font-medium text-white">2025</p></div>
+                    <div class="info-cell"><p class="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Rôle</p><p class="text-sm font-medium text-white">Business Analyst</p></div>
+                    <div class="info-cell"><p class="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Secteur</p><p class="text-sm font-medium text-white">Gaming/AAA</p></div>
+                    <div class="info-cell"><p class="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Budget</p><p class="text-sm font-medium text-white">20M€</p></div>
+                </div>
+                <div class="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" aria-hidden="true"></div>
+                <div class="flex flex-col gap-2">
+                    <a href="https://github.com/FlavienBardet/Portfolio/tree/main/projects/FB_P10_Project-Vanguard" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 w-full py-2 px-4 text-sm bg-slate-950 border border-blue-500/50 text-blue-400 font-medium rounded-xl hover:border-blue-500 hover:bg-blue-500/10 transition-all">
+                        <i data-lucide="external-link" class="w-4 h-4 shrink-0" aria-hidden="true"></i>
+                        <span>Voir sur GitHub</span>
+                    </a>
+                    <a href="#downloads" class="flex items-center justify-center gap-2 w-full py-2 px-4 text-sm bg-slate-900/50 border border-white/10 text-white font-medium rounded-xl hover:bg-white/5 transition-all">
+                        <i data-lucide="download" class="w-4 h-4 shrink-0" aria-hidden="true"></i>
+                        <span>Télécharger les Livrables</span>
+                    </a>
+                </div>
+            </aside>
+
+            <!-- En-tête central : titre Projet Vanguard (Ticket 24) -->
+            <div class="mb-12">
+                <div class="inline-flex items-center gap-2 mb-4">
+                    <div class="w-2 h-2 rounded-full bg-cyan-500" aria-hidden="true"></div>
+                    <span class="text-xs uppercase tracking-wider font-mono text-cyan-400">STRATÉGIE</span>
+                </div>
+                <h1 class="text-5xl md:text-6xl font-bold text-white mb-3">
+                    Projet Vanguard
+                </h1>
+                <div class="h-1 w-24 rounded-full bg-gradient-to-r from-cyan-500 to-emerald-500 mb-6 drop-shadow-[0_0_8px_rgba(6,182,212,0.6)]" aria-hidden="true"></div>
+                <div class="inline-flex items-center gap-3 px-4 py-2 rounded-xl bg-emerald-500/5 border-l-2 border-emerald-500/50">
+                    <p class="text-lg font-semibold text-emerald-400 tracking-wide">
+                        Niche Gaming & Rentabilité
+                    </p>
+                </div>
+            </div>
+
+            <article class="space-y-12">
+
+                <!-- SECTION: Contexte -->
+                <section id="contexte">
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="w-2 h-8 rounded-full bg-gradient-to-b from-cyan-500 to-emerald-500 flex-shrink-0" aria-hidden="true"></span>
+                        Challenge : Naviguer l'Océan Rouge
+                    </h2>
+                    <div class="space-y-4 text-slate-400 leading-relaxed">
+                        <p>
+                            Le marché du AAA Gaming traverse une crise structurelle menaçant la viabilité des nouveaux projets : hausse des coûts de développement (+8%/an), saturation du segment PVP, et monopoles établis verrouillant les segments Battle Royale et Shooters Compétitifs.
+                        </p>
+                        <p>
+                            Le défi : définir une <strong class="text-white">stratégie Go-To-Market</strong> pour un lancement produit AAA avec un budget de 20M€, dans un environnement hostile où la barrière à l'entrée semble insurmontable.
+                        </p>
+                    </div>
+
+                    <!-- Challenge Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 items-stretch">
+                        <div class="glass-card rounded-xl p-5 h-full flex flex-col">
+                            <i data-lucide="trending-up" class="w-8 h-8 text-red-400 mb-3 shrink-0" aria-hidden="true"></i>
+                            <h4 class="text-white font-bold mb-2">Explosion des Coûts</h4>
+                            <p class="text-3xl font-bold text-red-400 mb-2">+8%<span class="text-lg">/an</span></p>
+                            <p class="text-slate-400 text-sm">Hausse structurelle (TCAC) rendant le seuil de rentabilité difficile à atteindre.</p>
+                        </div>
+                        <div class="glass-card rounded-xl p-5 h-full flex flex-col">
+                            <i data-lucide="users" class="w-8 h-8 text-red-400 mb-3 shrink-0" aria-hidden="true"></i>
+                            <h4 class="text-white font-bold mb-2">Saturation du PVP</h4>
+                            <p class="text-sm font-mono text-red-400 mb-2 tracking-wider">OCÉAN ROUGE</p>
+                            <p class="text-slate-400 text-sm">Monopoles Fortnite et Call of Duty verrouillent le segment compétitif.</p>
+                        </div>
+                        <div class="glass-card rounded-xl p-5 h-full flex flex-col">
+                            <i data-lucide="alert-triangle" class="w-8 h-8 text-amber-400 mb-3 shrink-0" aria-hidden="true"></i>
+                            <h4 class="text-white font-bold mb-2">Budget Limité</h4>
+                            <p class="text-3xl font-bold text-amber-400 mb-2">20M€</p>
+                            <p class="text-slate-400 text-sm">Impossible de rivaliser en marketing avec les mastodontes du secteur.</p>
+                        </div>
+                    </div>
+
+                    <!-- Strategic Breach -->
+                    <div class="glass-card rounded-xl p-6 mt-6 border-cyan-500/20">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-cyan-500/20 flex items-center justify-center flex-shrink-0" aria-hidden="true">
+                                <i data-lucide="lightbulb" class="w-6 h-6 text-cyan-400 flex items-center justify-center shrink-0" aria-hidden="true"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-xl font-bold text-white mb-2">La Brèche Stratégique : Le PVE Coopératif</h3>
+                                <p class="text-slate-300">
+                                    <span class="text-cyan-400 font-semibold">Tendance de fond :</span> Migration massive des joueurs fuyant la toxicité compétitive.
+                                    <span class="text-emerald-400 font-semibold">Opportunité :</span> Demande non satisfaite pour des expériences coopératives sociales (validation : succès de Helldivers 2 avec 12M+ ventes).
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="section-divider"></div>
+
+                <!-- SECTION: Méthodologie -->
+                <section id="methodologie">
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="w-2 h-8 bg-purple-500 rounded-full"></span>
+                        Approche Hybride
+                    </h2>
+                    <p class="text-slate-400 leading-relaxed mb-6">
+                        Combinaison de <strong class="text-white">Market Intelligence</strong>, <strong class="text-white">Psychologie Utilisateur</strong> et <strong class="text-white">Financial Forecasting</strong> pour identifier la niche optimale.
+                    </p>
+
+                    <!-- Methodology Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="glass-card rounded-xl p-6">
+                            <div class="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center mb-4">
+                                <i data-lucide="bar-chart-3" class="w-6 h-6 text-purple-400"></i>
+                            </div>
+                            <h4 class="text-white font-bold mb-3">Market Intelligence</h4>
+                            <p class="text-slate-400 text-sm mb-4">
+                                Analyse SteamDB pour corréler <span class="text-purple-400 font-semibold">Pricing Power</span> et <span class="text-purple-400 font-semibold">Volume de Ventes</span>.
+                            </p>
+                            <ul class="space-y-2 text-sm text-slate-400">
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check" class="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5"></i>
+                                    <span>Extraction Top 50 Steam</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check" class="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5"></i>
+                                    <span>Modélisation Power BI & DAX</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check" class="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5"></i>
+                                    <span>Identification Sweet Spot</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="glass-card rounded-xl p-6">
+                            <div class="w-12 h-12 rounded-xl bg-cyan-500/20 flex items-center justify-center mb-4">
+                                <i data-lucide="brain" class="w-6 h-6 text-cyan-400"></i>
+                            </div>
+                            <h4 class="text-white font-bold mb-3">Psychologie Utilisateur</h4>
+                            <p class="text-slate-400 text-sm mb-4">
+                                Identification de la <span class="text-cyan-400 font-semibold">Toxicité Compétitive</span> comme barrière économique majeure.
+                            </p>
+                            <ul class="space-y-2 text-sm text-slate-400">
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check" class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5"></i>
+                                    <span>Persona "Commandant Coopératif"</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check" class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5"></i>
+                                    <span>Fuite toxicité PVP (25-35 ans, CSP+)</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check" class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5"></i>
+                                    <span>Recherche "Quality Time"</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="glass-card rounded-xl p-6">
+                            <div class="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center mb-4">
+                                <i data-lucide="trending-up" class="w-6 h-6 text-emerald-400"></i>
+                            </div>
+                            <h4 class="text-white font-bold mb-3">Financial Forecasting</h4>
+                            <p class="text-slate-400 text-sm mb-4">
+                                Modélisation de <span class="text-emerald-400 font-semibold">3 scénarios</span> pour définir le point mort et l'objectif central.
+                            </p>
+                            <ul class="space-y-2 text-sm text-slate-400">
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check" class="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5"></i>
+                                    <span>Break-even : 714k unités</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check" class="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5"></i>
+                                    <span>Objectif central : 1M unités</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check" class="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5"></i>
+                                    <span>ROI estimé : ~40% (An 1)</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="section-divider"></div>
+
+                <!-- SECTION: Résultats Visuels -->
+                <section id="resultats">
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="w-2 h-8 bg-cyan-500 rounded-full"></span>
+                        Insights Stratégiques
+                    </h2>
+
+                    <!-- Visual A: Scatter Plot -->
+                    <div class="glass-card rounded-2xl p-6 mb-8">
+                        <h3 class="text-white font-bold mb-4 flex items-center gap-2">
+                            <i data-lucide="scatter-chart" class="w-5 h-5 text-cyan-400"></i>
+                            Visuel A : Positionnement Stratégique
+                        </h3>
+                        <p class="text-slate-400 text-sm mb-4 font-mono">Finding the Sweet Spot: Pricing Strategy Analysis on Steam Data</p>
+
+                        <div class="relative rounded-2xl overflow-hidden border border-cyan-500/20 bg-slate-900/50 p-4 mb-4">
+                            <img
+                                src="../assets/images/prixmoy.png"
+                                alt="Scatter Plot - Prix Moyen (30-40$) vs Revenus Médians - Sweet Spot tarifaire identifié"
+                                class="w-full h-auto object-contain"
+                            />
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-slate-900/30 rounded-xl p-5 border border-cyan-500/10">
+                                <h4 class="text-cyan-400 font-bold mb-3 flex items-center gap-2">
+                                    <i data-lucide="zap" class="w-5 h-5"></i>
+                                    Insight Clé
+                                </h4>
+                                <p class="text-slate-300 text-sm leading-relaxed">
+                                    La zone des <span class="text-cyan-400 font-semibold">30-40$</span> concentre la plus forte densité de succès financiers médians.
+                                    Notre prix tactique de <span class="text-cyan-400 font-semibold">39.99€</span> se positionne comme un refuge "valeur sûre".
+                                </p>
+                            </div>
+                            <div class="bg-slate-900/30 rounded-xl p-5 border border-cyan-500/10">
+                                <h4 class="text-cyan-400 font-bold mb-3 flex items-center gap-2">
+                                    <i data-lucide="shield-check" class="w-5 h-5"></i>
+                                    Avantage Concurrentiel
+                                </h4>
+                                <p class="text-slate-300 text-sm leading-relaxed">
+                                    Le modèle <span class="text-cyan-400 font-semibold">Premium (achat unique)</span> valide notre approche comme une alternative éthique face aux pratiques F2P.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visual B: Break-even -->
+                    <div class="glass-card rounded-2xl p-6">
+                        <h3 class="text-white font-bold mb-4 flex items-center gap-2">
+                            <i data-lucide="activity" class="w-5 h-5 text-emerald-400"></i>
+                            Visuel B : Trajectoire Financière
+                        </h3>
+                        <p class="text-slate-400 text-sm mb-4 font-mono">Dynamic Break-even Analysis: Tracking Real-time Profitability Scenarios</p>
+
+                        <div class="relative rounded-2xl overflow-hidden border border-emerald-500/20 bg-slate-900/50 p-4 mb-4">
+                            <img
+                                src="../assets/images/renta.png"
+                                alt="Visuel B - Analyse de rentabilité"
+                                class="w-full h-auto object-contain"
+                            />
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="bg-slate-900/30 rounded-xl p-4 text-center border border-slate-700">
+                                <p class="text-slate-400 text-xs font-mono mb-2">PESSIMISTE</p>
+                                <p class="text-2xl font-bold text-slate-400 mb-1">~243k</p>
+                                <p class="text-xs text-slate-500 mb-2">Médiane Marché</p>
+                                <p class="text-xs text-red-400">❌ Non-Rentable</p>
+                            </div>
+                            <div class="bg-emerald-900/20 rounded-xl p-4 text-center border-2 border-emerald-500/50">
+                                <p class="text-emerald-400 text-xs font-mono mb-2 flex items-center justify-center gap-1">
+                                    <i data-lucide="target" class="w-3 h-3"></i>
+                                    OBJECTIF
+                                </p>
+                                <p class="text-3xl font-bold text-emerald-400 mb-1">1M</p>
+                                <p class="text-xs text-emerald-300 mb-2">Scénario Central</p>
+                                <p class="text-sm text-emerald-400 font-semibold">✅ ROI ~40%</p>
+                            </div>
+                            <div class="bg-slate-900/30 rounded-xl p-4 text-center border border-cyan-700">
+                                <p class="text-cyan-400 text-xs font-mono mb-2">OPTIMISTE</p>
+                                <p class="text-2xl font-bold text-cyan-400 mb-1">~2.1M</p>
+                                <p class="text-xs text-cyan-300 mb-2">Moyenne "Hit"</p>
+                                <p class="text-xs text-cyan-400">🚀 ROI Exponentiel</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 bg-gradient-to-r from-emerald-900/20 to-transparent rounded-xl p-5 border-l-4 border-emerald-500">
+                            <p class="text-slate-300 text-sm leading-relaxed">
+                                <span class="text-emerald-400 font-bold">Conclusion Financière :</span> Notre objectif d'1M de ventes génère un
+                                <span class="text-emerald-400 font-semibold">Revenu Net de ~28M€</span> contre 20M€ de budget, soit un
+                                <span class="text-emerald-400 font-semibold">ROI de ~40%</span> dès l'année 1.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="section-divider"></div>
+
+                <!-- SECTION: KPIs -->
+                <section id="kpis">
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="w-2 h-8 bg-emerald-500 rounded-full"></span>
+                        Impact & Métriques
+                    </h2>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="kpi-card text-center">
+                            <p class="text-3xl font-bold text-cyan-400 mb-1">~40%</p>
+                            <p class="text-xs text-slate-500 uppercase tracking-wider">ROI An 1</p>
+                        </div>
+                        <div class="kpi-card text-center">
+                            <p class="text-3xl font-bold text-emerald-400 mb-1">1M</p>
+                            <p class="text-xs text-slate-500 uppercase tracking-wider">Objectif Ventes</p>
+                        </div>
+                        <div class="kpi-card text-center">
+                            <p class="text-3xl font-bold text-cyan-400 mb-1">39.99€</p>
+                            <p class="text-xs text-slate-500 uppercase tracking-wider">Prix Optimal</p>
+                        </div>
+                        <div class="kpi-card text-center">
+                            <p class="text-3xl font-bold text-purple-400 mb-1">714k</p>
+                            <p class="text-xs text-slate-500 uppercase tracking-wider">Break-even</p>
+                        </div>
+                    </div>
+
+                    <!-- Validation Marché -->
+                    <div class="glass-card rounded-xl p-6 mt-6 border-cyan-500/20">
+                        <h3 class="text-white font-bold mb-4 flex items-center gap-2">
+                            <i data-lucide="shield-check" class="w-5 h-5 text-cyan-400"></i>
+                            Validation Marché (2024)
+                        </h3>
+                        <div class="grid sm:grid-cols-3 gap-4">
+                            <div class="text-center p-4 bg-slate-800/50 rounded-lg border border-cyan-500/20">
+                                <p class="text-2xl font-bold text-cyan-400 mb-1">12M+</p>
+                                <p class="text-xs text-slate-400">Helldivers 2</p>
+                            </div>
+                            <div class="text-center p-4 bg-slate-800/50 rounded-lg border border-cyan-500/20">
+                                <p class="text-2xl font-bold text-cyan-400 mb-1">~4.5M</p>
+                                <p class="text-xs text-slate-400">Space Marine 2</p>
+                            </div>
+                            <div class="text-center p-4 bg-slate-800/50 rounded-lg border border-cyan-500/20">
+                                <p class="text-2xl font-bold text-cyan-400 mb-1">4M+</p>
+                                <p class="text-xs text-slate-400">Deep Rock Galactic</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="section-divider"></div>
+
+                <!-- SECTION: Recommandation -->
+                <section id="recommandation">
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="w-2 h-8 bg-cyan-500 rounded-full"></span>
+                        Recommandation Stratégique
+                    </h2>
+
+                    <div class="glass-card rounded-2xl p-8 border-2 border-cyan-500/30 bg-gradient-to-br from-cyan-900/10 to-emerald-900/10 relative overflow-hidden mb-6">
+                        <!-- Glow effect -->
+                        <div class="absolute inset-0 bg-cyan-500/5 blur-3xl rounded-full opacity-50"></div>
+
+                        <div class="relative z-10">
+                            <div class="flex items-center gap-4 mb-6">
+                                <div class="w-16 h-16 rounded-2xl bg-cyan-500/20 flex items-center justify-center border-2 border-cyan-500/50">
+                                    <i data-lucide="check-circle-2" class="w-8 h-8 text-cyan-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-3xl font-bold text-white">Pivoter vers le PVE Coopératif</h3>
+                                    <p class="text-cyan-400 font-mono text-sm mt-1">STRATÉGIE OCÉAN BLEU VALIDÉE</p>
+                                </div>
+                            </div>
+
+                            <p class="text-xl text-slate-200 leading-relaxed mb-6">
+                                Au vu des indicateurs de marché (<span class="text-emerald-400 font-semibold">Opportunité</span>),
+                                de produit (<span class="text-cyan-400 font-semibold">Faisabilité</span>) et financiers (<span class="text-cyan-400 font-semibold">Rentabilité</span>),
+                                nous recommandons le <span class="text-cyan-400 font-bold">lancement immédiat de la phase de pré-production</span>.
+                            </p>
+
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="bg-slate-900/50 rounded-xl p-5 border border-cyan-500/20">
+                                    <h4 class="text-cyan-400 font-bold mb-3 flex items-center gap-2">
+                                        <i data-lucide="compass" class="w-5 h-5"></i>
+                                        Positionnement Unique
+                                    </h4>
+                                    <p class="text-slate-300 text-sm leading-relaxed">
+                                        Shooter PVE <span class="text-white font-semibold">profond, en croissance et moins saturé</span> que le PVP.
+                                        Fuir la toxicité compétitive pour sécuriser le ROI.
+                                    </p>
+                                </div>
+
+                                <div class="bg-slate-900/50 rounded-xl p-5 border border-emerald-500/20">
+                                    <h4 class="text-emerald-400 font-bold mb-3 flex items-center gap-2">
+                                        <i data-lucide="target" class="w-5 h-5"></i>
+                                        Objectif Financier
+                                    </h4>
+                                    <p class="text-slate-300 text-sm leading-relaxed">
+                                        Seuil de rentabilité : <span class="text-white font-semibold">714k unités</span>.
+                                        Objectif central : <span class="text-emerald-400 font-semibold">1M unités</span> pour un ROI de ~40%.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Océan Rouge vs Océan Bleu -->
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="glass-card rounded-xl p-5 border-red-500/20">
+                            <h4 class="text-red-400 font-bold text-lg mb-4 flex items-center gap-2">
+                                <i data-lucide="alert-circle" class="w-5 h-5"></i>
+                                OCÉAN ROUGE (À ÉVITER)
+                            </h4>
+                            <ul class="space-y-3">
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="x" class="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5"></i>
+                                    <span class="text-slate-300 text-sm">Segment PVP/Battle Royale saturé</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="x" class="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5"></i>
+                                    <span class="text-slate-300 text-sm">Monopoles Fortnite, Call of Duty</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="x" class="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5"></i>
+                                    <span class="text-slate-300 text-sm">Toxicité compétitive = barrière</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="glass-card rounded-xl p-5 border-cyan-500/30 bg-cyan-900/5">
+                            <h4 class="text-cyan-400 font-bold text-lg mb-4 flex items-center gap-2">
+                                <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                                OCÉAN BLEU (VANGUARD)
+                            </h4>
+                            <ul class="space-y-3">
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check" class="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5"></i>
+                                    <span class="text-slate-300 text-sm">Shooter Coopératif Tactique (PVE)</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check" class="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5"></i>
+                                    <span class="text-slate-300 text-sm">Expérience sociale bienveillante</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check" class="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5"></i>
+                                    <span class="text-slate-300 text-sm">Modèle Premium éthique (39.99€)</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="section-divider"></div>
+
+                <!-- SECTION: Téléchargements -->
+                <section id="downloads">
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="w-2 h-8 bg-cyan-500 rounded-full"></span>
+                        Livrables Complets
+                    </h2>
+
+                    <div class="glass-card rounded-2xl p-8 text-center mb-6">
+                        <i data-lucide="download" class="w-12 h-12 text-cyan-400 mx-auto mb-4"></i>
+                        <h3 class="text-2xl font-bold text-white mb-3">Accéder aux Documents Stratégiques</h3>
+                        <p class="text-slate-400 mb-8 max-w-2xl mx-auto">
+                            Téléchargez le rapport complet et le dashboard dynamique Power BI pour approfondir l'analyse
+                        </p>
+
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <!-- PDF Download -->
+                            <a href="../assets/pdf/Bardet_Flavien_1_Présentation_1225.pdf"
+                               download
+                               class="group bg-gradient-to-br from-cyan-500/10 to-emerald-500/10 border border-cyan-500/30 rounded-xl p-6 hover:border-cyan-500/60 hover:bg-cyan-500/20 transition-all duration-300 hover:-translate-y-1">
+                                <div class="w-16 h-16 rounded-xl bg-cyan-500/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                                    <i data-lucide="file-text" class="w-8 h-8 text-cyan-400"></i>
+                                </div>
+                                <h4 class="text-white font-bold text-lg mb-2">Rapport Stratégique</h4>
+                                <p class="text-slate-400 text-sm mb-4">Présentation complète (PDF · 14 pages)</p>
+                                <div class="flex items-center justify-center gap-2 text-cyan-400 font-semibold text-sm">
+                                    <span>Télécharger le PDF</span>
+                                    <i data-lucide="arrow-down-to-line" class="w-4 h-4 group-hover:translate-y-1 transition-transform"></i>
+                                </div>
+                            </a>
+
+                            <!-- PBIX Download -->
+                            <a href="../assets/docs/Bardet_Flavien_2_Analyses_1225.pbix"
+                               download
+                               class="group bg-gradient-to-br from-emerald-500/10 to-cyan-500/10 border border-emerald-500/30 rounded-xl p-6 hover:border-emerald-500/60 hover:bg-emerald-500/20 transition-all duration-300 hover:-translate-y-1">
+                                <div class="w-16 h-16 rounded-xl bg-emerald-500/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                                    <i data-lucide="bar-chart-4" class="w-8 h-8 text-emerald-400"></i>
+                                </div>
+                                <h4 class="text-white font-bold text-lg mb-2">Dashboard Dynamique</h4>
+                                <p class="text-slate-400 text-sm mb-4">Analyses Power BI (PBIX)</p>
+                                <div class="flex items-center justify-center gap-2 text-emerald-400 font-semibold text-sm">
+                                    <span>Explorer le Dashboard</span>
+                                    <i data-lucide="arrow-down-to-line" class="w-4 h-4 group-hover:translate-y-1 transition-transform"></i>
+                                </div>
+                            </a>
+                        </div>
+
+                        <p class="mt-6 text-slate-500 text-xs">
+                            Le fichier PBIX nécessite <a href="https://powerbi.microsoft.com/fr-fr/downloads/" target="_blank" class="text-cyan-400 hover:underline">Power BI Desktop</a> (gratuit) pour être ouvert.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- NAVIGATION PROJETS -->
+                <div class="flex justify-between items-center pt-12 border-t border-white/5">
+                    <a href="rag-assistant.html" class="group flex items-center gap-2 text-slate-400 hover:text-white transition-colors">
+                        <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform"></i>
+                        <span>Projet précédent</span>
+                    </a>
+                    <a href="../index.html#projects" class="group flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors">
+                        <span>Tous les projets</span>
+                        <i data-lucide="grid-3x3" class="w-4 h-4"></i>
+                    </a>
+                </div>
+
+            </article>
+        </div>
+
+    </main>
+
+    <!-- FOOTER (décalé sur desktop pour alignement avec contenu) -->
+    <footer class="bg-black border-t border-white/10 py-8 relative z-20 lg:ml-[280px]">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
+            <p>© 2025 FB. All rights reserved.</p>
+            <div class="flex items-center gap-6">
+                <a href="../index.html#contact" class="hover:text-cyan-400 transition-colors">Contact</a>
+                <a href="../index.html#projects" class="hover:text-cyan-400 transition-colors">Projets</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
