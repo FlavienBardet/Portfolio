@@ -11,8 +11,8 @@ desktop.ini
 # IDE / tooling (Cursor, Claude, CI)
 .claude/
 .cursor/rules/
-.github/workflows/
 docs/
+# .github/workflows/ : gardé pour le déploiement GitHub Pages (pages.yml)
 
 # IDE files
 .idea/
