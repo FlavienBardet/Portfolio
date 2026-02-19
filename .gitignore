@@ -38,6 +38,11 @@ venv/
 # Power BI local files
 *.pbit
 
+# Lighthouse audit outputs (ne pas pousser sur le repo)
+audit-*.json
+audit-*.html
+site/audits/
+
 # Temporary files
 *.tmp
 *.temp

@@ -24,24 +24,26 @@ Ouvre les fichiers `audit-*.html` dans un navigateur pour voir les scores et les
 
 ---
 
-## Scores (à remplir après exécution de Lighthouse)
+## Scores Lighthouse (audit du site en ligne)
 
-| Page              | Métrique        | Avant | Après (à mesurer) |
-|-------------------|-----------------|-------|---------------------|
-| index.html        | Performance     | -     |                     |
-|                   | Accessibility   | -     |                     |
-|                   | Best Practices  | -     |                     |
-|                   | SEO             | -     |                     |
-| livrables.html    | Performance     | -     |                     |
-|                   | Accessibility   | -     |                     |
-|                   | Best Practices  | -     |                     |
-|                   | SEO             | -     |                     |
-| veille-deep-research.html | Performance     | -     |                     |
-|                   | Accessibility   | -     |                     |
-|                   | Best Practices  | -     |                     |
-|                   | SEO             | -     |                     |
+*Dernier audit : exécution Lighthouse CLI sur https://flavienbardet.github.io/Portfolio/*
 
-*Lighthouse n’a pas été exécuté dans l’environnement (Node/npm absents). Relance les commandes ci-dessus après déploiement pour obtenir les scores réels.*
+| Page              | Métrique        | Avant | Après  |
+|-------------------|-----------------|-------|--------|
+| index.html        | Performance     | -     | **39** |
+|                   | Accessibility   | -     | **93** |
+|                   | Best Practices  | -     | **96** |
+|                   | SEO             | -     | **100** |
+| livrables.html    | Performance     | -     | **32** |
+|                   | Accessibility   | -     | **95** |
+|                   | Best Practices  | -     | **96** |
+|                   | SEO             | -     | **100** |
+| veille-deep-research.html | Performance     | -     | **44** |
+|                   | Accessibility   | -     | **92** |
+|                   | Best Practices  | -     | **96** |
+|                   | SEO             | -     | **100** |
+
+**Résumé :** Accessibility (92–95), Best Practices (96) et SEO (100) atteignent ou dépassent 90 sur toutes les pages. La **Performance** (32–44) reste en dessous de 90 (réseau, CDN, poids des polices/scripts) ; pistes : réduire le JS/CSS bloquants, précharger les polices, optimiser les images (WebP, dimensions).
 
 ---
 
@@ -82,3 +84,19 @@ Ouvre les fichiers `audit-*.html` dans un navigateur pour voir les scores et les
 4. **Lecteur d’écran** : Tester rapidement avec NVDA ou VoiceOver que les aria-label et les boutons sont annoncés correctement.
 
 Une fois Lighthouse relancé, remplir le tableau « Après » dans ce fichier pour documenter les scores finaux.
+
+---
+
+## Commande pour valider le score Accessibilité (index.html)
+
+Après les corrections WCAG, relance l’audit dans ton terminal :
+
+```bash
+npx lighthouse https://flavienbardet.github.io/Portfolio/ --output=html --output-path=./audit-index.html --chrome-flags="--headless"
+```
+
+Ou en JSON pour extraire les scores :
+
+```bash
+npx lighthouse https://flavienbardet.github.io/Portfolio/ --output=json --output-path=./audit-index.json --chrome-flags="--headless"
+```

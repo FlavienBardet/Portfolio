@@ -78,6 +78,17 @@
             scroll-padding-top: 120px;
         }
 
+        /* WCAG 2.1 AA : indicateur de focus clair pour la navigation clavier */
+        a:focus-visible,
+        button:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 2px #0f172a, 0 0 0 4px #10b981;
+        }
+        a:focus-visible.rounded-full,
+        button:focus-visible.rounded-full {
+            border-radius: 9999px;
+        }
+
         .custom-scrollbar::-webkit-scrollbar {
             width: 4px;
         }
@@ -483,8 +494,8 @@
                 <a href="#skills" class="px-5 py-2.5 text-sm font-medium text-slate-400 hover:text-white transition-all duration-300 rounded-full hover:bg-white/5 hover:shadow-[0_0_15px_rgba(255,255,255,0.15)]" data-ml-key="nav_skills">Compétences</a>
                 <a href="#projects" class="px-5 py-2.5 text-sm font-medium text-slate-400 hover:text-white transition-all duration-300 rounded-full hover:bg-white/5 hover:shadow-[0_0_15px_rgba(255,255,255,0.15)]" data-ml-key="nav_projects">Projets</a>
                 <a href="livrables.html" class="px-5 py-2.5 text-sm font-medium text-slate-400 hover:text-white transition-all duration-300 rounded-full hover:bg-white/5 hover:shadow-[0_0_15px_rgba(255,255,255,0.15)]" data-ml-key="nav_livrables">Livrables</a>
-                <a href="https://github.com/FlavienBardet/Portfolio" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 text-sm font-medium text-slate-400 hover:text-white transition-all duration-300 rounded-full hover:bg-white/5 hover:shadow-[0_0_15px_rgba(255,255,255,0.15)] inline-flex items-center gap-1.5">
-                    <i data-lucide="github" class="w-4 h-4"></i>
+                <a href="https://github.com/FlavienBardet/Portfolio" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 text-sm font-medium text-slate-400 hover:text-white transition-all duration-300 rounded-full hover:bg-white/5 hover:shadow-[0_0_15px_rgba(255,255,255,0.15)] inline-flex items-center gap-1.5" aria-label="Voir le dépôt GitHub du portfolio">
+                    <i data-lucide="github" class="w-4 h-4" aria-hidden="true"></i>
                     <span>GitHub</span>
                 </a>
             </div>
@@ -498,7 +509,7 @@
 
             <a href="assets/cv/cvflavienbardet.pdf" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-2 px-6 py-2.5 rounded-full bg-slate-900/50 border border-cyan-400/30 text-cyan-400 text-sm font-medium hover:bg-cyan-400/10 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] hover:border-cyan-400/80 transition-all duration-300 ml-auto md:ml-0">
                 <span>Mon CV</span>
-                <i data-lucide="arrow-up-right" class="w-4 h-4 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform"></i>
+                <i data-lucide="arrow-up-right" class="w-4 h-4 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" aria-hidden="true"></i>
             </a>
         </div>
     </nav>
@@ -522,12 +533,12 @@
                         </div>
                         <span class="w-px h-4 bg-white/10 shrink-0"></span>
                         <div class="inline-flex items-center gap-1.5 shrink-0">
-                            <i data-lucide="map-pin" class="w-3 h-3 text-fuchsia-400"></i>
+                            <i data-lucide="map-pin" class="w-3 h-3 text-fuchsia-400" aria-hidden="true"></i>
                             <span class="text-fuchsia-400 text-xs font-mono tracking-wide uppercase font-semibold" data-ml-key="hero_location">Toulouse</span>
                         </div>
                         <span class="w-px h-4 bg-white/10 shrink-0"></span>
                         <div class="inline-flex items-center gap-1.5 shrink-0">
-                            <i data-lucide="laptop" class="w-3 h-3 text-indigo-400"></i>
+                            <i data-lucide="laptop" class="w-3 h-3 text-indigo-400" aria-hidden="true"></i>
                             <span class="text-indigo-400 text-xs font-mono tracking-wide uppercase font-semibold whitespace-nowrap" data-ml-key="hero_mode">Remote / Hybride</span>
                         </div>
                     </div>
@@ -541,7 +552,7 @@
                     </div>
                     <a href="#projects" class="group relative px-8 py-4 rounded-xl bg-emerald-500/10 border border-emerald-500/50 text-emerald-400 font-bold transition-all shadow-[0_0_20px_rgba(16,185,129,0.15)] hover:shadow-[0_0_30px_rgba(16,185,129,0.3)] hover:bg-emerald-500/20 w-fit mt-auto">
                         <span class="relative z-10 flex items-center gap-2">
-                            <span data-ml-key="hero_cta">Voir mes Projets</span> <i data-lucide="eye" class="w-4 h-4"></i>
+                            <span data-ml-key="hero_cta">Voir mes Projets</span> <i data-lucide="eye" class="w-4 h-4" aria-hidden="true"></i>
                         </span>
                     </a>
                 </div>
@@ -590,7 +601,7 @@
                 <!-- Colonne texte -->
                 <div class="relative z-10 min-w-0">
                     <h3 class="text-emerald-400 text-sm font-mono uppercase font-bold tracking-wider mb-6 flex items-center gap-2">
-                        <i data-lucide="user" class="w-4 h-4"></i> <span data-ml-key="about_label">À Propos</span>
+                        <i data-lucide="user" class="w-4 h-4" aria-hidden="true"></i> <span data-ml-key="about_label">À Propos</span>
                     </h3>
                     <h2 class="text-3xl md:text-4xl font-bold mb-8 leading-tight max-w-2xl" style="color: #FFFFFF;" data-ml-key="about_title" data-ml-html="true">
                         L'histoire de ma reconversion.
@@ -601,7 +612,7 @@
                 </div>
                 <!-- Colonne ADN : centrée horizontalement et verticalement (+30 % taille) -->
                 <div class="flex justify-center items-center p-4 lg:p-8 pointer-events-none" aria-hidden="true">
-                    <i data-lucide="dna" class="w-64 h-64 lg:w-[20.8rem] lg:h-[20.8rem] text-emerald-400 opacity-[0.05] group-hover:opacity-[0.1] transition-opacity duration-700 block shrink-0"></i>
+                    <i data-lucide="dna" class="w-64 h-64 lg:w-[20.8rem] lg:h-[20.8rem] text-emerald-400 opacity-[0.05] group-hover:opacity-[0.1] transition-opacity duration-700 block shrink-0" aria-hidden="true"></i>
                 </div>
             </div>
 
@@ -629,7 +640,7 @@
                         <div class="glass-card rounded-2xl p-5 mb-4 border-emerald-500/20 hover:border-emerald-500/40 transition-all">
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center">
-                                    <i data-lucide="database" class="w-5 h-5 text-emerald-400"></i>
+                                    <i data-lucide="database" class="w-5 h-5 text-emerald-400" aria-hidden="true"></i>
                                 </div>
                                 <div>
                                     <h3 class="text-emerald-400 font-bold text-sm uppercase tracking-wider">Data & AI</h3>
@@ -668,7 +679,7 @@
                         <div class="glass-card rounded-2xl p-5 mb-4 border-cyan-500/20 hover:border-cyan-500/40 transition-all">
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10 rounded-xl bg-cyan-500/20 flex items-center justify-center">
-                                    <i data-lucide="layout-dashboard" class="w-5 h-5 text-cyan-400"></i>
+                                    <i data-lucide="layout-dashboard" class="w-5 h-5 text-cyan-400" aria-hidden="true"></i>
                                 </div>
                                 <div>
                                     <h3 class="text-cyan-400 font-bold text-sm uppercase tracking-wider">Product</h3>
@@ -707,7 +718,7 @@
                         <div class="glass-card rounded-2xl p-5 mb-4 border-purple-500/20 hover:border-purple-500/40 transition-all">
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10 rounded-xl bg-purple-500/20 flex items-center justify-center">
-                                    <i data-lucide="flask-conical" class="w-5 h-5 text-purple-400"></i>
+                                    <i data-lucide="flask-conical" class="w-5 h-5 text-purple-400" aria-hidden="true"></i>
                                 </div>
                                 <div>
                                     <h3 class="text-purple-400 font-bold text-sm uppercase tracking-wider">Recherche</h3>
@@ -788,12 +799,12 @@
                                  <span class="tech-tag text-orange-400 border-orange-500/20">DAX</span>
                             </div>
                             <div class="pt-4 flex flex-wrap gap-3 mt-auto">
-                                <a href="projects/vanguard-strategy.html" class="inline-flex items-center gap-2 px-6 py-3 bg-white text-slate-950 text-sm font-bold rounded-full hover:bg-cyan-400 transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] group/btn">
+                                <a href="projects/vanguard-strategy.html" class="inline-flex items-center gap-2 px-6 py-3 bg-white text-slate-950 text-sm font-bold rounded-full hover:bg-cyan-400 transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] group/btn" aria-label="En savoir plus sur le projet Vanguard - Étude de Marché Niche Gaming">
                                     <span>En savoir plus</span>
-                                    <i data-lucide="arrow-right" class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform"></i>
+                                    <i data-lucide="arrow-right" class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" aria-hidden="true"></i>
                                 </a>
-                                <a href="https://github.com/FlavienBardet/Portfolio/tree/main/projects/FB_P10_Project-Vanguard" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 bg-slate-950 border border-blue-500/50 text-blue-400 text-sm font-bold rounded-full hover:bg-blue-500/10 hover:border-blue-400 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-300 group/gh">
-                                    <i data-lucide="github" class="w-4 h-4"></i>
+                                <a href="https://github.com/FlavienBardet/Portfolio/tree/main/projects/FB_P10_Project-Vanguard" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 bg-slate-950 border border-blue-500/50 text-blue-400 text-sm font-bold rounded-full hover:bg-blue-500/10 hover:border-blue-400 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-300 group/gh" aria-label="Code source GitHub - Projet Vanguard">
+                                    <i data-lucide="github" class="w-4 h-4" aria-hidden="true"></i>
                                     <span>GitHub</span>
                                 </a>
                             </div>
@@ -826,12 +837,12 @@
                                  <span class="tech-tag text-orange-400 border-orange-500/20">AUDIT DE DONNÉES</span>
                             </div>
                             <div class="pt-4 flex flex-wrap gap-3 mt-auto">
-                                <a href="projects/bottleneck-audit.html" class="inline-flex items-center gap-2 px-6 py-3 bg-white text-slate-950 text-sm font-bold rounded-full hover:bg-emerald-400 transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] group/btn">
+                                <a href="projects/bottleneck-audit.html" class="inline-flex items-center gap-2 px-6 py-3 bg-white text-slate-950 text-sm font-bold rounded-full hover:bg-emerald-400 transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] group/btn" aria-label="En savoir plus sur le projet Bottleneck Data Audit">
                                     <span>En savoir plus</span>
-                                    <i data-lucide="arrow-right" class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform"></i>
+                                    <i data-lucide="arrow-right" class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" aria-hidden="true"></i>
                                 </a>
-                                <a href="https://github.com/FlavienBardet/Portfolio/tree/main/projects/FB_P06_Bottleneck-Data-Audit" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 bg-slate-950 border border-blue-500/50 text-blue-400 text-sm font-bold rounded-full hover:bg-blue-500/10 hover:border-blue-400 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-300 group/gh">
-                                    <i data-lucide="github" class="w-4 h-4"></i>
+                                <a href="https://github.com/FlavienBardet/Portfolio/tree/main/projects/FB_P06_Bottleneck-Data-Audit" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 bg-slate-950 border border-blue-500/50 text-blue-400 text-sm font-bold rounded-full hover:bg-blue-500/10 hover:border-blue-400 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-300 group/gh" aria-label="Code source GitHub - Projet Bottleneck">
+                                    <i data-lucide="github" class="w-4 h-4" aria-hidden="true"></i>
                                     <span>GitHub</span>
                                 </a>
                             </div>
@@ -880,12 +891,12 @@
                                 <span class="tech-tag text-amber-400 border-amber-500/20">ARBITRAGE FINANCIER</span>
                             </div>
                             <div class="pt-4 flex flex-wrap gap-3 mt-auto">
-                                <a href="projects/valuation-ml.html" class="inline-flex items-center gap-2 px-6 py-3 bg-white text-slate-950 text-sm font-bold rounded-full hover:bg-purple-400 transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] group/btn">
+                                <a href="projects/valuation-ml.html" class="inline-flex items-center gap-2 px-6 py-3 bg-white text-slate-950 text-sm font-bold rounded-full hover:bg-purple-400 transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] group/btn" aria-label="En savoir plus sur le projet Algorithmic Asset Valuation & ML">
                                     <span>En savoir plus</span>
-                                    <i data-lucide="arrow-right" class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform"></i>
+                                    <i data-lucide="arrow-right" class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" aria-hidden="true"></i>
                                 </a>
-                                <a href="https://github.com/FlavienBardet/Portfolio/tree/main/projects/FB_P08_Valuation-ML" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 bg-slate-950 border border-blue-500/50 text-blue-400 text-sm font-bold rounded-full hover:bg-blue-500/10 hover:border-blue-400 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-300 group/gh">
-                                    <i data-lucide="github" class="w-4 h-4"></i>
+                                <a href="https://github.com/FlavienBardet/Portfolio/tree/main/projects/FB_P08_Valuation-ML" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 bg-slate-950 border border-blue-500/50 text-blue-400 text-sm font-bold rounded-full hover:bg-blue-500/10 hover:border-blue-400 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-300 group/gh" aria-label="Code source GitHub - Projet Valuation ML">
+                                    <i data-lucide="github" class="w-4 h-4" aria-hidden="true"></i>
                                     <span>GitHub</span>
                                 </a>
                             </div>
@@ -918,9 +929,9 @@
                                 <span class="tech-tag text-cyan-400 border-cyan-500/20">STRATÉGIE PRODUIT IA</span>
                             </div>
                             <div class="pt-4 flex flex-wrap gap-3 mt-auto">
-                                <a href="https://www.aimanager360.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 bg-white text-slate-950 text-sm font-bold rounded-full hover:bg-emerald-400 transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] group/btn">
+                                <a href="https://www.aimanager360.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 bg-white text-slate-950 text-sm font-bold rounded-full hover:bg-emerald-400 transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] group/btn" aria-label="Voir le site officiel AI Strategy & Conversational Intelligence - AImanager360">
                                     <span>Voir le site officiel</span>
-                                    <i data-lucide="external-link" class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform"></i>
+                                    <i data-lucide="external-link" class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" aria-hidden="true"></i>
                                 </a>
                             </div>
                         </div>
@@ -968,8 +979,8 @@
                                 <span class="tech-tag text-amber-400 border-amber-500/20">AUDIT DE CONFORMITÉ</span>
                             </div>
                             <div class="pt-4 flex flex-wrap gap-3 mt-auto">
-                                <a href="https://github.com/FlavienBardet/Portfolio/tree/main/projects/FB_P04_DevImmediat-Privacy" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 bg-slate-950 border border-blue-500/50 text-blue-400 text-sm font-bold rounded-full hover:bg-blue-500/10 hover:border-blue-400 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-300 group/gh">
-                                    <i data-lucide="github" class="w-4 h-4"></i>
+                                <a href="https://github.com/FlavienBardet/Portfolio/tree/main/projects/FB_P04_DevImmediat-Privacy" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 bg-slate-950 border border-blue-500/50 text-blue-400 text-sm font-bold rounded-full hover:bg-blue-500/10 hover:border-blue-400 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-300 group/gh" aria-label="Code source GitHub - Projet Dev'Immediat Data Privacy">
+                                    <i data-lucide="github" class="w-4 h-4" aria-hidden="true"></i>
                                     <span>GitHub</span>
                                 </a>
                             </div>
@@ -1002,8 +1013,8 @@
                                 <span class="tech-tag text-amber-400 border-amber-500/20">GOUVERNANCE DATA</span>
                             </div>
                             <div class="pt-4 flex flex-wrap gap-3 mt-auto">
-                                <a href="https://github.com/FlavienBardet/Portfolio/tree/main/projects/FB_P07_Sanitoral-PMO" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 bg-slate-950 border border-blue-500/50 text-blue-400 text-sm font-bold rounded-full hover:bg-blue-500/10 hover:border-blue-400 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-300 group/gh">
-                                    <i data-lucide="github" class="w-4 h-4"></i>
+                                <a href="https://github.com/FlavienBardet/Portfolio/tree/main/projects/FB_P07_Sanitoral-PMO" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 bg-slate-950 border border-blue-500/50 text-blue-400 text-sm font-bold rounded-full hover:bg-blue-500/10 hover:border-blue-400 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-300 group/gh" aria-label="Code source GitHub - Projet Sanitoral PMO">
+                                    <i data-lucide="github" class="w-4 h-4" aria-hidden="true"></i>
                                     <span>GitHub</span>
                                 </a>
                             </div>
@@ -1052,8 +1063,8 @@
                                 <span class="tech-tag text-orange-400 border-orange-500/20">PILOTAGE DE RENTABILITÉ</span>
                             </div>
                             <div class="pt-4 flex flex-wrap gap-3 mt-auto">
-                                <a href="https://github.com/FlavienBardet/Portfolio/tree/main/projects/FB_P05_RetailInsight360" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 bg-slate-950 border border-blue-500/50 text-blue-400 text-sm font-bold rounded-full hover:bg-blue-500/10 hover:border-blue-400 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-300 group/gh">
-                                    <i data-lucide="github" class="w-4 h-4"></i>
+                                <a href="https://github.com/FlavienBardet/Portfolio/tree/main/projects/FB_P05_RetailInsight360" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 bg-slate-950 border border-blue-500/50 text-blue-400 text-sm font-bold rounded-full hover:bg-blue-500/10 hover:border-blue-400 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-300 group/gh" aria-label="Code source GitHub - Projet Audit BI E-commerce">
+                                    <i data-lucide="github" class="w-4 h-4" aria-hidden="true"></i>
                                     <span>GitHub</span>
                                 </a>
                             </div>
@@ -1167,7 +1178,7 @@
                                 <div class="flex flex-col lg:flex-row justify-between gap-6">
                                     <div class="flex gap-5">
                                         <div class="w-14 h-14 rounded-2xl bg-fuchsia-600 flex items-center justify-center text-white shadow-lg shrink-0">
-                                            <i data-lucide="brain" class="w-7 h-7"></i>
+                                            <i data-lucide="brain" class="w-7 h-7" aria-hidden="true"></i>
                                         </div>
                                         <div class="flex-1">
                                             <h3 class="text-xl lg:text-2xl font-bold text-white mb-1">Psychothérapeute</h3>
@@ -1261,7 +1272,7 @@
                                 <div class="flex flex-col lg:flex-row justify-between gap-6">
                                     <div class="flex gap-5">
                                         <div class="w-14 h-14 rounded-2xl bg-fuchsia-600 flex items-center justify-center text-white shadow-lg shrink-0">
-                                            <i data-lucide="graduation-cap" class="w-7 h-7"></i>
+                                            <i data-lucide="graduation-cap" class="w-7 h-7" aria-hidden="true"></i>
                                         </div>
                                         <div class="flex-1">
                                             <h3 class="text-xl lg:text-2xl font-bold text-white mb-1">Licence Sciences Psychologiques et de l'éducation</h3>
@@ -1303,7 +1314,7 @@
                         
                             <a href="https://www.linkedin.com/in/flavien-bardet-38649a18b/" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center gap-3 px-8 py-4 bg-emerald-500/10 border border-emerald-500/50 text-emerald-400 font-bold rounded-full transition-all duration-300 hover:shadow-[0_0_30px_rgba(16,185,129,0.3)] hover:bg-emerald-500/20">
                                 <span data-ml-key="cta_button">Démarrer une conversation</span>
-                            <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                            <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform" aria-hidden="true"></i>
                         </a>
                     </div>
 
@@ -1433,13 +1444,13 @@
                     <!-- Social Icons -->
                     <div class="flex items-center gap-4">
                         <a href="https://linkedin.com/in/flavien-bardet" target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] transition-all" aria-label="LinkedIn">
-                            <i data-lucide="linkedin" class="w-5 h-5"></i>
+                            <i data-lucide="linkedin" class="w-5 h-5" aria-hidden="true"></i>
                         </a>
                         <a href="https://github.com/flavien-bardet" target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] transition-all" aria-label="GitHub">
-                            <i data-lucide="github" class="w-5 h-5"></i>
+                            <i data-lucide="github" class="w-5 h-5" aria-hidden="true"></i>
                         </a>
                         <a href="mailto:flavien.bardet@email.com" class="text-slate-500 hover:text-emerald-400 hover:drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] transition-all" aria-label="Email">
-                            <i data-lucide="mail" class="w-5 h-5"></i>
+                            <i data-lucide="mail" class="w-5 h-5" aria-hidden="true"></i>
                         </a>
             </div>
 
