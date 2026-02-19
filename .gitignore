@@ -8,6 +8,12 @@ ehthumbs.db
 Thumbs.db
 desktop.ini
 
+# IDE / tooling (Cursor, Claude, CI)
+.claude/
+.cursor/rules/
+.github/workflows/
+docs/
+
 # IDE files
 .idea/
 .vscode/
