@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Portfolio de Flavien Bardet, Lead Data Analyst & AI Engineer en alternance. Expert en diagnostic neurodéveloppemental reconverti à l'IA, projets Data Science, Power BI et GenAI.">
-    <title>FB | Lead Data Analyst Portfolio</title>
+    <title>FB | Portfolio</title>
+    <link
+        rel="icon"
+        type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2064%2064%27%3E%3Crect%20width%3D%2764%27%20height%3D%2764%27%20rx%3D%2716%27%20fill%3D%27%23020617%27/%3E%3Ctext%20x%3D%2732%27%20y%3D%2742%27%20text-anchor%3D%27middle%27%20font-family%3D%27Inter%2C%20Arial%27%20font-size%3D%2728%27%20font-weight%3D%27800%27%20fill%3D%27%23ffffff%27%3EFB%3C%2Ftext%3E%3Ccircle%20cx%3D%2746%27%20cy%3D%2718%27%20r%3D%276%27%20fill%3D%27%2310b981%27/%3E%3C%2Fsvg%3E"
+    >
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1464,11 +1469,135 @@
         </div>
     </footer>
 
+    <!-- Mentions Légales Modal (animée) -->
+    <div
+        id="modal-mentions-overlay"
+        class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 flex items-end sm:items-center justify-center p-4"
+        aria-hidden="true"
+    >
+        <div
+            id="modal-mentions"
+            role="dialog"
+            aria-modal="true"
+            aria-hidden="true"
+            aria-labelledby="modal-mentions-title"
+            tabindex="-1"
+            class="w-full max-w-2xl bg-slate-950 border border-white/10 rounded-2xl shadow-[0_0_60px_rgba(16,185,129,0.12)] p-6 sm:p-8 opacity-0 translate-y-6 scale-[0.98] transition-all duration-300"
+        >
+            <div class="flex items-start justify-between gap-4">
+                <h2 id="modal-mentions-title" class="text-xl sm:text-2xl font-extrabold text-white">
+                    Mentions Légales
+                </h2>
+                <button
+                    id="modal-mentions-close"
+                    type="button"
+                    class="flex items-center justify-center w-10 h-10 rounded-full bg-slate-900/50 border border-white/10 hover:border-white/20 hover:bg-slate-900 transition-colors text-white"
+                    aria-label="Fermer la modale Mentions Légales"
+                >
+                    <span aria-hidden="true" class="text-lg leading-none">X</span>
+                </button>
+            </div>
+
+            <div class="mt-6 space-y-4 text-sm sm:text-base text-slate-300 leading-relaxed">
+                <p><span class="font-semibold text-white">Éditeur</span> : Bardet Flavien</p>
+                <p><span class="font-semibold text-white">Contact</span> : bardet.flavien@gmail.com</p>
+                <p><span class="font-semibold text-white">Hébergeur</span> : GitHub</p>
+                <p><span class="font-semibold text-white">Politique de confidentialité</span> : Zéro données / Zéro cookies</p>
+                <p><span class="font-semibold text-white">Propriété intellectuelle</span> : Tous droits réservés</p>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Ensure DOM is loaded before running scripts
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize Icons
             lucide.createIcons();
+
+            // --- Mentions Légales Modal (animated) ---
+            const overlayEl = document.getElementById('modal-mentions-overlay');
+            const modalEl = document.getElementById('modal-mentions');
+            const closeBtn = document.getElementById('modal-mentions-close');
+
+            const footerLegalLink = document.querySelector('a[data-ml-key="footer_legal"]');
+            const footerPrivacyLink = document.querySelector('a[data-ml-key="footer_privacy"]');
+
+            let lastFocusedEl = null;
+
+            function openMentionsModal() {
+                if (!overlayEl || !modalEl) return;
+
+                lastFocusedEl = document.activeElement;
+
+                overlayEl.setAttribute('aria-hidden', 'false');
+                modalEl.setAttribute('aria-hidden', 'false');
+
+                overlayEl.classList.remove('opacity-0', 'pointer-events-none');
+                overlayEl.classList.add('opacity-100', 'pointer-events-auto');
+
+                modalEl.classList.remove('opacity-0', 'translate-y-6', 'scale-[0.98]');
+                modalEl.classList.add('opacity-100', 'translate-y-0', 'scale-100');
+
+                document.body.classList.add('overflow-hidden');
+
+                if (closeBtn) {
+                    closeBtn.focus({ preventScroll: true });
+                }
+            }
+
+            function closeMentionsModal() {
+                if (!overlayEl || !modalEl) return;
+
+                overlayEl.setAttribute('aria-hidden', 'true');
+                modalEl.setAttribute('aria-hidden', 'true');
+
+                overlayEl.classList.remove('opacity-100', 'pointer-events-auto');
+                overlayEl.classList.add('opacity-0', 'pointer-events-none');
+
+                modalEl.classList.remove('opacity-100', 'translate-y-0', 'scale-100');
+                modalEl.classList.add('opacity-0', 'translate-y-6', 'scale-[0.98]');
+
+                document.body.classList.remove('overflow-hidden');
+
+                if (lastFocusedEl && typeof lastFocusedEl.focus === 'function') {
+                    lastFocusedEl.focus({ preventScroll: true });
+                }
+            }
+
+            if (footerLegalLink) {
+                footerLegalLink.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    openMentionsModal();
+                });
+            }
+
+            if (footerPrivacyLink) {
+                footerPrivacyLink.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    openMentionsModal();
+                });
+            }
+
+            if (closeBtn) {
+                closeBtn.addEventListener('click', function() {
+                    closeMentionsModal();
+                });
+            }
+
+            if (overlayEl) {
+                overlayEl.addEventListener('click', function(event) {
+                    if (event.target === overlayEl) {
+                        closeMentionsModal();
+                    }
+                });
+            }
+
+            document.addEventListener('keydown', function(event) {
+                const isOpen = overlayEl && overlayEl.getAttribute('aria-hidden') === 'false';
+                if (isOpen && event.key === 'Escape') {
+                    closeMentionsModal();
+                }
+            });
         });
 
         // --- LOGS TAB LOGIC (New) ---
