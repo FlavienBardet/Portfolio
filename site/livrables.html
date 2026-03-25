@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Livrables du projet Aéroworld : cahier des charges, veille technologique, rétroplanning Gantt et démonstration technique du portfolio Data Analyst.">
-    <title>FB | Livrables - Projet Aéroworld</title>
+    <title>FB | Livrables</title>
+    <link
+        rel="icon"
+        type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2064%2064%27%3E%3Crect%20width%3D%2764%27%20height%3D%2764%27%20rx%3D%2716%27%20fill%3D%27%23020617%27/%3E%3Ctext%20x%3D%2732%27%20y%3D%2742%27%20text-anchor%3D%27middle%27%20font-family%3D%27Inter%2C%20Arial%27%20font-size%3D2728%27%20font-weight%3D27800%27%20fill%3D%27%23ffffff%27%3EFB%3C%2Ftext%3E%3Ccircle%20cx%3D%2746%27%20cy%3D%2718%27%20r%3D%276%27%20fill%3D%27%2310b981%27/%3E%3C%2Fsvg%3E"
+    >
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -194,7 +199,7 @@
 
     <!-- CAPSULE HEADER -->
     <nav class="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
-        <div class="bg-slate-950/70 backdrop-blur-xl border border-white/10 rounded-full p-2 pl-6 pr-2 shadow-2xl shadow-black/20 max-w-4xl w-full flex justify-between items-center transition-all duration-300 hover:border-white/20">
+        <div class="bg-slate-950/70 backdrop-blur-xl border border-white/10 rounded-full p-2 pl-4 sm:pl-6 pr-2 shadow-2xl shadow-black/20 max-w-4xl w-full flex justify-between items-center transition-all duration-300 hover:border-white/20 relative">
             
             <a href="index.html" class="text-xl font-bold text-white tracking-tight mr-4 md:mr-8 hover:opacity-80 transition-opacity">
                 FB<span class="text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.6)]">.</span>
@@ -211,10 +216,41 @@
                 </a>
             </div>
 
-            <a href="assets/cv/CV_Bardet_Flavien.pdf" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-2 px-6 py-2.5 rounded-full bg-slate-900/50 border border-cyan-400/30 text-cyan-400 text-sm font-medium hover:bg-cyan-400/10 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] hover:border-cyan-400/80 transition-all duration-300 ml-auto md:ml-0">
+            <!-- Mobile menu (hamburger) -->
+            <button
+                type="button"
+                id="mobileNavToggleLivrables"
+                class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-full bg-slate-900/50 border border-white/10 hover:border-white/20 transition-all"
+                aria-label="Ouvrir le menu de navigation"
+                aria-controls="mobileNavMenuLivrables"
+                aria-expanded="false"
+            >
+                <i data-lucide="menu" class="w-5 h-5 text-white" aria-hidden="true"></i>
+            </button>
+
+            <a href="assets/cv/CV_Bardet_Flavien.pdf" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-2 px-4 sm:px-6 py-2.5 rounded-full bg-slate-900/50 border border-cyan-400/30 text-cyan-400 text-sm font-medium hover:bg-cyan-400/10 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] hover:border-cyan-400/80 transition-all duration-300 ml-auto md:ml-0">
                 <span>Mon CV</span>
                 <i data-lucide="arrow-up-right" class="w-4 h-4 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform"></i>
             </a>
+
+            <div
+                id="mobileNavMenuLivrables"
+                class="hidden md:hidden absolute top-full left-0 right-0 mt-3 z-50 bg-slate-950/95 border border-white/10 rounded-2xl shadow-[0_0_60px_rgba(16,185,129,0.12)] p-4"
+                role="dialog"
+                aria-modal="false"
+                aria-label="Menu mobile"
+            >
+                <nav class="flex flex-col gap-2 text-sm">
+                    <a href="index.html#about" class="px-4 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all">À propos</a>
+                    <a href="index.html#skills" class="px-4 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all">Compétences</a>
+                    <a href="index.html#projects" class="px-4 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all">Projets</a>
+                    <a href="livrables.html" class="px-4 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all">Livrables</a>
+                    <a href="https://github.com/FlavienBardet/Portfolio" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all inline-flex items-center gap-2" aria-label="Voir le dépôt GitHub du portfolio">
+                        <i data-lucide="github" class="w-4 h-4" aria-hidden="true"></i>
+                        <span>GitHub</span>
+                    </a>
+                </nav>
+            </div>
         </div>
     </nav>
 
@@ -610,6 +646,53 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             lucide.createIcons();
+
+            // --- Mobile navigation menu ---
+            const mobileToggle = document.getElementById('mobileNavToggleLivrables');
+            const mobileMenu = document.getElementById('mobileNavMenuLivrables');
+
+            function setMobileMenuOpen(open) {
+                if (!mobileToggle || !mobileMenu) return;
+
+                if (open) {
+                    mobileMenu.classList.remove('hidden');
+                    mobileToggle.setAttribute('aria-expanded', 'true');
+                } else {
+                    mobileMenu.classList.add('hidden');
+                    mobileToggle.setAttribute('aria-expanded', 'false');
+                }
+            }
+
+            if (mobileToggle && mobileMenu) {
+                mobileToggle.addEventListener('click', function() {
+                    const isOpen = mobileMenu.classList.contains('hidden') === false;
+                    setMobileMenuOpen(!isOpen);
+                });
+
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', function() {
+                        setMobileMenuOpen(false);
+                    });
+                });
+
+                document.addEventListener('click', function(event) {
+                    const isOpen = mobileMenu.classList.contains('hidden') === false;
+                    if (!isOpen) return;
+
+                    const clickedInsideMenu = mobileMenu.contains(event.target);
+                    const clickedToggle = mobileToggle.contains(event.target);
+                    if (!clickedInsideMenu && !clickedToggle) {
+                        setMobileMenuOpen(false);
+                    }
+                });
+
+                document.addEventListener('keydown', function(event) {
+                    const isOpen = mobileMenu.classList.contains('hidden') === false;
+                    if (isOpen && event.key === 'Escape') {
+                        setMobileMenuOpen(false);
+                    }
+                });
+            }
         });
 
         // ============================================

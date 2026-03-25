@@ -488,7 +488,7 @@
 
     <!-- CAPSULE HEADER -->
     <nav class="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
-        <div class="bg-slate-950/70 backdrop-blur-xl border border-white/10 rounded-full p-2 pl-6 pr-2 shadow-2xl shadow-black/20 max-w-4xl w-full flex justify-between items-center transition-all duration-300 hover:border-white/20">
+        <div class="bg-slate-950/70 backdrop-blur-xl border border-white/10 rounded-full p-2 pl-4 sm:pl-6 pr-2 shadow-2xl shadow-black/20 max-w-4xl w-full flex justify-between items-center transition-all duration-300 hover:border-white/20 relative">
             
             <a href="#" class="text-xl font-bold text-white tracking-tight mr-4 md:mr-8 hover:opacity-80 transition-opacity" aria-label="Retour en haut de page - Accueil">
                 FB<span class="text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.6)]">.</span>
@@ -505,17 +505,48 @@
                 </a>
             </div>
 
+            <!-- Mobile menu (hamburger) -->
+            <button
+                type="button"
+                id="mobileNavToggle"
+                class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-full bg-slate-900/50 border border-white/10 hover:border-white/20 transition-all"
+                aria-label="Ouvrir le menu de navigation"
+                aria-controls="mobileNavMenu"
+                aria-expanded="false"
+            >
+                <i data-lucide="menu" class="w-5 h-5 text-white" aria-hidden="true"></i>
+            </button>
+
             <!-- Language Toggle FR/EN - Dynamic -->
-            <button type="button" id="langToggle" class="hidden md:flex items-center gap-1 px-3 py-1.5 bg-slate-900/50 rounded-full border border-white/10 hover:border-white/20 transition-all" onclick="toggleLanguage()" aria-label="Choisir la langue : Français ou English">
+            <button type="button" id="langToggle" class="flex md:flex items-center gap-1 px-2.5 sm:px-3 py-1.5 bg-slate-900/50 rounded-full border border-white/10 hover:border-white/20 transition-all" onclick="toggleLanguage()" aria-label="Choisir la langue : Français ou English">
                 <span id="langFR" class="text-white text-xs font-bold transition-colors">FR</span>
                 <span class="text-slate-600" aria-hidden="true">/</span>
                 <span id="langEN" class="text-slate-500 text-xs font-bold transition-colors">EN</span>
             </button>
 
-            <a href="assets/cv/CV_Bardet_Flavien.pdf" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-2 px-6 py-2.5 rounded-full bg-slate-900/50 border border-cyan-400/30 text-cyan-400 text-sm font-medium hover:bg-cyan-400/10 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] hover:border-cyan-400/80 transition-all duration-300 ml-auto md:ml-0">
+            <a href="assets/cv/CV_Bardet_Flavien.pdf" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-2 px-4 sm:px-6 py-2.5 rounded-full bg-slate-900/50 border border-cyan-400/30 text-cyan-400 text-sm font-medium hover:bg-cyan-400/10 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] hover:border-cyan-400/80 transition-all duration-300 ml-auto md:ml-0">
                 <span>Mon CV</span>
                 <i data-lucide="arrow-up-right" class="w-4 h-4 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" aria-hidden="true"></i>
             </a>
+
+            <div
+                id="mobileNavMenu"
+                class="hidden md:hidden absolute top-full left-0 right-0 mt-3 z-50 bg-slate-950/95 border border-white/10 rounded-2xl shadow-[0_0_60px_rgba(16,185,129,0.12)] p-4"
+                role="dialog"
+                aria-modal="false"
+                aria-label="Menu mobile"
+            >
+                <nav class="flex flex-col gap-2 text-sm">
+                    <a href="#about" class="px-4 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all" data-ml-key="nav_about">À propos</a>
+                    <a href="#skills" class="px-4 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all" data-ml-key="nav_skills">Compétences</a>
+                    <a href="#projects" class="px-4 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all" data-ml-key="nav_projects">Projets</a>
+                    <a href="livrables.html" class="px-4 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all" data-ml-key="nav_livrables">Livrables</a>
+                    <a href="https://github.com/FlavienBardet/Portfolio" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all inline-flex items-center gap-2" aria-label="Voir le dépôt GitHub du portfolio">
+                        <i data-lucide="github" class="w-4 h-4" aria-hidden="true"></i>
+                        <span>GitHub</span>
+                    </a>
+                </nav>
+            </div>
         </div>
     </nav>
 
@@ -528,7 +559,7 @@
                 <!-- Colonne gauche : Stat bar, titre, pitch, CTA aligné bas avec photo -->
                 <div class="z-20 order-1 flex flex-col items-start text-left relative h-full min-h-0">
                     <!-- Status Tags Bar : une seule ligne, forme pilule, sans FR/EN -->
-                    <div class="inline-flex flex-nowrap items-center gap-2.5 px-5 py-2.5 mb-8 rounded-full bg-slate-800/30 border border-slate-700/50 backdrop-blur-md">
+                    <div class="flex flex-wrap items-center gap-x-2.5 gap-y-1.5 px-5 py-2.5 mb-8 rounded-full bg-slate-800/30 border border-slate-700/50 backdrop-blur-md">
                         <div class="inline-flex items-center gap-2 badge-status-flicker">
                             <span class="relative flex h-2 w-2">
                                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -1579,6 +1610,53 @@
                 overlayEl.addEventListener('click', function(event) {
                     if (event.target === overlayEl) {
                         closeMentionsModal();
+                    }
+                });
+            }
+
+            // --- Mobile navigation menu ---
+            const mobileToggle = document.getElementById('mobileNavToggle');
+            const mobileMenu = document.getElementById('mobileNavMenu');
+
+            function setMobileMenuOpen(open) {
+                if (!mobileToggle || !mobileMenu) return;
+
+                if (open) {
+                    mobileMenu.classList.remove('hidden');
+                    mobileToggle.setAttribute('aria-expanded', 'true');
+                } else {
+                    mobileMenu.classList.add('hidden');
+                    mobileToggle.setAttribute('aria-expanded', 'false');
+                }
+            }
+
+            if (mobileToggle && mobileMenu) {
+                mobileToggle.addEventListener('click', function() {
+                    const isOpen = mobileMenu.classList.contains('hidden') === false;
+                    setMobileMenuOpen(!isOpen);
+                });
+
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', function() {
+                        setMobileMenuOpen(false);
+                    });
+                });
+
+                document.addEventListener('click', function(event) {
+                    const isOpen = mobileMenu.classList.contains('hidden') === false;
+                    if (!isOpen) return;
+
+                    const clickedInsideMenu = mobileMenu.contains(event.target);
+                    const clickedToggle = mobileToggle.contains(event.target);
+                    if (!clickedInsideMenu && !clickedToggle) {
+                        setMobileMenuOpen(false);
+                    }
+                });
+
+                document.addEventListener('keydown', function(event) {
+                    const isOpen = mobileMenu.classList.contains('hidden') === false;
+                    if (isOpen && event.key === 'Escape') {
+                        setMobileMenuOpen(false);
                     }
                 });
             }
